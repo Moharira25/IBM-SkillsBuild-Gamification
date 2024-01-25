@@ -1,0 +1,5 @@
+Code-Review has passed successfully
+Code-No runtime errors
+Testing-All tests passed successfully
+Deployment-Code has been successfully deployed
+Monitoring-Monitoring and logging has been setup for new features 
