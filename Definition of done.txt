@@ -1,0 +1,5 @@
+Code-Review has passed successfully
+Testing-All tests passed successfully
+Monitoring-Monitoring and logging has been setup for new features 
+All relevant files/work uploaded to git
+Webapp is secure/has user authentication
