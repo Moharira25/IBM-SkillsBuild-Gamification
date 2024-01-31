@@ -1,4 +1,4 @@
-##Topic: Artificial Intelligence
+## Topic: Artificial Intelligence
   - Course: Getting Started with Enterprise-grade AI
     Description: This course covers the foundations of Artificial Intelligence for business, including the following topics: AI Evolution, AI Industry Adoption Trends, Natural Language Processing and Virtual Agents.
   - Course: Artificial Intelligence Fundamentals
@@ -25,7 +25,7 @@
     Description: BM Watson Knowledge Catalog is a secure enterprise catalog to index, classify, and govern your data with greater efficiency. Manage your data from every angle giving you a 360-degree [...]
   - Course: Create a Node-RED starter application
     Description: In this tutorial, you will learn how to create a Node-RED starter application in the IBM Cloud, including a Cloudant database to store the application flow configuration.
-##Topic: Capstone
+## Topic: Capstone
   - Course: Getting Started with Enterprise-grade AI
     Description: This course covers the foundations of Artificial Intelligence for business, including the following topics: AI Evolution, AI Industry Adoption Trends, Natural Language Processing and Virtual Agents.
   - Course: Getting Started with Enterprise Data Science
@@ -34,7 +34,7 @@
     Description: This is a foundational course, exposing the learner to threat intelligence concepts including: Attack trends by geography, threat intelligence tools and real-world use cases.
   - Course: Getting Started with Cloud for the Enterprise
     Description: This course covers the basic foundations of cloud for the enterprise including: Consumer applications, Enterprise adoption, Delivery models and Industry Cloud Adoption.
-##Topic: Data Science
+## Topic: Data Science
   - Course: OpenDS4All
     Description: OpenDS4All is a project created to accelerate the creation of data science curriculum at academic institutions.
   - Course: Getting Started with Enterprise Data Science
@@ -63,7 +63,7 @@
     Description: Through interactive demonstrations and exercises, participants will learn how to author reports that navigate and manipulate dimensional data structures using the specific dimensional functions and [...]
   - Course: IBM Cognos Analytics - Architecture and Logging
     Description: Through lecture and interactive exercises participants will identify IBM Cognos Analytics components, examine how these components interact with Java, and will explore logging to assist [...]
-##Topic: IBM Automation
+## Topic: IBM Automation
   - Course: IBM Automation Learning Center
     Description: Getting started in your Automation journey is easy!
   - Course: IBM Process Mining Collection
@@ -76,7 +76,7 @@
     Description: This course introduces students to IBM Process Mining. Students will learn the differences between process mining and task mining, the different phases of process mining, use cases, and how process [...]
   - Course: Fundamentals of IBM Process Mining
     Description: Fundamentals of IBM process mining is a collection of courses that introduces students to process mining and how it is used to perform process and data analysis. Students will learn how to evaluate [...]
-##Topic: IBM Cloud
+## Topic: IBM Cloud
   - Course: Journey to Cloud: Envisioning Your Solution
     Description: This credential earner demonstrates knowledge and understanding of the digital transformation drivers made possible by cloud technologies and services. [...]
   - Course: Cloud Computing Fundamentals
@@ -93,10 +93,10 @@
     Description: Learners in any job role can get a first look at cloud computing and IBM Cloud. No experience needed. Learn to discuss and use cloud services with confidence. Earn your first cloud certification.
   - Course: Cloud Native Bootcamp
     Description: Cloud is everywhere. Today, many companies want to migrate their applications on to cloud. For this migration to be done, the applications must be re-architected in a way that they [...]
-##Topic: IBM Engineering
+## Topic: IBM Engineering
   - Course: Quick Start Sessions
     Description: Learn how to use IBM Engineering tools. Quick Starts are short, focused, introductory hands-on labs designed to take less than two hours to complete.
-##Topic: IBM Security
+## Topic: IBM Security
   - Course: IBM Security Learning Academy
     Description: Get free technical training for IBM Security products. You can explore the course catalog and build your own curriculum by enrolling in courses.
   - Course: Getting Started with Threat Intelligence and Hunting
@@ -111,7 +111,7 @@
     Description: Using the skills taught in this course, you will be able to configure processing of uncommon events, work with reference data, and develop custom rules, custom actions, and rules.
   - Course: Developing Secure Software
     Description: Learn the security basics to develop software that is hardened against attacks, and understand how you can reduce the damage and speed the response when a vulnerability is exploited. [...]
-##Topic: IBM Z
+## Topic: IBM Z
   - Course: IBM Z Enterprise Computing Kickstart
     Description: 13 Courses (56 hours) of online, self-paced courses covering topics from the z/OS Mainframe System, the IBM Development Environment, JCL, WebSphere, COBOL and DB2. Differentiate yourself with [...]
   - Course: Introduction to the Mainframe
@@ -132,7 +132,7 @@
     Description: This course introduces the major functions and capabilities of Linux on IBM Z. It also goes into the advantages of Linux on System z including total cost of ownership, scalability, performance, administration, [...]
   - Course: z/OS Introduction
     Description: This series of short videos teaches you about the IBM Z environment. The course starts from the beginning teaching IBM Z basics and the flagship operating system z/OS. The course addresses access and interaction basics, [...]
-##Topic: Power Systems
+## Topic: Power Systems
   - Course: IBM Engineering and Scientific Subroutine Library for Linux on Power
     Description: IBM Engineering and Scientific Subroutine Library (ESSL) is a state-of-the-art collection of subroutines providing a wide range of mathematical functions for scientific and engineering [...]
   - Course: IBM Rational Developer for i RPG & COBOL Tools
@@ -143,7 +143,7 @@
     Description: IBM XL Fortran for Linux is an advanced, high-performance compiler that can be used for developing complex, computationally intensive programs, including interlanguage calls with C programs.
   - Course: IBM XL C/C++
     Description: IBM XL C/C++ for AIX is an advanced, high-performance compiler that can be used for developing complex, computationally intensive programs, including interlanguage calls with C and Fortran programs.
-##Topic: Red Hat Academy
+## Topic: Red Hat Academy
   - Course: Red Hat System Administration I (RH124)
     Description: The first of two courses that cover the core system administration tasks needed to manage Red Hat® Enterprise Linux® servers.
   - Course: Red Hat System Administration II (RH134)
@@ -158,7 +158,7 @@
     Description: Learn to operate a Red Hat OpenStack Platform private cloud and manage domain resources to secure and deploy modern, scalable cloud applications, networks, and storage.
   - Course: Red Hat Application Development I: Programming in Java EE (AD183)
     Description: Helping Java SE developers write Java EE applications.
-##Topic: IBM Quantum
+## Topic: IBM Quantum
   - Course: Qiskit Textbook
     Description: Qiskit makes it easy to start learning quantum software. Teach with the same tools used by scientists and engineers to accelerate research towards practical applications for quantum computing
   - Course: Introduction to Quantum Computing and Quantum Hardware
