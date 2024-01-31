@@ -1,2 +1,0 @@
-git config --global user.email "ap833@student.le.ac.uk"
-git config --global user.name "Adam Pathan"
