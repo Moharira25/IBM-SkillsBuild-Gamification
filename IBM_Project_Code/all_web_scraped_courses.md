@@ -1,6 +1,7 @@
 # Topic: Artificial Intelligence
   ## - Course: Getting Started with Enterprise-grade AI
-    Description: This course covers the foundations of Artificial Intelligence for business, including the following topics: AI Evolution, AI Industry Adoption Trends, Natural Language Processing and Virtual Agents.
+    
+> Description: This course covers the foundations of Artificial Intelligence for business, including the following topics: AI Evolution, AI Industry Adoption Trends, Natural Language Processing and Virtual Agents.
   ## - Course: Artificial Intelligence Fundamentals
     Description: Does artificial intelligence (AI) spark your interest? Here’s your chance to visualize yourself in an AI career! You’ll explore AI’s history, then see how it can change the world.
   ## - Course: Fundamentals of Sustainability and Technology
