@@ -1,4 +1,3 @@
-
 # IBM SkillsBuild Gamification
 
 Brief description of what this project does and who it's for. Provide context and add a link to any relevant resources or documentation.
@@ -69,10 +68,6 @@ http://localhost:8080
 
 - [Spring Boot](https://spring.io/projects/spring-boot) - The web framework used
 - [Gradle](https://gradle.org/) - Dependency Management
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://github.com/yourusername/yourprojectname/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
