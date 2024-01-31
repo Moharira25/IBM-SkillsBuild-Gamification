@@ -12,6 +12,7 @@ build/
 **/local.properties
 **/src/main/resources/*-local.properties
 .env
+test/
 
 ### STS ###
 .apt_generated
