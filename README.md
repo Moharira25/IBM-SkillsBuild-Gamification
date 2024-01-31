@@ -71,7 +71,7 @@ http://localhost:8080
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning.
+We use [SemVer](http://semver.org/) for versioning.  For the versions available, see the [tags on this repository](https://campus.cs.le.ac.uk/gitlab/co2201-2024/group-12/-/tags).
 
 ## Authors
 
