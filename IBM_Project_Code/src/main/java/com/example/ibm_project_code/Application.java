@@ -13,13 +13,15 @@ public class Application implements CommandLineRunner {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
+    // loads .env data correctly
     static {
         Dotenv dotenv = Dotenv.load();
         dotenv.entries().forEach(e -> System.setProperty(e.getKey(), e.getValue()));
     }
+    //
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args); // Ensure this matches your class name
+        SpringApplication.run(Application.class, args);
     }
 
     @Override
