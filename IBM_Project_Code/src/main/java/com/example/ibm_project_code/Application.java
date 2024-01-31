@@ -1,6 +1,7 @@
 package com.example.ibm_project_code;
 
 import com.example.ibm_project_code.services.CustomUserDetailsService;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,12 +13,17 @@ public class Application implements CommandLineRunner {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
+    static {
+        Dotenv dotenv = Dotenv.load();
+        dotenv.entries().forEach(e -> System.setProperty(e.getKey(), e.getValue()));
+    }
+
     public static void main(String[] args) {
-        SpringApplication.run(IbmProjectCodeApplication.class, args);
+        SpringApplication.run(Application.class, args); // Ensure this matches your class name
     }
 
     @Override
-    public void run(String... args) {
+    public void run(String... args) throws Exception {
         userDetailsService.addTestUser();
     }
 }
