@@ -1,30 +1,29 @@
 # Topic: Artificial Intelligence
-  ## - Course: Getting Started with Enterprise-grade AI
-    
-> Description: This course covers the foundations of Artificial Intelligence for business, including the following topics: AI Evolution, AI Industry Adoption Trends, Natural Language Processing and Virtual Agents.
-  ## - Course: Artificial Intelligence Fundamentals
+  - Course: Getting Started with Enterprise-grade AI
+  Description: This course covers the foundations of Artificial Intelligence for business, including the following topics: AI Evolution, AI Industry Adoption Trends, Natural Language Processing and Virtual Agents.
+  - Course: Artificial Intelligence Fundamentals
     Description: Does artificial intelligence (AI) spark your interest? Here’s your chance to visualize yourself in an AI career! You’ll explore AI’s history, then see how it can change the world.
-  ## - Course: Fundamentals of Sustainability and Technology
+  - Course: Fundamentals of Sustainability and Technology
     Description: In this learning plan, you’ll have the chance to learn about sustainability science and its applications in various fields of technology. You will gain knowledge about sustainability and develop skills to apply it in the tech world.
-  ## - Course: Building Trustworthy AI Enterprise Solutions
+  - Course: Building Trustworthy AI Enterprise Solutions
     Description: This course is intended to assist individuals with an active interest in becoming part of a team tasked with the implementation of an Artificial Intelligence (AI) solution within an organization to address specific business needs.
-  ## - Course: Building AI Solutions Using Advanced Algorithms and Open Source Frameworks
+  - Course: Building AI Solutions Using Advanced Algorithms and Open Source Frameworks
     Description: This course is intended to assist individuals with an active interest in understanding the internal building blocks of an Artificial Intelligence (AI) solution, specifically focused on identifying and utilizing appropriate algorithms and open-source frameworks.
-  ## - Course: Art of Prompt Writing
+  - Course: Art of Prompt Writing
     Description: This is an activity-based course. You’ll learn about AI language models and the rules to follow when giving instructions, or prompting, an AI language model. This includes guided activities and practical exercises.
-  ## - Course: Introduction to Generative AI in Action
+  - Course: Introduction to Generative AI in Action
     Description: This credential earner has applied technical knowledge of principles of generative AI, prompt engineering techniques, and Python libraries in various practical applications.
-  ## - Course: OpenDS4All
+  - Course: OpenDS4All
     Description: OpenDS4All is a project created to accelerate the creation of data science curriculum at academic institutions. The project hosts educational modules that can be used as foundational elements in data science courses.
-  ## - Course: IBM AI Education
+  - Course: IBM AI Education
     Description: We know that students need to understand AI to be successful in the modern workforce. Through this Professional Development (PD) experience, teachers will be equipped to teach students about AI's impact on various industries.
-  ## - Course: Watson Academy
+  - Course: Watson Academy
     Description: Your fast track to cognitive computing, this course provides an in-depth understanding of IBM's Watson technology and its practical applications in various fields.
-  ## - Course: Data Refinery Essentials
+  - Course: Data Refinery Essentials
     Description: Data Refinery is a self-service data preparation client for data scientists, data engineers, and business analysts. With it, you can quickly transform large amounts of raw data into insightful, actionable information.
-  ## - Course: IBM Watson Knowledge Catalog Essentials
+  - Course: IBM Watson Knowledge Catalog Essentials
     Description: IBM Watson Knowledge Catalog is a secure enterprise catalog to index, classify, and govern your data. This course provides a comprehensive understanding of managing data effectively for business insights.
-  ## - Course: Create a Node-RED starter application
+  - Course: Create a Node-RED starter application
     Description: In this tutorial, you will learn how to create a Node-RED starter application in the IBM Cloud, including setting up a Cloudant database to store the application flow configuration.
 
 # Topic: Capstone
