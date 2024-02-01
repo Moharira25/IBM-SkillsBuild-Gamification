@@ -1,6 +1,8 @@
 # IBM SkillsBuild Gamification
 
-Brief description of what this project does and who it's for. Provide context and add a link to any relevant resources or documentation.
+This project is a gamification of IBM's SkillsBuild program. It aims to leverage the comprehensive resources of IBM's SkillsBuild. This is for university coursework.
+
+For more detailed information on IBM's SkillsBuild program, please visit [IBM SkillsBuild](https://skillsbuild.org/).
 
 ## Getting Started
 
