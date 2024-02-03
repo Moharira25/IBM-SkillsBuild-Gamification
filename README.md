@@ -14,7 +14,7 @@ What things you need to install the software and how to install them. For exampl
 
 - Java JDK 17 or newer
 - Gradle
-- An IDE of your choice (e.g., IntelliJ IDEA, Eclipse, VS Code)
+- An IDE of your choice (e.g., IntelliJ IDEA, VS Code, etc.,)
 
 ### Installing
 
