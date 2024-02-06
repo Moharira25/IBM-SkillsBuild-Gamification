@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="post.css">
+</head>
+<body>
+<div class ="form">
+    <!--ccp refers to category-courses-pair-->
+    <div th:each="ccp: ${coursesByCategory}" >
+        <h1 th:text="'Category: ' + ${ccp.key}">Category: </h1>
+        <div th:each="c: ${ccp.value}">
+            <h2 th:text="'Title:' + ${c.title}"></h2>
+            <p style="font-size: small" th:text="'Language:' + ${c.language}"></p>
+            <p style="font-size: small" th:text="'Duration:' + ${c.duration}"></p>
+            <p th:text="'Description:' + ${c.description}"></p>
+            <a th:href="@{/start/{userId}/{courseId}(userId=${userId}, courseId=${c.id})}">Start Learning</a>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
