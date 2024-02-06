@@ -26,6 +26,9 @@ public class WelcomeController {
         // Add the first name to the model, or default to "User" if not found
         String firstName = user != null ? user.getFirstName() : "User";
         model.addAttribute("firstName", firstName);
+        //adding userId to use it when displaying the dashboard
+        Long userId = user != null ? user.getId() : 1; //default is id=1 for test user.
+        model.addAttribute("userId", userId);
 
         return "hello";
     }
