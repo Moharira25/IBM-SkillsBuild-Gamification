@@ -45,6 +45,8 @@ dependencies {
     // For Gradle in build.gradle
     implementation 'io.github.cdimascio:dotenv-java:2.2.0'
 
+    implementation "org.jsoup:jsoup:1.15.3" //jsoup dependency
+
 }
 
 tasks.named('test') {
