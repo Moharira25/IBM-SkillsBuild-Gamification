@@ -7,7 +7,9 @@ import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -57,6 +59,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Collection<Role> roles;
+
+    @ManyToMany
+    private List<Course> courses = new ArrayList<>();
 
     @PreUpdate
     protected void onUpdate() {
