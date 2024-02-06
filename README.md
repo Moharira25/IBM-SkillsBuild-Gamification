@@ -34,11 +34,7 @@ git clone https://campus.cs.le.ac.uk/gitlab/co2201-2024/group-12.git
 
 3. **Set up environment variables**
 
-Copy the `.env.example` file to a new file named `.env`, and edit it to fill in your specific settings:
-
-```bash
-cp .env.example .env
-```
+In the `application.properties` file, edit it to fill in your specific settings:
 
 Make sure to replace placeholder values with your actual environment variables.
 
