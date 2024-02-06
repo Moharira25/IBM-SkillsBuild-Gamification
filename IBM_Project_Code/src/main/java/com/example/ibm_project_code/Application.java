@@ -13,6 +13,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import static io.github.cdimascio.dotenv.Dotenv.*;
+
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
@@ -22,10 +24,10 @@ public class Application implements CommandLineRunner {
     private CourseRepository courseRepository;
 
     // loads .env data correctly
-    static {
-        Dotenv dotenv = Dotenv.load();
+/*    static {
+        Dotenv dotenv = load();
         dotenv.entries().forEach(e -> System.setProperty(e.getKey(), e.getValue()));
-    }
+    }*/
     //
 
     public static void main(String[] args) {
@@ -44,21 +46,24 @@ public class Application implements CommandLineRunner {
         Elements categories = doc.getElementsByClass("pb-12");
 
         for (Element c : categories) {
-            Element category = c.getElementsByClass("badge-section-title bx--productive-heading-06 pt-8 pb-12 max-w-9/10").getFirst();
+            Element category = c.getElementsByClass("badge-section-title bx--productive-heading-06 pt-8 pb-12 max-w-9/10").first();
             Elements categoryElements = c.getElementsByClass("mb-16 bx--row");
             for (Element cE : categoryElements) {
 
                 Course course = new Course();
+                assert category != null;
                 course.setCategory(category.text());
                 Element title = cE.selectFirst(".bx--expressive-heading-03.mb-4");
                 Element language = cE.select(".ml-1").get(0);
                 Element duration = cE.select(".ml-1").get(2);
-                Element description = cE.getElementsByClass("bx--body-long-02 max-w-9/10").select("p").getFirst();
-                String link = cE.getElementsByClass("flex flex-col md:flex-row").select("a").getLast().attr("href");
+                Element description = cE.getElementsByClass("bx--body-long-02 max-w-9/10").select("p").first();
+                String link = cE.getElementsByClass("flex flex-col md:flex-row").select("a").last().attr("href");
 
+                assert title != null;
                 course.setTitle(title.text());
                 course.setDuration(duration.text());
                 course.setLanguage(language.text());
+                assert description != null;
                 course.setDescription(description.text());
                 course.setLink(link);
                 courseRepository.save(course);
