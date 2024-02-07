@@ -3,7 +3,7 @@ package com.example.ibm_project_code;
 import com.example.ibm_project_code.database.Course;
 import com.example.ibm_project_code.repositories.CourseRepository;
 import com.example.ibm_project_code.services.CustomUserDetailsService;
-import io.github.cdimascio.dotenv.Dotenv;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import static io.github.cdimascio.dotenv.Dotenv.*;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -65,8 +63,12 @@ public class Application implements CommandLineRunner {
                 course.setLanguage(language.text());
                 assert description != null;
                 course.setDescription(description.text());
-                course.setLink(link);
-                courseRepository.save(course);
+                //checking if course has the "start learning" link in ibm skillsbuild.
+                // If not the course will not be added.
+                if (!link.startsWith("/")){
+                    course.setLink(link);
+                    courseRepository.save(course);
+                }
             }
         }
 
