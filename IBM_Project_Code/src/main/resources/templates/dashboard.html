@@ -12,7 +12,7 @@
     <div class="flex-grow">
         <div class="flex items-center justify-between">
             <div class="flex items center">
-                <div th:replace="fragments/sidebar :: sidebar"></div>
+<!--                <div th:replace="fragments/sidebar :: sidebar"></div>-->
                 <!-- Tabs -->
                 <ul class="flex flex-col space-y-6 text-xl font-medium text-gray-500 dark:text-gray-400 md:mr-4 mb-4 md:mb-0 m-4 mr-8 sticky top-0 h-screen text-center">
                     <li th:each="ccp, iterStat : ${coursesByCategory}" th:id="'tab-' + ${iterStat.index}"
