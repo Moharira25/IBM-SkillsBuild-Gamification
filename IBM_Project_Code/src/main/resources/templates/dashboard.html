@@ -1,26 +1,105 @@
 <!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en-gb">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="post.css">
+    <th:block th:replace="~{fragments/layout :: common-head}"></th:block>
 </head>
-<body>
-<div class ="form">
-    <!--ccp refers to category-courses-pair-->
-    <div th:each="ccp: ${coursesByCategory}" >
-        <h1 th:text="'Category: ' + ${ccp.key}">Category: </h1>
-        <div th:each="c: ${ccp.value}">
-            <h2 th:text="'Title:' + ${c.title}"></h2>
-            <p style="font-size: small" th:text="'Language:' + ${c.language}"></p>
-            <p style="font-size: small" th:text="'Duration:' + ${c.duration}"></p>
-            <p th:text="'Description:' + ${c.description}"></p>
-            <a th:href="@{/start/{userId}/{courseId}(userId=${userId}, courseId=${c.id})}">Start Learning</a>
+<body class="bg-gray-600"> <!-- This sets the background color for any unfilled space -->
+<div class="h-screen">
+    <!--include header fragment-->
+    <div th:replace="fragments/header :: header"></div>
+    <div class="flex-grow">
+        <div class="flex items-center justify-between">
+            <div class="flex items center">
+                <div th:replace="fragments/sidebar :: sidebar"></div>
+                <!-- Tabs -->
+                <ul class="flex flex-col space-y-6 text-xl font-medium text-gray-500 dark:text-gray-400 md:mr-4 mb-4 md:mb-0 m-4 mr-8 sticky top-0 h-screen text-center">
+                    <li th:each="ccp, iterStat : ${coursesByCategory}" th:id="'tab-' + ${iterStat.index}"
+                        class="cursor-pointer items-center text-center">
+                        <a href="javascript:void(0)" th:onclick="'openCategory(' + ${iterStat.index} + ')'">
+                            <div class="inline-flex items-center px-6 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
+                                 th:text="${ccp.key}"></div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- Tab Content -->
+                <div class="flex flex-1">
+                    <div th:each="ccp, iterStat : ${coursesByCategory}" th:id="'category-'+${iterStat.index}"
+                         class="tab-content hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 pr-5">
+                            <div th:each="c : ${ccp.value}"
+                                 class="flex flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 my-4 p-5 h-full">
+                                <div class="flex-grow">
+                                    <a href="#">
+                                        <img class="rounded-t-lg" src="https://i.ibb.co/VQcPr6r/img.png" alt=""/>
+                                    </a>
+                                    <div class="mt-4">
+                                        <div class="justify-between flex items-baseline">
+                                            <h5 class="text-2xl font-bold tracking-tight text-orange-700 mr-2"
+                                                th:text="${c.title}"></h5>
+                                            <p class="text-indigo-500 text-xs text-right font-bold text-nowrap"
+                                               th:text="${c.duration}"></p>
+                                        </div>
+                                        <p class="text-sm mt-2 text-gray-500 m-2" th:text="${c.description}"></p>
+                                    </div>
+                                </div>
+                                <a th:href="@{/start/{userId}/{courseId}(userId=${userId}, courseId=${c.id})}"
+                                   class="mt-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white
+                       bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300
+                       dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    Read more
+                                    <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<script>
+    function openCategory(index) {
+        var i, tabcontent;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        document.getElementById("category-" + index).style.display = "block";
+    }
 
+    document.addEventListener("DOMContentLoaded", function () {
+        openCategory(0); // Open the first tab by default
+    });
+
+    // Get the button and the dropdown elements
+    const menuButton = document.getElementById('user-menu-button');
+    const menuDropdown = document.getElementById('user-menu-dropdown');
+
+    // Define the click event handler
+    menuButton.addEventListener('click', function () {
+        // Check the current state of the dropdown
+        console.log(menuButton.getAttribute('aria-expanded'));
+        const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+        // Toggle the dropdown and the aria-expanded attribute
+        menuDropdown.classList.toggle('hidden');
+        menuButton.setAttribute('aria-expanded', String(!isExpanded)); // Convert boolean to string
+    });
+
+    // Optional: Clicking outside the menu will close it
+    window.addEventListener('click', function (e) {
+        if (!menuButton.contains(e.target) && !menuDropdown.contains(e.target)) {
+            menuDropdown.classList.add('hidden');
+            menuButton.setAttribute('aria-expanded' , 'false');
+        }
+    });
+
+</script>
 
 </body>
 </html>
