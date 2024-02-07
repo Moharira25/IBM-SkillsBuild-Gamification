@@ -15,7 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import static io.github.cdimascio.dotenv.Dotenv.*;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.example.ibm_project_code")
 public class Application implements CommandLineRunner {
 
     @Autowired
