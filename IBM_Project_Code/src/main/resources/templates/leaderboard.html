@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaderboard</title>
+</head>
+<body>
+<!-- u for user-->
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Rank</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Overall Points</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Loop through the list of users and populate the table -->
+        <tr th:each="user, rank : ${users}">
+            <td th:text="${rank.index + 1}"></td>
+            <td th:text="${user.firstName}">First Name</td>
+            <td th:text="${user.lastName}">Last Name</td>
+            <td th:text="${user.overallPoints}">Overall Points</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</body>
+</html>

@@ -24,7 +24,8 @@ public class Course {
     @Column
     private String link;
     private String category;
-
+    @Column
+    private int points;
     @ManyToMany(mappedBy = "courses")
     private List<User> users = new ArrayList<>();
 

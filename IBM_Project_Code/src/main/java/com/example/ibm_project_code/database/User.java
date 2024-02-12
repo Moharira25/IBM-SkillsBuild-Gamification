@@ -63,6 +63,8 @@ public class User {
     @ManyToMany
     private List<Course> courses = new ArrayList<>();
 
+    @Column
+    private int overallPoints = 0;
     @PreUpdate
     protected void onUpdate() {
         lastModifiedDate = Timestamp.from(Instant.now());

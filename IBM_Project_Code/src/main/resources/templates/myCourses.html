@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Courses</title>
+</head>
+<body>
+<div>
+    <!--c refers to course-->
+    <div th:each="c: ${studentCourses}">
+        <h2 th:text="'Title:' + ${c.title}"></h2>
+        <a th:href="@{/finish/{userId}/{courseId}(userId=${userId}, courseId=${c.id})}">Finish</a>
+    </div>
+
+</div>
+</body>
+</html>
