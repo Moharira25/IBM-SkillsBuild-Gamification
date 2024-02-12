@@ -40,16 +40,43 @@ public class CourseController {
         return "dashboard";
     }
 
+    @GetMapping("/myCourses")
+    public String myCourses(Model model, @RequestParam Long userId) {
+        List<Course> courses = userRepo.findById(userId).get().getCourses();
+        if (courses.isEmpty()){
+            model.addAttribute("userId", userId);
+            return "courseError";
+        }
+        model.addAttribute("studentCourses", courses);
+        model.addAttribute("userId", userId);
+        return "myCourses";
+    }
+
     @RequestMapping("/start/{userId}/{courseId}")
-    public String startLearning(Model model, @PathVariable Long userId, @PathVariable int courseId) {
+    public String startLearning(@PathVariable Long userId, @PathVariable int courseId) {
         Course course = courseRepo.findById(courseId);
         Optional<User> user = userRepo.findById(userId);
-        if (!user.isEmpty()) {
+        if (user.isPresent()) {
             user.get().getCourses().add(course);
             course.getUsers().add(user.get());
             userRepo.save(user.get());
             courseRepo.save(course);
         }
         return "redirect:"+course.getLink();
+    }
+
+    @RequestMapping("/finish/{userId}/{courseId}")
+    public String finish(@PathVariable Long userId, @PathVariable int courseId) {
+        Course course = courseRepo.findById(courseId);
+        Optional<User> user = userRepo.findById(userId);
+        if (user.isPresent()) {
+            user.get().getCourses().remove(course);
+            course.getUsers().remove(user.get());
+            int newPoints = user.get().getOverallPoints() + course.getPoints();
+            user.get().setOverallPoints(newPoints);
+            userRepo.save(user.get());
+            courseRepo.save(course);
+        }
+        return "redirect:/myCourses?userId=" + userId;
     }
 }
