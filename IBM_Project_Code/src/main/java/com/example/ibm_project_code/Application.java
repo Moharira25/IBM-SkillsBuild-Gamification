@@ -20,6 +20,8 @@ import java.time.Instant;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.time.Instant.*;
+
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
@@ -54,7 +56,7 @@ public class Application implements CommandLineRunner {
         u1.setPassword("password");
         u1.setEmailVerified(false);
         u1.setEnabled(true);
-        Timestamp currentTime = Timestamp.from(Instant.now());
+        Timestamp currentTime = Timestamp.from(now());
         u1.setCreatedDate(currentTime);
         u1.setLastModifiedDate(currentTime);
         userRepository.save(u1);

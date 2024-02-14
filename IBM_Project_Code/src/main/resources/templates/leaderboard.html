@@ -1,12 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            background: #022258;
+            color: white;
+            font-size: 30px;
+            padding: 20px;
+            margin: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px; /* Adjust margin-top as needed */
+            font-family: "Hiragino Sans GB", Arial, sans-serif;
+        }
+
+        thead th {
+            background-color: darkblue;
+            color: white;
+            border: 1px solid darkblue;
+            padding: 10px;
+            text-align: left;
+        }
+
+        tbody td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background-color: #f2f2f2;
+        }
+    </style>
     <meta charset="UTF-8">
     <title>Leaderboard</title>
 </head>
 <body>
-<!-- u for user-->
-
+<div class="container">
+    <h1>Global leaderboard</h1>
     <table border="1">
         <thead>
         <tr>
@@ -26,7 +74,6 @@
         </tr>
         </tbody>
     </table>
-
-
+</div>
 </body>
 </html>
