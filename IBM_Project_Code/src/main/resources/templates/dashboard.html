@@ -3,24 +3,84 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Dashboard</title>
+    <title>IBM Skillsbuild Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/6fd6cd8763.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="post.css">
 </head>
 <body>
-<div class ="form">
-    <!--ccp refers to category-courses-pair-->
-    <div th:each="ccp: ${coursesByCategory}" >
-        <h1 th:text="'Category: ' + ${ccp.key}">Category: </h1>
-        <div th:each="c: ${ccp.value}">
-            <h2 th:text="'Title:' + ${c.title}"></h2>
-            <p style="font-size: small" th:text="'Language:' + ${c.language}"></p>
-            <p style="font-size: small" th:text="'Duration:' + ${c.duration}"></p>
-            <p th:text="'Description:' + ${c.description}"></p>
-            <a th:href="@{/start/{userId}/{courseId}(userId=${userId}, courseId=${c.id})}">Start Learning</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Home</a>
+    <div class="ml-auto">
+        <div class="btn-group profile-button">
+            <button type="button" class="btn btn-primary rounded-circle">
+                <i class="fas fa-user"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+<div class="container" >
+    <div class="row">
+        <div class="col-md-12">
+            <img src="IBM_Logo2.png" alt="IBM Logo" class="header-image">
+            <h2 class="centered-heading">IBM Skills Build Courses</h2>
+            <div class="form-group">
+                <label for="filterDropdown">Filter by Topic:</label>
+                <select class="form-control" id="filterDropdown">
+                    <option value="">All Topics</option>
+                    <option value="Artificial Intelligence">Artificial Intelligence</option>
+                    <option value="Capstone">Capstone</option>
+                    <option value="Data Science">Data Science</option>
+                    <option value="IBM Automation">IBM Automation</option>
+                    <option value="IBM Cloud">IBM Cloud</option>
+                    <option value="IBM Engineering">IBM Engineering</option>
+                    <option value="IBM Security">IBM Security</option>
+                    <option value="IBM Z">IBM Z</option>
+                    <option value="Power Systems">Power Systems</option>
+                    <option value="Red Hat Academy">Red Hat Academy</option>
+                    <option value="IBM Quantum">IBM Quantum</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="languageFilterDropdown">Filter by Language:</label>
+                <select class="form-control" id="languageFilterDropdown">
+                    <option value="">All Languages</option>
+                    <option value="English">English</option>
+                    <option value="Spanish">Spanish</option>
+                </select>
+
+                <div class="scrollable-table">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Topic</th>
+                            <th>Course</th>
+                            <th>Description</th>
+                            <th>Language</th>
+                            <th>Duration</th>
+                            <th>Link</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="ccp: ${coursesByCategory}">
+                        </tr>
+                        <tr th:each="c: ${ccp.value}">
+                            <td th:text="${ccp.key}"></td>
+                            <td th:text="${c.title}"></td>
+                            <td th:text="${c.description}"></td>
+                            <td th:text="${c.language}"></td>
+                            <td th:text="${c.duration}"></td>
+                            <td>
+                                <a th:href="@{/start/{userId}/{courseId}(userId=${userId}, courseId=${c.id})}">Start Learning</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
-
 </body>
 </html>
