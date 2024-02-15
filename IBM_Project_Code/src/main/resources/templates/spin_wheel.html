@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daily Wheel Spin</title>
+    <link rel="stylesheet" type="text/css" href="spin_design.css">
+</head>
+<body>
+<button class="go-home" onclick="goToHome()">Go to home page</button>
+<div class="container">
+    <div class="Spin_Button" id="spinbutton">
+        <div class="arrow"></div>
+        Spin
+    </div>
+    <div class="Wheel">
+        <div class="number" style="--i:1; --clr:#70dbb0;"><span>x1.5</span></div>
+        <div class="number" style="--i:2; --clr:#07e295;"><span>x2</span></div>
+        <div class="number" style="--i:3; --clr:#70dbd9;"><span>x1.5</span></div>
+        <div class="number" style="--i:4; --clr:#10a1df;"><span>x2</span></div>
+        <div class="number" style="--i:5; --clr:#05fcba;"><span>x1.5</span></div>
+        <div class="number" style="--i:6; --clr:#70d6db;"><span>x2</span></div>
+        <div class="number" style="--i:7; --clr:#169965;"><span>x3</span></div>
+        <div class="number" style="--i:8; --clr:#09b9a8;"><span>x1.5</span></div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="modal" id="modal">
+        <div id="modal-content"></div>
+        <button onclick="closeModal()">Close</button>
+    </div>
+    <div id="timer"></div>
+</div>
+    <script>
+        const SPIN_INTERVAL_MS = 10 * 1000;
+        const LAST_SPIN_KEY = 'lastSpin';
+
+        let wheel = document.querySelector('.Wheel');
+        let spinButton = document.getElementById('spinbutton');
+        let arrow = document.querySelector('.Spin_Button .arrow');
+        let overlay = document.getElementById('overlay');
+        let modal = document.getElementById('modal');
+        let modalContent = document.getElementById('modal-content');
+        let isSpinAllowed = true;
+        let isSpinning = false;
+
+        spinButton.onclick = function () {
+            if (!canSpinWheel() || isSpinning) {
+                alert('You can only spin the wheel once every 10 seconds.');
+                return;
+            }
+
+            lockButton();
+            isSpinning = true;
+
+            var randomRotation = Math.floor(Math.random() * (360 - 1 + 1)) + 1;
+
+            wheel.style.transition = 'transform 5s ease-out';
+            wheel.style.transform = 'rotate(' + (1800 + randomRotation) + 'deg)';
+
+            setTimeout(function () {
+                wheel.style.transform = 'rotate(0deg)';
+                isSpinning = false;
+                wheel.style.transition = 'none';
+
+                let wheelRotation = ((1800 + randomRotation) % 360);
+                let sectionIndex = Math.floor((wheelRotation + 202.5) / 45) % 8;
+                let sectionSpan = document.querySelector('.number:nth-child(' + (sectionIndex + 1) + ') span');
+                let sectionContent = sectionSpan.textContent.trim();
+                displayModal(sectionContent);
+                localStorage.setItem(LAST_SPIN_KEY, new Date().getTime().toString());
+            }, 5000);
+        };
+
+        function goToHome() {
+            window.location.href ="home.html"; // Navigate to the Daily Spin page
+        }
+        function canSpinWheel() {
+            const lastSpinTime = localStorage.getItem(LAST_SPIN_KEY);
+            if (lastSpinTime) {
+                const currentTime = new Date().getTime();
+                const timeSinceLastSpin = currentTime - parseInt(lastSpinTime);
+                return timeSinceLastSpin >= SPIN_INTERVAL_MS;
+            } else {
+                return true;
+            }
+        }
+
+        function lockButton() {
+            var button = document.getElementById('spinbutton');
+            button.disabled = true;
+            setTimeout(function(){
+                button.disabled = false;
+            }, 6000);
+        }
+
+        function displayModal(sectionContent) {
+            modalContent.innerHTML = 'Congratulations, you have won ' + sectionContent + ' on your next course!';
+            overlay.style.display = 'block';
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            overlay.style.display = 'none';
+            modal.style.display = 'none';
+        }
+
+    </script>
+</body>
+</html>
