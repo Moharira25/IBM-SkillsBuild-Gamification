@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -60,8 +61,8 @@ public class User {
     )
     private Collection<Role> roles;
 
-    @ManyToMany
-    private List<Course> courses = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<UserCourse> courses = new ArrayList<>();
 
     @Column
     private int overallPoints = 0;
@@ -71,4 +72,29 @@ public class User {
     }
 
     // Constructors, getters and setters will be handled by Lombok
+
+    //A method to check if a course have been started
+    public boolean courseStarted(Course course){
+        boolean started = false;
+        for (UserCourse c: courses){
+            if (Objects.equals(course, c.getCourse())){
+                return c.getStartDate() != null;
+            }
+
+        }
+        return started;
+    }
+
+    //Getting the UserCourse by the course.
+    public UserCourse getUserCourse(Course course){
+        for (UserCourse c: courses){
+            if (Objects.equals(course, c.getCourse())){
+                return c;
+            }
+        }
+        //if the course does not exist
+        return null;
+    }
+
+
 }

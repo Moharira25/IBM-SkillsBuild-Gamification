@@ -1,7 +1,11 @@
 package com.example.ibm_project_code.controllers;
 
+
+
 import com.example.ibm_project_code.database.Course;
+import com.example.ibm_project_code.database.UserCourse;
 import com.example.ibm_project_code.database.User;
+import com.example.ibm_project_code.repositories.UserCourseRepository;
 import com.example.ibm_project_code.repositories.CourseRepository;
 import com.example.ibm_project_code.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.*;
 
 @Controller
@@ -20,46 +26,40 @@ public class CourseController {
     private CourseRepository courseRepo;
     @Autowired
     private UserRepository userRepo;
+    @Autowired
+    UserCourseRepository userCourseRepository;
 
 
 
     @GetMapping("/dashboard")
     public String list(Model model, @RequestParam Long userId) {
-        Map<String, List<Course>> coursesByCategory = new HashMap<>();
-        for (Course course : courseRepo.findAll()) {
-            String category = course.getCategory();
 
-            //adding a category-courses pair if they are not present in the hashmap
-            coursesByCategory.putIfAbsent(category, new ArrayList<>());
 
-            // Add the course to the list from the pair above
-            coursesByCategory.get(category).add(course);
-        }
-        //model.addAttribute("coursesByCategory", coursesByCategory);
         model.addAttribute("courses", courseRepo.findAll());
         model.addAttribute("userId", userId);
+        model.addAttribute("user", userRepo.findById(userId).get());
+
+
         return "dashboard";
     }
 
-    @GetMapping("/myCourses")
-    public String myCourses(Model model, @RequestParam Long userId) {
-        List<Course> courses = userRepo.findById(userId).get().getCourses();
-        if (courses.isEmpty()){
-            model.addAttribute("userId", userId);
-            return "courseError";
-        }
-        model.addAttribute("studentCourses", courses);
-        model.addAttribute("userId", userId);
-        return "myCourses";
-    }
+
 
     @RequestMapping("/start/{userId}/{courseId}")
     public String startLearning(@PathVariable Long userId, @PathVariable int courseId) {
         Course course = courseRepo.findById(courseId);
         Optional<User> user = userRepo.findById(userId);
         if (user.isPresent()) {
-            user.get().getCourses().add(course);
-            course.getUsers().add(user.get());
+            //Creating a course enrollment for the started course and recording the start date.
+            UserCourse userCourse = new UserCourse();
+            userCourse.setCourse(course);
+            userCourse.setStartDate(Timestamp.from(Instant.now()));
+            userCourse.setUser(user.get());
+            //saving the userCourse to the database.
+            userCourseRepository.save(userCourse);
+
+            user.get().getCourses().add(userCourse);
+            course.getEnrollments().add(userCourse);
             userRepo.save(user.get());
             courseRepo.save(course);
         }
@@ -71,13 +71,23 @@ public class CourseController {
         Course course = courseRepo.findById(courseId);
         Optional<User> user = userRepo.findById(userId);
         if (user.isPresent()) {
-            user.get().getCourses().remove(course);
-            course.getUsers().remove(user.get());
+            //Recording the completion time for the course.
+            user.get().getUserCourse(course).setEndDate(Timestamp.from(Instant.now()));
+            //Setting the done attribute to true in the UserCourse class
+            user.get().getUserCourse(course).setDone(true);
             int newPoints = user.get().getOverallPoints() + course.getPoints();
             user.get().setOverallPoints(newPoints);
             userRepo.save(user.get());
             courseRepo.save(course);
         }
-        return "redirect:/myCourses?userId=" + userId;
+        return "redirect:/dashboard?userId=" + userId;
+    }
+
+
+    //A controller for when a user resume a course.
+    @RequestMapping("/resume/{userId}/{courseId}")
+    public String resume(@PathVariable Long userId, @PathVariable int courseId) {
+        Course course = courseRepo.findById(courseId);
+        return "redirect:"+course.getLink();
     }
 }

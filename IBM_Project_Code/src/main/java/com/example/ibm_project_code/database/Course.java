@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Entity
@@ -26,8 +26,9 @@ public class Course {
     private String category;
     @Column
     private int points;
-    @ManyToMany(mappedBy = "courses")
-    private List<User> users = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<UserCourse> enrollments;
     // Constructors, getters and setters will be handled by Lombok
 }
+

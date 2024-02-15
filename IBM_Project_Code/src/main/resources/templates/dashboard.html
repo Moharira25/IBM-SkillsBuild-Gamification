@@ -8,49 +8,53 @@
     <script src="https://kit.fontawesome.com/6fd6cd8763.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
-    .header-image img{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 20%;
-    margin-top: 15px;
-    }
-    .scrollable-table {
-    max-height: 600px;
-    overflow-y: auto;
-    margin-top: 20px;
-    }
-    .scrollable-table thead th{
-    position: sticky;
-    top: 0px;
-    }
-    table {
-    border-collapse: collapse;
-    width: 100%;
-    }
-    th {
-    background: #f9fafb;
-    }
-    .centered-heading {
-    text-align: center;
-    margin-top: 15px;
-    }
-    .profile-button {
-    position: absolute;
-    top: 5px;
-    right: 20px;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    }
-    .profile-button i {
-    font-size: 20px;
-    }
-    .profile-button .dropdown-menu {
-    top: 70px;
-    right: 0;
-    min-width: 200px;
-    }
+        .header-image img{
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 20%;
+            margin-top: 15px;
+        }
+        .scrollable-table {
+            max-height: 600px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .scrollable-table thead th{
+            position: sticky;
+            top: 0px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th {
+            background: #f9fafb;
+        }
+        .centered-heading {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .profile-button {
+            position: absolute;
+            top: 5px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+        .profile-button i {
+            font-size: 20px;
+        }
+        .profile-button .dropdown-menu {
+            top: 70px;
+            right: 0;
+            min-width: 200px;
+        }
+
+        .myCourse{
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -68,7 +72,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="header-image">
-            <img src="https://img1.wsimg.com/isteam/ip/6f5993eb-07fd-4e54-a10f-d1d3850f5f51/ibmskillsbuild-gmen.png/:/" alt="IBM SkillsBuild">
+                <img src="https://img1.wsimg.com/isteam/ip/6f5993eb-07fd-4e54-a10f-d1d3850f5f51/ibmskillsbuild-gmen.png/:/" alt="IBM SkillsBuild">
             </div>
             <h2 class="centered-heading">IBM Skills Build Courses</h2>
             <div class="form-group">
@@ -109,7 +113,7 @@
                         </tr>
                         </thead>
 
-                        <tbody th:each="c: ${courses}">
+                        <tbody th:each="c: ${courses}" th:if="${user.getUserCourse(c) == null}">
                         <tr>
                             <td th:text="${c.category}"></td>
                             <td th:text="${c.title}"></td>
@@ -118,6 +122,32 @@
                             <td th:text="${c.duration}"></td>
                             <td>
                                 <a th:href="@{/start/{userId}/{courseId}(userId=${userId}, courseId=${c.id})}">Start Learning</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="scrollable-table">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Topic</th>
+                            <th>Course</th>
+                            <th>Start Date</th>
+                            <th>Completion Date</th>
+                        </tr>
+                        </thead>
+
+                        <tbody th:each="c: ${courses}" th:if="${user.getUserCourse(c) != null}">
+                        <tr>
+                            <td th:text="${c.category}"></td>
+                            <td th:text="${c.title}"></td>
+                            <td th:text="${user.getUserCourse(c).getStartDate()}"></td>
+                            <td th:if="${user.getUserCourse(c).getEndDate() != null}" th:text="${user.getUserCourse(c).endDate}"></td>
+                            <td th:unless="${user.getUserCourse(c).getEndDate() != null}">
+                                <a class="myCourse"  th:href="@{/resume/{userId}/{courseId}(userId=${userId}, courseId=${c.id})}">Resume Learning</a>
+                                <a class="myCourse" th:href="@{/finish/{userId}/{courseId}(userId=${userId}, courseId=${c.id})}">Finish</a>
                             </td>
                         </tr>
                         </tbody>
