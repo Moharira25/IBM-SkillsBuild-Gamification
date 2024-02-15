@@ -6,7 +6,6 @@
     <title>IBM Skillsbuild Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/6fd6cd8763.js" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .header-image img{
             display: block;
@@ -14,10 +13,6 @@
             margin-right: auto;
             width: 20%;
             margin-top: 15px;
-        }
-        .table>tbody>tr:nth-child(even)>td,
-        .table>tbody>tr:nth-child(even)>th {
-            background-color: #f2f2f2;
         }
         .scrollable-table {
             max-height: 600px;
@@ -50,12 +45,11 @@
         .profile-button i {
             font-size: 20px;
         }
-        .profile-button .dropdown-menu {
-            top: 70px;
-            right: 0;
-            min-width: 200px;
+        .profile-button {
+            top: 5px;
+            right: 15px;
+            min-width: 50px;
         }
-
         .myCourse{
             display: block;
         }
@@ -79,33 +73,8 @@
                 <img src="https://img1.wsimg.com/isteam/ip/6f5993eb-07fd-4e54-a10f-d1d3850f5f51/ibmskillsbuild-gmen.png/:/" alt="IBM SkillsBuild">
             </div>
             <h2 class="centered-heading">IBM Skills Build Courses</h2>
-            <div class="form-group">
-                <label for="filterDropdown">Filter by Topic:</label>
-                <select class="form-control" id="filterDropdown">
-                    <option value="">All Topics</option>
-                    <option value="Artificial Intelligence">Artificial Intelligence</option>
-                    <option value="Capstone">Capstone</option>
-                    <option value="Data Science">Data Science</option>
-                    <option value="IBM Automation">IBM Automation</option>
-                    <option value="IBM Cloud">IBM Cloud</option>
-                    <option value="IBM Engineering">IBM Engineering</option>
-                    <option value="IBM Security">IBM Security</option>
-                    <option value="IBM Z">IBM Z</option>
-                    <option value="Power Systems">Power Systems</option>
-                    <option value="Red Hat Academy">Red Hat Academy</option>
-                    <option value="IBM Quantum">IBM Quantum</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="languageFilterDropdown">Filter by Language:</label>
-                <select class="form-control" id="languageFilterDropdown">
-                    <option value="">All Languages</option>
-                    <option value="English">English</option>
-                    <option value="Spanish">Spanish</option>
-                </select>
-
                 <div class="scrollable-table">
-                    <table class="table table-striped">
+                    <table class="table table-striped table-bordered">
                         <thead>
                         <tr>
                             <th>Topic</th>
@@ -116,9 +85,8 @@
                             <th>Link</th>
                         </tr>
                         </thead>
-
-                        <tbody th:each="c: ${courses}" th:if="${user.getUserCourse(c) == null}">
-                        <tr>
+                        <tbody>
+                        <tr th:each="c: ${courses}" th:if="${user.getUserCourse(c) == null}">
                             <td th:text="${c.category}"></td>
                             <td th:text="${c.title}"></td>
                             <td th:text="${c.description}"></td>
@@ -131,9 +99,9 @@
                         </tbody>
                     </table>
                 </div>
-
                 <div th:if="${user.getCourses().size() != 0}" class="scrollable-table">
-                    <table class="table table-striped">
+                    <h3 class="centered-heading">Your Courses</h3>
+                    <table class="table table-striped table-bordered">
                         <thead>
                         <tr>
                             <th>Topic</th>
@@ -142,9 +110,8 @@
                             <th>Completion Date</th>
                         </tr>
                         </thead>
-
-                        <tbody th:each="c: ${courses}" th:if="${user.getUserCourse(c) != null}">
-                        <tr>
+                        <tbody>
+                        <tr th:each="c: ${courses}" th:if="${user.getUserCourse(c) != null}">
                             <td th:text="${c.category}"></td>
                             <td th:text="${c.title}"></td>
                             <td th:text="${user.getUserCourse(c).getStartDate()}"></td>
