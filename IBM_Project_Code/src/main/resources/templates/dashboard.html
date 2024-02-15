@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>IBM Skillsbuild Dashboard</title>
@@ -62,11 +62,10 @@
                             <th>Link</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr th:each="ccp: ${coursesByCategory}">
-                        </tr>
-                        <tr th:each="c: ${ccp.value}">
-                            <td th:text="${ccp.key}"></td>
+
+                        <tbody th:each="c: ${courses}">
+                        <tr>
+                            <td th:text="${c.category}"></td>
                             <td th:text="${c.title}"></td>
                             <td th:text="${c.description}"></td>
                             <td th:text="${c.language}"></td>
@@ -78,6 +77,7 @@
                         </tbody>
                     </table>
                 </div>
+
             </div>
         </div>
     </div>

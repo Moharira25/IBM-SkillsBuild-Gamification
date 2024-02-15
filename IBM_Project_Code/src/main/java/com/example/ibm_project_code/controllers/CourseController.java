@@ -35,7 +35,8 @@ public class CourseController {
             // Add the course to the list from the pair above
             coursesByCategory.get(category).add(course);
         }
-        model.addAttribute("coursesByCategory", coursesByCategory);
+        //model.addAttribute("coursesByCategory", coursesByCategory);
+        model.addAttribute("courses", courseRepo.findAll());
         model.addAttribute("userId", userId);
         return "dashboard";
     }
