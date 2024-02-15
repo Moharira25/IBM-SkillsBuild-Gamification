@@ -128,7 +128,7 @@
                     </table>
                 </div>
 
-                <div class="scrollable-table">
+                <div th:if="${user.getCourses().size() != 0}" class="scrollable-table">
                     <table class="table table-striped">
                         <thead>
                         <tr>

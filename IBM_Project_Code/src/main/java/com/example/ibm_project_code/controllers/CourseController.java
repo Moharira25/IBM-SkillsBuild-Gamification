@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.*;
 
@@ -53,7 +54,10 @@ public class CourseController {
             //Creating a course enrollment for the started course and recording the start date.
             UserCourse userCourse = new UserCourse();
             userCourse.setCourse(course);
-            userCourse.setStartDate(Timestamp.from(Instant.now()));
+            //Formatting the date.
+            SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String formattedStartDate = simpleFormat.format(Timestamp.from(Instant.now()));
+            userCourse.setStartDate(formattedStartDate);
             userCourse.setUser(user.get());
             //saving the userCourse to the database.
             userCourseRepository.save(userCourse);
@@ -71,8 +75,10 @@ public class CourseController {
         Course course = courseRepo.findById(courseId);
         Optional<User> user = userRepo.findById(userId);
         if (user.isPresent()) {
+            SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String formattedEndDate = simpleFormat.format(Timestamp.from(Instant.now()));
             //Recording the completion time for the course.
-            user.get().getUserCourse(course).setEndDate(Timestamp.from(Instant.now()));
+            user.get().getUserCourse(course).setEndDate(formattedEndDate);
             //Setting the done attribute to true in the UserCourse class
             user.get().getUserCourse(course).setDone(true);
             int newPoints = user.get().getOverallPoints() + course.getPoints();

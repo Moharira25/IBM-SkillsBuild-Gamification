@@ -20,8 +20,8 @@ public class UserCourse {
     private Course course;
     @ManyToOne
     private User user;
-    private Timestamp startDate;
-    private Timestamp endDate;
+    private String startDate;
+    private String endDate;
     private boolean isDone = false;
 
 }
