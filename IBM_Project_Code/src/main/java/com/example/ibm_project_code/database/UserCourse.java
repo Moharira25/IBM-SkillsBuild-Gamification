@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class UserCourse {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private Course course;
