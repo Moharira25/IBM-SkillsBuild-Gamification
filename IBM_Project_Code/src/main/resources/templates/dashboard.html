@@ -55,7 +55,8 @@
                             <td th:text="${c.language}"></td>
                             <td th:text="${c.duration}"></td>
                             <td>
-                                <a th:href="@{/start/{userId}/{courseId}(userId=${userId}, courseId=${c.id})}">Start Learning</a>
+                                <a th:href="@{/start/{courseId}(courseId=${c.id})}">Start Learning</a>
+
                             </td>
                         </tr>
                         </tbody>
@@ -79,8 +80,9 @@
                             <td th:text="${user.getUserCourse(c).getStartDate()}"></td>
                             <td th:if="${user.getUserCourse(c).getEndDate() != null}" th:text="${user.getUserCourse(c).endDate}"></td>
                             <td th:unless="${user.getUserCourse(c).getEndDate() != null}">
-                                <a class="myCourse"  th:href="@{/resume/{userId}/{courseId}(userId=${userId}, courseId=${c.id})}">Resume Learning</a>
-                                <a class="myCourse" th:href="@{/finish/{userId}/{courseId}(userId=${userId}, courseId=${c.id})}">Finish</a>
+                                <a class="myCourse"  th:href="@{/resume/{courseId}(courseId=${c.id})}">Resume Learning</a>
+                                <a class="myCourse" th:href="@{/finish/{courseId}(courseId=${c.id})}">Finish</a>
+
                             </td>
                         </tr>
                         </tbody>

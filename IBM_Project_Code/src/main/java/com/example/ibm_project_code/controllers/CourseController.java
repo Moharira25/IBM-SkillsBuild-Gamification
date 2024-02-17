@@ -9,17 +9,19 @@ import com.example.ibm_project_code.repositories.UserCourseRepository;
 import com.example.ibm_project_code.repositories.CourseRepository;
 import com.example.ibm_project_code.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.*;
+
 
 @Controller
 public class CourseController {
@@ -33,12 +35,10 @@ public class CourseController {
 
 
     @GetMapping("/dashboard")
-    public String list(Model model, @RequestParam Long userId) {
-
-
+    public String list(Model model) {
+        User user = userAuth();
         model.addAttribute("courses", courseRepo.findAll());
-        model.addAttribute("userId", userId);
-        model.addAttribute("user", userRepo.findById(userId).get());
+        model.addAttribute("user", user);
 
 
         return "dashboard";
@@ -46,54 +46,68 @@ public class CourseController {
 
 
 
-    @RequestMapping("/start/{userId}/{courseId}")
-    public String startLearning(@PathVariable Long userId, @PathVariable int courseId) {
-        Course course = courseRepo.findById(courseId);
-        Optional<User> user = userRepo.findById(userId);
-        if (user.isPresent()) {
-            //Creating a course enrollment for the started course and recording the start date.
-            UserCourse userCourse = new UserCourse();
-            userCourse.setCourse(course);
-            //Formatting the date.
-            SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            String formattedStartDate = simpleFormat.format(Timestamp.from(Instant.now()));
-            userCourse.setStartDate(formattedStartDate);
-            userCourse.setUser(user.get());
-            //saving the userCourse to the database.
-            userCourseRepository.save(userCourse);
+    @RequestMapping("/start/{courseId}")
+    public String startLearning(@PathVariable int courseId) {
+        User user = userAuth();
 
-            user.get().getCourses().add(userCourse);
-            course.getEnrollments().add(userCourse);
-            userRepo.save(user.get());
-            courseRepo.save(course);
-        }
+        Course course = courseRepo.findById(courseId);
+
+        //Creating a course enrollment for the started course and recording the start date.
+        UserCourse userCourse = new UserCourse();
+        userCourse.setCourse(course);
+        //Formatting the date and setting the start date for the user-course.
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String formattedStartDate = simpleFormat.format(Timestamp.from(Instant.now()));
+        userCourse.setStartDate(formattedStartDate);
+        userCourse.setUser(user);
+
+        //saving the userCourse to the database.
+        userCourseRepository.save(userCourse);
+
+        user.getCourses().add(userCourse);
+        course.getEnrollments().add(userCourse);
+
+        userRepo.save(user);
+        courseRepo.save(course);
+
         return "redirect:"+course.getLink();
     }
 
-    @RequestMapping("/finish/{userId}/{courseId}")
-    public String finish(@PathVariable Long userId, @PathVariable int courseId) {
+    @RequestMapping("/finish/{courseId}")
+    public String finish(@PathVariable int courseId) {
+        User user = userAuth();
         Course course = courseRepo.findById(courseId);
-        Optional<User> user = userRepo.findById(userId);
-        if (user.isPresent()) {
-            SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            String formattedEndDate = simpleFormat.format(Timestamp.from(Instant.now()));
-            //Recording the completion time for the course.
-            user.get().getUserCourse(course).setEndDate(formattedEndDate);
-            //Setting the done attribute to true in the UserCourse class
-            user.get().getUserCourse(course).setDone(true);
-            int newPoints = user.get().getOverallPoints() + course.getPoints();
-            user.get().setOverallPoints(newPoints);
-            userRepo.save(user.get());
-            courseRepo.save(course);
-        }
-        return "redirect:/dashboard?userId=" + userId;
+
+        //getting the formatted date
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String formattedEndDate = simpleFormat.format(Timestamp.from(Instant.now()));
+        //Recording the completion time for the course.
+        user.getUserCourse(course).setEndDate(formattedEndDate);
+
+        //Setting the done attribute to true in the UserCourse class
+        user.getUserCourse(course).setDone(true);
+        int newPoints = user.getOverallPoints() + course.getPoints();
+        user.setOverallPoints(newPoints);
+
+        userRepo.save(user);
+        courseRepo.save(course);
+
+        return "redirect:/dashboard";
     }
 
 
     //A controller for when a user resume a course.
-    @RequestMapping("/resume/{userId}/{courseId}")
-    public String resume(@PathVariable Long userId, @PathVariable int courseId) {
+    @RequestMapping("/resume/{courseId}")
+    public String resume(@PathVariable int courseId) {
         Course course = courseRepo.findById(courseId);
         return "redirect:"+course.getLink();
+    }
+
+
+    private User userAuth(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName(); // Get the username
+        // Retrieve the user by username
+        return userRepo.findByUsername(username).orElse(null);
     }
 }
