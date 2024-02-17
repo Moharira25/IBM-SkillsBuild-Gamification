@@ -28,7 +28,7 @@ h2 {
 .navigation {
     position: fixed;
     inset: 30px;
-    background: radial-gradient(circle at 74.2% 50.9%, rgb(14, 72, 222) 5.2%, rgb(3, 22, 65) 75.3%);
+    background: radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);
     width: 83px;
     overflow: hidden;
     box-shadow: 15px 15px 25px rgba(0, 0, 0, 0.05);
