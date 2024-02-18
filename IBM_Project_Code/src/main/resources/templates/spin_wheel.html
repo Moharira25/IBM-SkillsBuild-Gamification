@@ -67,8 +67,33 @@
                 let sectionContent = sectionSpan.textContent.trim();
                 displayModal(sectionContent);
                 localStorage.setItem(LAST_SPIN_KEY, new Date().getTime().toString());
+
+                // Start the timer
+                startTimer();
             }, 5000);
         };
+
+        function startTimer() {
+            var remainingTime = 10;
+            var button = document.getElementById('spinbutton');
+            button.disabled = true;
+            button.innerText = "Please wait " + remainingTime + " seconds";
+            button.style.fontSize = "7px";
+            button.style.textAlign = "center";
+
+            var intervalId = setInterval(function() {
+                remainingTime--;
+                if (remainingTime <= 0) {
+                    button.disabled = false;
+                    button.innerText = "Spin";
+                    button.style.fontSize = "";
+                    button.style.textAlign = "";
+                    clearInterval(intervalId);
+                } else {
+                    button.innerText = "Please wait " + remainingTime + " seconds";
+                }
+            }, 1000);
+        }
 
         function goToHome() {
             window.location.href ="home.html"; // Navigate to the Daily Spin page
@@ -91,7 +116,6 @@
                 button.disabled = false;
             }, 6000);
         }
-
         function displayModal(sectionContent) {
             modalContent.innerHTML = 'Congratulations, you have won ' + sectionContent + ' on your next course!';
             overlay.style.display = 'block';
