@@ -61,6 +61,22 @@ public class Application implements CommandLineRunner {
         u1.setLastModifiedDate(currentTime);
         userRepository.save(u1);
 
+        //User to show point system working in leaderboard
+        User u2 = new User();
+        u2.setFirstName("Adam");
+        u2.setLastName("Pathan");
+        u2.setEmail("ap@outlook.com");
+        u2.setUsername("Ap");
+        u2.setPassword("pass");
+        u2.setEmailVerified(false);
+        u2.setEnabled(true);
+        Timestamp currentTime2 = Timestamp.from(Instant.now());
+        u2.setCreatedDate(currentTime2);
+        u2.setLastModifiedDate(currentTime2);
+        u2.setOverallPoints(50);
+        userRepository.save(u2);
+
+
         //scrapping course-data (college students pathway only) from IBM skills build website.
         Document doc = Jsoup
                 .connect("https://skillsbuild.org/college-students/digital-credentials")
