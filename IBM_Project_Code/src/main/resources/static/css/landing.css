@@ -13,7 +13,7 @@ ul {
     list-style: none;
 }
 
-h1 {
+.captionText {
     font-family: DIN Alternate, sans-serif;
     line-height: 1;
     font-size: 50px;

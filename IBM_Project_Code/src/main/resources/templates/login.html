@@ -3,12 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>Login</title>
-    <link rel="stylesheet" href="login-style.css">
+    <link rel="stylesheet" th:href="@{/css/login-style.css}">
+    <link rel="stylesheet" th:href="@{/css/landing.css}">
 </head>
 <body>
-<div>
-Invalid username and password.
-</div>
+<div th:replace="fragments/header :: header"></div>
 <div th:if="${param.logout}">
     You have been logged out.
 </div>
