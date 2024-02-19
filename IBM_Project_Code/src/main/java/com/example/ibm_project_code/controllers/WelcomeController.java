@@ -30,7 +30,8 @@ public class WelcomeController {
         Long userId = user != null ? user.getId() : 1; //default is id=1 for test user.
         model.addAttribute("userId", userId);
 
-        return "hello";
+        // redirect to /dashboard
+        return "redirect:/dashboard";
     }
 }
 

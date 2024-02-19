@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class LeaderboardController {
 
     @GetMapping("/leaderboard")
     public String leaderboard(Model model) {
-        List<User> users =  userRepo.findAll();
+        List<User> users = userRepo.findAll();
         //sorting users by overall points
         users.sort(new Comparator<User>() {
             @Override

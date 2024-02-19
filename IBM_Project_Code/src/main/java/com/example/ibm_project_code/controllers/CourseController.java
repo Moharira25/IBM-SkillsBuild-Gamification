@@ -1,12 +1,11 @@
 package com.example.ibm_project_code.controllers;
 
 
-
 import com.example.ibm_project_code.database.Course;
-import com.example.ibm_project_code.database.UserCourse;
 import com.example.ibm_project_code.database.User;
-import com.example.ibm_project_code.repositories.UserCourseRepository;
+import com.example.ibm_project_code.database.UserCourse;
 import com.example.ibm_project_code.repositories.CourseRepository;
+import com.example.ibm_project_code.repositories.UserCourseRepository;
 import com.example.ibm_project_code.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -33,18 +31,14 @@ public class CourseController {
     UserCourseRepository userCourseRepository;
 
 
-
     @GetMapping("/dashboard")
     public String list(Model model) {
         User user = userAuth();
         model.addAttribute("courses", courseRepo.findAll());
         model.addAttribute("user", user);
 
-
         return "dashboard";
     }
-
-
 
     @RequestMapping("/start/{courseId}")
     public String startLearning(@PathVariable int courseId) {
@@ -70,7 +64,7 @@ public class CourseController {
         userRepo.save(user);
         courseRepo.save(course);
 
-        return "redirect:"+course.getLink();
+        return "redirect:" + course.getLink();
     }
 
     @RequestMapping("/finish/{courseId}")
@@ -100,11 +94,11 @@ public class CourseController {
     @RequestMapping("/resume/{courseId}")
     public String resume(@PathVariable int courseId) {
         Course course = courseRepo.findById(courseId);
-        return "redirect:"+course.getLink();
+        return "redirect:" + course.getLink();
     }
 
 
-    private User userAuth(){
+    private User userAuth() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName(); // Get the username
         // Retrieve the user by username
