@@ -8,13 +8,6 @@ h1 {
     color: darkblue;
 }
 
-h2 {
-    text-align: center;
-    font-size: 70px;
-    font-family: "Hiragino Sans GB", sans-serif;
-    margin-left: 345px;
-}
-
 .navigation {
     position: fixed;
     inset: 0;

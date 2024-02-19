@@ -14,7 +14,7 @@ ul {
 }
 
 h1 {
-    font-family: DIN Alternate;
+    font-family: DIN Alternate, sans-serif;
     line-height: 1;
     font-size: 50px;
     margin-left: 120px;
@@ -31,7 +31,7 @@ h1 {
 }
 
 h2 {
-    font-family: "Bradley Hand";
+    font-family: "Bradley Hand", sans-serif;
     line-height: 0;
     font-size: 47px;
     margin-left: 120px;
@@ -48,7 +48,7 @@ a {
 
 .button {
     display: inline-block;
-    font-family: "Avenir Next";
+    font-family: "Avenir Next", sans-serif;
     font-size: 17px;
     padding: 20px 40px;
     margin-left: 120px;
@@ -70,7 +70,7 @@ a {
 }
 
 .logo {
-    margin: 0;
+    margin: 0 0 0 6%;
     font-size: 1.45em;
 }
 
@@ -88,7 +88,7 @@ a {
 .main-nav a {
     color: #34495e;
     font-size: .90em;
-    font-family: "Avenir Next";
+    font-family: "Avenir Next", sans-serif;
 }
 
 .main-nav a:hover {
@@ -142,6 +142,8 @@ a {
     position: relative;
     margin-left: auto;
     cursor: pointer;
+    margin-right: 6%;
+    margin-top: auto;
 }
 
 .profile-icon img {

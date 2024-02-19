@@ -1,11 +1,11 @@
 
-body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
+/*body {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    min-height: 100vh;*/
+/*}*/
 
 .container {
     width: 80%;
@@ -39,7 +39,7 @@ thead th {
 
 tbody td {
     border: 1px solid #ddd;
-    padding: 10px;
+    /*padding: 10px;*/
 }
 
 tbody tr:nth-child(even) {
@@ -57,7 +57,7 @@ tbody tr:hover {
 }
 
 .image-container img {
-    max-width: 20%;
+    /*max-width: 20%;*/
     display: block;
     margin: 0 auto;
 }

@@ -1,0 +1,20 @@
+<header class="header" th:fragment="header">
+    <h1 class="logo"><a href="#">IBM</a></h1>
+    <ul class="main-nav">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Login</a></li>
+        <li><a href="#">Register</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Help</a></li>
+
+    </ul>
+    <div class="profile-icon" onclick="toggleDropdown()">
+        <img src="https://creazilla-store.fra1.digitaloceanspaces.com/icons/7912642/avatar-icon-md.png"
+             alt="Profile Picture">
+        <div class="dropdown-content" id="dropdownMenu">
+            <a href="#">Profile</a>
+            <a href="#">Settings</a>
+            <a href="#">Logout</a>
+        </div>
+    </div>
+</header>
