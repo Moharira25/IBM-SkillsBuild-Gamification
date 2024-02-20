@@ -19,13 +19,15 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Loop through the list of users and populate the table -->
-        <tr th:each="user, rank : ${users}">
+
+        <!-- Loop through the list of users and populate the table and highlight the current user -->
+        <tr th:each="user, rank : ${users}" th:class="${user.id == userId ? 'highlighted' : ''}" >
             <td th:text="${rank.index + 1}"></td>
             <td th:text="${user.firstName}">First Name</td>
             <td th:text="${user.lastName}">Last Name</td>
             <td th:text="${user.overallPoints}">Overall Points</td>
         </tr>
+
         </tbody>
     </table>
 </div>

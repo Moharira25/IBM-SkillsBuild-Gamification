@@ -61,3 +61,7 @@ tbody tr:hover {
     display: block;
     margin: 0 auto;
 }
+
+.highlighted{
+    background-color: #2980b9 !important;;
+}
