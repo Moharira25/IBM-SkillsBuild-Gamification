@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/landing.css}">
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <title>Spring Security Registration</title>
-    <link th:href="@{/css/register.css}" rel="stylesheet" type="text/css"/>
+    <script defer src="@{/js/loginval.js}"></script>
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
@@ -16,38 +16,47 @@
 </div>
 <div class="center register-form">
     <h1>Register</h1>
-    <form th:action="@{/register}" method="post" class="two-column-grid">
+    <form th:action="@{/register}" method="post" class="two-column-grid" id="form">
         <div class="text_field">
-            <input type="text" name="firstName" required>
-            <span></span>
-            <label>First Name</label>
+            <input id="firstname" type="text" name="firstName" required>
+            <span id="firstname_error"></span>
+            <label for="firstname">First Name</label>
+            <div class="error"></div>
         </div>
         <div class="text_field">
-            <input type="text" name="lastName" required>
+            <input id="lastname" type="text" name="lastName" required>
             <span></span>
-            <label>Last Name</label>
+            <label for="lastname">Last Name</label>
+            <div class="error"></div>
+
         </div>
         <div class="text_field">
-            <input type="email" name="email" required>
+            <input id="email" type="email" name="email" required>
             <span></span>
-            <label>Email</label>
+            <label for="email">Email</label>
+            <div class="error"></div>
+
         </div>
         <div class="text_field">
-            <input type="text" name="username" required>
+            <input id="username" type="text" name="username" required>
             <span></span>
-            <label>Username</label>
+            <label for="username">Username</label>
+            <div class="error"></div>
+
         </div>
         <div class="text_field">
-            <input type="password" name="password" required>
+            <input id="password" type="password" name="password" required>
             <span></span>
-            <label>Password</label>
+            <label for="password">Password</label>
+            <div class="error"></div>
         </div>
         <div class="text_field">
-            <input type="password" name="confirmPassword" required>
+            <input id="password2" type="password" name="confirmPassword" required>
             <span></span>
-            <label>Confirm Password</label>
+            <label for="password2">Confirm Password</label>
+            <div class="error"></div>
+
         </div>
-        <!-- The submit button remains outside the grid to span full width -->
         <div class="pass" style="grid-column: 1 / -1;"> <!-- Makes the submit button span all columns -->
             <input type="submit" value="Register"/>
         </div>

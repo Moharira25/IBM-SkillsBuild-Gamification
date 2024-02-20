@@ -131,4 +131,16 @@ footer img {
     .two-column-grid {
         grid-template-columns: 1fr; /* Switches to one column on smaller screens */
     }
+
+}
+.text_field.success input{
+    border-color: #09c372;
+}
+.text_field.error input {
+    border-color: #ff3860;
+}
+.text_field .error{
+    color: #ff3860;
+    font-size: 9px;
+    height: 13px;
 }
