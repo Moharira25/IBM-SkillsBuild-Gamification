@@ -1,5 +1,7 @@
 <header class="header navbar-gradient" th:fragment="header">
-    <h1 class="logo"><a href="/">IBM</a></h1>
+    <div class="logo">
+        <a href="/"><img th:src="@{/img/courseXP.png}" alt="Course XP logo"></a>
+    </div>
     <ul class="main-nav nav-links">
 <!--        if user id is null, show home direct to /, if not, home direct to /dashboard-->
         <li><a th:if="${userId == null}" href="/">Home</a></li>

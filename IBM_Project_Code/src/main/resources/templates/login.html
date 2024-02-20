@@ -8,13 +8,18 @@
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
 </head>
 <body>
-<div th:replace="~{fragments/header :: header}"></div>
 
-<div class="center">
-    <h1>Login</h1>
-    <div th:if="${param.logout}">
-        You have been logged out.
+<div th:if="${param.logout}">
+    <div class="logout-window" id="popup">
+        <form th:action="@{/login}" method="post">
+        <h2>Thank You</h2>
+        <p>You have been logged out</p>
+        <input type="submit" th:value="OK">
+        </form>
     </div>
+</div>
+<div class="center" th:unless="${param.logout}">
+    <h1>Login</h1>
     <form th:action="@{/login}" method="post">
         <div class="text_field">
             <input name="username" type="text" required>
@@ -29,10 +34,12 @@
         <div class="pass">
             <input type="submit" value="Sign In"/>
         </div>
+        <div class="register">
+        <p>Don't have an account?<a style="color: #007bff" th:href="@{/register}"> Register</a></p>
+        </div>
     </form>
     <footer>
-        <img src="https://img1.wsimg.com/isteam/ip/6f5993eb-07fd-4e54-a10f-d1d3850f5f51/ibmskillsbuild-gmen.png/:/"
-             alt="IBM Skills Build Logo">
+        <img th:src="@{/img/courseXP.png}" alt="Course XP logo">
     </footer>
 </div>
 </body>

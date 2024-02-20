@@ -7,10 +7,9 @@
     <link rel="stylesheet" th:href="@{/css/landing.css}">
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <title>Spring Security Registration</title>
-    <script defer src="@{/js/loginval.js}"></script>
+    <script defer th:src="@{/js/loginval.js}"></script>
 </head>
 <body>
-<div th:replace="~{fragments/header :: header}"></div>
 <div th:if="${param.error}">
     Invalid registration details.
 </div>
@@ -62,8 +61,7 @@
         </div>
     </form>
     <footer>
-        <img src="https://img1.wsimg.com/isteam/ip/6f5993eb-07fd-4e54-a10f-d1d3850f5f51/ibmskillsbuild-gmen.png/:/"
-             alt="IBM Skills Build Logo">
+        <img th:src="@{/img/courseXP.png}" alt="Course XP logo">
     </footer>
 </div>
 
