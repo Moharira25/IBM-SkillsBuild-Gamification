@@ -1,11 +1,20 @@
 <header class="header navbar-gradient" th:fragment="header">
     <h1 class="logo"><a href="/">IBM</a></h1>
     <ul class="main-nav nav-links">
-        <li><a class="nav-text" href="#">Home</a></li>
-        <li><a href="#">Login</a></li>
-        <li><a href="#">Register</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Help</a></li>
+<!--        if user id is null, show home direct to /, if not, home direct to /dashboard-->
+        <li><a th:if="${userId == null}" href="/">Home</a></li>
+        <li><a th:if="${userId != null}" href="/dashboard">Dashboard</a></li>
+
+        <li>
+            <div th:if="${userId != null}">
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Logout" />
+                </form>
+            </div>
+            <a th:if="${userId == null}" href="/login">Login</a>
+        </li>
+        <li><a th:if="${userId == null}" href="/register">Register</a></li>
+
 
     </ul>
     <div class="profile-icon" onclick="toggleDropdown()">

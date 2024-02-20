@@ -64,6 +64,9 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL)
     private List<UserCourse> courses = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<BadgeCollection> badgeCollection = new ArrayList<>();
+
     @Column
     private int overallPoints = 0;
     @PreUpdate

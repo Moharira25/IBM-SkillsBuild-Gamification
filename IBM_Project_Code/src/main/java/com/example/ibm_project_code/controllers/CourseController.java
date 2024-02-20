@@ -36,6 +36,7 @@ public class CourseController {
         User user = userAuth();
         model.addAttribute("courses", courseRepo.findAll());
         model.addAttribute("user", user);
+        model.addAttribute("userId", user.getId());
 
         return "dashboard";
     }
