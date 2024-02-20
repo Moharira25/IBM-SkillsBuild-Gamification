@@ -56,3 +56,7 @@ th {
 a{
     color: #007bff;
 }
+
+.dashboard{
+    text-decoration: underline;
+}

@@ -4,14 +4,14 @@
     </div>
     <ul class="main-nav nav-links">
 <!--        if user id is null, show home direct to /, if not, home direct to /dashboard-->
-        <li><a th:if="${userId == null}" href="/">Home</a></li>
-        <li><a th:if="${userId != null}" href="/dashboard">Dashboard</a></li>
+        <li class="home"><a th:if="${userId == null}" href="/">Home</a></li>
+        <li class="dashboard"><a th:if="${userId != null}" href="/dashboard">Dashboard</a></li>
 
         <li>
             <a th:if="${userId == null}" href="/login">Login</a>
         </li>
         <li><a th:if="${userId == null}" href="/register">Register</a></li>
-        <li><a th:if="${userId != null}" href="/leaderboard">Leaderboard</a></li>
+        <li class="leaderboard"><a th:if="${userId != null}" href="/leaderboard">Leaderboard</a></li>
 
 
 
