@@ -59,8 +59,7 @@ tbody tr:hover {
 .image-container img {
     max-width: 20%;
     display: block;
-    margin: 0 auto;
-    margin-top: 500px;
+    margin: 500px auto 0;
 }
 
 .highlighted{
