@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/landing.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <script th:src="@{/js/landing.js}"></script>
+
 
 </head>
 <body>
 
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
 
 <div class="captionText">
     <h1> Elevate Your Skills <br> Power Up Your Potential </h1>
