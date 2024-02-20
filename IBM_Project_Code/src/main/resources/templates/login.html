@@ -9,11 +9,12 @@
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
+
 <div class="center">
     <h1>Login</h1>
+    <div th:if="${param.logout}">
+        You have been logged out.
+    </div>
     <form th:action="@{/login}" method="post">
         <div class="text_field">
             <input name="username" type="text" required>
