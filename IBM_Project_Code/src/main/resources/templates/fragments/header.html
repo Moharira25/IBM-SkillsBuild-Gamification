@@ -3,7 +3,7 @@
     <ul class="main-nav nav-links">
         <li><a class="nav-text" href="/">Home</a></li>
         <li><a th:unless="${userId != null}" href="/login">Login</a>
-            <a th:if="${userId != null}" href="/login">logout</a>
+            <a th:if="${userId != null}" th:action="@{/logout}" href="/login">logout</a>
         </li>
         <li><a th:unless="${userId != null}" href="/register">Register</a></li>
 
