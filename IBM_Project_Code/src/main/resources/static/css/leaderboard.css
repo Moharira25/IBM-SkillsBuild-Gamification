@@ -57,11 +57,13 @@ tbody tr:hover {
 }
 
 .image-container img {
-    /*max-width: 20%;*/
+    max-width: 20%;
     display: block;
-    margin: 0 auto;
+    margin: 500px auto 0;
 }
 
 .highlighted{
     background-color: #2980b9 !important;;
+
 }
+
