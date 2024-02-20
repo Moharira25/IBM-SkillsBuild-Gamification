@@ -8,7 +8,7 @@
 /*}*/
 
 .container {
-    width: 80%;
+    width: 100%;
     margin: auto;
     text-align: center;
     flex-grow: 1;
@@ -65,5 +65,9 @@ tbody tr:hover {
 .highlighted{
     background-color: #2980b9 !important;;
 
+}
+
+.leaderboard{
+    text-decoration: underline;
 }
 
