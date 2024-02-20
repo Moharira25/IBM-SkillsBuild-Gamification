@@ -42,10 +42,17 @@ th {
 
 .myCourse {
     display: block;
+    color: #007bff;
 }
 
 .skillsBuildTitle {
     margin-top: 20px;
     margin-bottom: 80px;
     text-align: center;
+}
+.centered-heading{
+    color: #3f3f3f;
+}
+a{
+    color: #007bff;
 }

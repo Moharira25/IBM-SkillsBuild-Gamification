@@ -41,7 +41,7 @@
                         <td th:text="${c.language}"></td>
                         <td th:text="${c.duration}"></td>
                         <td>
-                            <a th:href="@{/start/{courseId}(courseId=${c.id})}">Start Learning</a>
+                            <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}">Start Learning</a>
 
                         </td>
                     </tr>
