@@ -6,14 +6,11 @@
         <li><a th:if="${userId != null}" href="/dashboard">Dashboard</a></li>
 
         <li>
-            <div th:if="${userId != null}">
-                <form th:action="@{/logout}" method="post">
-                    <input type="submit" value="Logout" />
-                </form>
-            </div>
             <a th:if="${userId == null}" href="/login">Login</a>
         </li>
         <li><a th:if="${userId == null}" href="/register">Register</a></li>
+        <li><a th:if="${userId != null}" href="/leaderboard">Leaderboard</a></li>
+
 
 
     </ul>
@@ -23,7 +20,9 @@
         <div class="dropdown-content" id="dropdownMenu">
             <a href="/profile">Profile</a>
             <a href="/settings">Settings</a>
-            <a href="/logout">Logout</a>
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Logout" />
+            </form>
         </div>
     </div>
 </header>
