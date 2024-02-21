@@ -32,7 +32,7 @@ public class CourseController {
 
 
     @GetMapping("/dashboard")
-    public String list(Model model) {
+    public String viewDashboard(Model model) {
         User user = userAuth();
         model.addAttribute("courses", courseRepo.findAll());
         model.addAttribute("user", user);
