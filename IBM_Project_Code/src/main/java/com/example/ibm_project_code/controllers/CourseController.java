@@ -28,7 +28,7 @@ public class CourseController {
     @Autowired
     private UserRepository userRepo;
     @Autowired
-    UserCourseRepository userCourseRepository;
+    private UserCourseRepository userCourseRepository;
 
 
     @GetMapping("/dashboard")
