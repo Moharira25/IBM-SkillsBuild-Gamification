@@ -12,13 +12,17 @@ body {
     margin-left: auto;
     margin-right: auto;
     width: 20%;
+    /*
     margin-top: 15px;
+    */
 }
 
 .scrollable-table {
     max-height: 600px;
     overflow-y: auto;
+    /*
     margin-top: 20px;
+    */
 }
 
 .scrollable-table thead th {
@@ -46,13 +50,14 @@ th {
 }
 
 .skillsBuildTitle {
-    margin-top: 20px;
-    margin-bottom: 80px;
-    text-align: center;
+    margin-top: 10rem;
+    margin-bottom: 2rem;
 }
+
 .centered-heading{
     color: #3f3f3f;
 }
+
 a{
     color: #007bff;
 }
