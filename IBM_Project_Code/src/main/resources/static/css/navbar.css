@@ -2,12 +2,13 @@
 .navbar-gradient {
     background: radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);
     display: flex;
-    margin-bottom: 2.5rem;
     color: white;
     align-items: center;
     justify-content: center;
     line-height: 2rem;
     z-index: -1;
+    margin: 0 0 2.5rem 0;
+    padding: 0;
 }
 
 .header {

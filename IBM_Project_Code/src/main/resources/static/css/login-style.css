@@ -129,6 +129,13 @@ footer img {
 
 .register{
     text-align: center;
+    width: max-content;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    /*centre to the middle of its container*/
+    margin: 0 auto;
+    /*centre to the middle of the page*/
 }
 
 .logout-window{
