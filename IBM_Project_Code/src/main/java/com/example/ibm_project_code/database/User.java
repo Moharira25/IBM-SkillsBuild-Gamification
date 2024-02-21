@@ -76,18 +76,6 @@ public class User {
 
     // Constructors, getters and setters will be handled by Lombok
 
-    //A method to check if a course have been started
-    public boolean courseStarted(Course course){
-        boolean started = false;
-        for (UserCourse c: courses){
-            if (Objects.equals(course, c.getCourse())){
-                return c.getStartDate() != null;
-            }
-
-        }
-        return started;
-    }
-
     //Getting the UserCourse by the course.
     public UserCourse getUserCourse(Course course){
         for (UserCourse c: courses){
