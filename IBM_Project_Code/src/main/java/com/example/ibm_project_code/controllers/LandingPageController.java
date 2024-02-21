@@ -19,7 +19,7 @@ public class LandingPageController {
     public String leaderboard(Model model) {
 
         User user = userAuth();
-        Long id = user != null ? user.getId():1;
+        Long id = user != null ? user.getId(): null;
         model.addAttribute("userId", id);
         return "landing";
     }
