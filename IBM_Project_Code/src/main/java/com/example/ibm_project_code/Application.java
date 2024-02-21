@@ -49,16 +49,17 @@ public class Application implements CommandLineRunner {
 
         //A user to test the leaderboard
         User u1 = new User();
-        u1.setFirstName("M");
-        u1.setLastName("A");
-        u1.setEmail("sss@gmail.com");
-        u1.setUsername("u1");
+        u1.setFirstName("Mohammed");
+        u1.setLastName("Abuharira");
+        u1.setEmail("mohammed@gmail.com");
+        u1.setUsername("maya2");
         u1.setPassword("password");
         u1.setEmailVerified(false);
         u1.setEnabled(true);
         Timestamp currentTime = Timestamp.from(now());
         u1.setCreatedDate(currentTime);
         u1.setLastModifiedDate(currentTime);
+        u1.setOverallPoints(100);
         userRepository.save(u1);
 
         //User to show point system working in leaderboard
