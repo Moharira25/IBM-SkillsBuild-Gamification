@@ -19,8 +19,8 @@
 
 <img src="https://darvideo.tv/wp-content/uploads/2021/05/E-learning-animation-video.jpg" alt="Description of your image"
      class="right-image">
-<h2>The IBM SkillsBuild</h2>
-<div class="button-container">
+    <h2>The IBM SkillsBuild</h2>
+<div th:if="${userId == null}" class="button-container">
     <a href="/register" class="button">Get Started</a>
     <a href="/login" class="button already-account">I have an account</a>
 </div>
