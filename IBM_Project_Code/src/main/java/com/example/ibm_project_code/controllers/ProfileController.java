@@ -14,6 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+
 @Controller
 public class ProfileController {
     @Autowired
@@ -33,9 +36,21 @@ public class ProfileController {
         return "profile";
     }
 
-    @PutMapping("/profile")
-    public String editingProfile(Model model, @ModelAttribute User user){
+    @PostMapping("/profile")
+    public String editingProfile(Model model, @ModelAttribute User user1){
+        user1.setEmail("email@email.com");
+        user1.setUsername("username");
+        user1.setPassword("password");
+        user1.setEnabled(true); // Assuming you want to enable the user right away
+        user1.setEmailVerified(false); // Set to true as appropriate
+        Timestamp currentTime = Timestamp.from(Instant.now());
+        user1.setCreatedDate(currentTime);
+        user1.setLastModifiedDate(currentTime);
 
+        User user = userAuth();
+        user.setFirstName(user1.getFirstName());
+        user.setFirstName(user1.getLastName());
+        user.setBio(user1.getBio());
         model.addAttribute("user", user);
         model.addAttribute("userId", user.getId());
         userRepo.save(user);
