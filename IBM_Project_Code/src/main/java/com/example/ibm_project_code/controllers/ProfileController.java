@@ -33,20 +33,12 @@ public class ProfileController {
         return "profile";
     }
 
-    @PostMapping("/profile")
-    public String editingProfile(Model model,
+    @PutMapping("/profile")
+    public String editingProfile(Model model, @ModelAttribute User user){
 
-                                 @RequestParam("firstName") String firstName,
-                                 @RequestParam("lastName") String secondName,
-                                 @RequestParam("bio") String bio){
-        User user = userAuth();
-
-        user.setBio(bio);
-        user.setFirstName(firstName);
-        user.setLastName(secondName);
-        userRepo.save(user);
         model.addAttribute("user", user);
         model.addAttribute("userId", user.getId());
+        userRepo.save(user);
 
         return "redirect:/profile";
 
