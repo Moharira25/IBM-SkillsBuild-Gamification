@@ -13,6 +13,7 @@ build/
 **/src/main/resources/*-local.properties
 .env
 test/
+IBM_Project_Code/src/main/resources/application.properties
 
 ### node modules ###
 node_modules/

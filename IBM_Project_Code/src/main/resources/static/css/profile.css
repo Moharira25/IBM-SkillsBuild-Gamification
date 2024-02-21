@@ -1,0 +1,62 @@
+/* Global settings for improved typography and spacing */
+/*body {*/
+/*    font-family: 'Arial', sans-serif; !* Modern, readable font *!*/
+/*    margin: 0;*/
+/*    padding: 20px;*/
+/*    background-color: #f4f4f4; !* Light grey background for a modern look *!*/
+/*}*/
+
+/* Styling for the main container */
+.container {
+    max-width: 800px; /* Constrain the width for better readability */
+    margin: auto; /* Center the container */
+    background-color: #fff; /* White background for the content area */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    border-radius: 8px; /* Rounded corners */
+}
+
+/* Titles styling */
+h2.skillsBuildTitle {
+    color: #333; /* Dark grey color for better readability */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+/* Profile information and form styling */
+.profile-info, form {
+    background-color: #f9f9f9; /* Slightly off-white background */
+    padding: 15px;
+    margin-bottom: 20px; /* Space between sections */
+    border-radius: 8px; /* Rounded corners */
+}
+
+p {
+    line-height: 1.6; /* Improve line spacing for readability */
+    color: #666; /* Lighter text color for a modern look */
+}
+
+label {
+    font-weight: bold; /* Make labels stand out */
+}
+
+input[type="text"], textarea {
+    width: 100%; /* Full width inputs */
+    padding: 8px; /* Padding for better text visibility */
+    margin-top: 5px; /* Space above inputs */
+    margin-bottom: 20px; /* Space below inputs */
+    border: 1px solid #ddd; /* Subtle border */
+    border-radius: 4px; /* Match rounded corners */
+}
+
+input[type="submit"] {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer; /* Cursor indicates clickable button */
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}

@@ -28,23 +28,27 @@ public class ProfileController {
     public String viewProfile(Model model) {
         User user = userAuth();
         model.addAttribute("user", user);
+        model.addAttribute("userId", user.getId());
 
         return "profile";
     }
 
     @PostMapping("/profile")
     public String editingProfile(Model model,
+
                                  @RequestParam("firstName") String firstName,
                                  @RequestParam("lastName") String secondName,
                                  @RequestParam("bio") String bio){
         User user = userAuth();
+
         user.setBio(bio);
         user.setFirstName(firstName);
         user.setLastName(secondName);
         userRepo.save(user);
         model.addAttribute("user", user);
+        model.addAttribute("userId", user.getId());
 
-        return "redirect/profile";
+        return "redirect:/profile";
 
     }
 
