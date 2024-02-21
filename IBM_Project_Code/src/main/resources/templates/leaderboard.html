@@ -13,7 +13,7 @@
 <div th:replace="~{fragments/header :: header}"></div>
 <div class="container">
     <h1>Global leaderboard</h1>
-    <table border="1">
+    <table>
         <thead>
         <tr>
             <th>Rank</th>
@@ -25,7 +25,7 @@
         <tbody>
 
         <!-- Loop through the list of users and populate the table and highlight the current user -->
-        <tr th:each="user, rank : ${users}" th:class="${user.id == userId ? 'highlighted' : ''}" >
+        <tr th:each="user, rank : ${users}" th:class="${user.id == userId ? 'highlighted' : ''}">
             <td th:text="${rank.index + 1}"></td>
             <td th:text="${user.firstName}">First Name</td>
             <td th:text="${user.lastName}">Last Name</td>
@@ -36,7 +36,7 @@
     </table>
 </div>
 
-<div class="image-container">
+<div class="image-container image-sticky-bottom">
     <img th:src="@{/img/courseXP.png}" alt="Course XP logo">
 </div>
 

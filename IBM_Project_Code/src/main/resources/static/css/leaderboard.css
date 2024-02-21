@@ -1,17 +1,11 @@
-
-/*body {*/
-/*    margin: 0;*/
-/*    padding: 0;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    min-height: 100vh;*/
-/*}*/
-
 .container {
-    width: 100%;
-    margin: auto;
+    width: 80%; /* Adjusted width for better spacing */
+    margin: 10rem auto; /* Added more margin to the top for spacing */
     text-align: center;
     flex-grow: 1;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1); /* Added shadow for modern feel */
+    border-radius: 10px; /* Rounded corners for the container */
+    overflow: hidden; /* Ensures the border-radius clips the table */
 }
 
 h1 {
@@ -20,26 +14,30 @@ h1 {
     font-size: 30px;
     padding: 20px;
     margin: 0;
+    border-bottom: 1px solid #ffffff30; /* Subtle separation from table */
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 0; /* Removed margin to align with modern design */
     font-family: "Hiragino Sans GB", Arial, sans-serif;
+    text-align: center; /* Center align table text */
 }
 
 thead th {
-    background-color: darkblue;
+    background-color: #3498db; /* Lighter blue for a modern look */
     color: white;
-    border: 1px solid darkblue;
-    padding: 10px;
-    text-align: left;
+    border: none; /* Removed borders for a cleaner look */
+    padding: 15px;
+    text-align: center;
+    font-size: 18px; /* Larger font for readability */
 }
 
 tbody td {
-    border: 1px solid #ddd;
-    /*padding: 10px;*/
+    border: none; /* Removed cell borders for a cleaner look */
+    padding: 15px;
+    font-size: 16px; /* Slightly smaller font than header */
 }
 
 tbody tr:nth-child(even) {
@@ -47,10 +45,15 @@ tbody tr:nth-child(even) {
 }
 
 tbody tr:hover {
-    background-color: #f2f2f2;
+    background-color: #f0f0f0;
+    cursor: pointer; /* Indicates the row is interactive */
 }
 
-/* Style for the image */
+.highlighted {
+    background-color: #064369 !important;
+    color: white; /* Ensures text is readable on the highlight */
+}
+
 .image-container {
     text-align: center;
     margin-bottom: 20px;
@@ -62,12 +65,37 @@ tbody tr:hover {
     margin: 500px auto 0;
 }
 
-.highlighted{
-    background-color: #2980b9 !important;;
-
+.image-sticky-bottom {
+    position: fixed; /* Fixed position relative to the viewport */
+    bottom: 0;      /* Align to the bottom */
+    left: 0;        /* Align to the left */
+    width: 100%;    /* Full width */
+    text-align: center; /* Center the image */
 }
 
-.leaderboard{
-    text-decoration: underline;
+.image-sticky-bottom img {
+    max-width: 100px; /* Set a maximum width for the image */
+    height: auto;     /* Maintain aspect ratio */
 }
 
+
+
+/* Added media query for responsive design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%; /* Full width on smaller screens */
+        margin: 20px auto; /* Less margin on smaller screens */
+    }
+
+    h1 {
+        padding: 15px; /* Smaller padding on smaller screens */
+    }
+
+    thead th, tbody td {
+        padding: 10px; /* Smaller padding in table cells on smaller screens */
+    }
+
+    .image-container img {
+        max-width: 50%; /* Larger image on smaller screens */
+    }
+}
