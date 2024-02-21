@@ -76,6 +76,20 @@ public class Application implements CommandLineRunner {
         u2.setOverallPoints(50);
         userRepository.save(u2);
 
+        User u3 = new User();
+        u3.setFirstName("IBM");
+        u3.setLastName("Wizz");
+        u3.setEmail("jeff@IBM.com");
+        u3.setUsername("IBM");
+        u3.setPassword("gradle");
+        u3.setEmailVerified(false);
+        u3.setEnabled(true);
+        Timestamp currentTime3 = Timestamp.from(Instant.now());
+        u3.setCreatedDate(currentTime3);
+        u3.setLastModifiedDate(currentTime3);
+        u3.setOverallPoints(10);
+        userRepository.save(u3);
+
 
         //scrapping course-data (college students pathway only) from IBM skills build website.
         Document doc = Jsoup
