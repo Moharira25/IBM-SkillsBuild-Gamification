@@ -60,6 +60,7 @@ public class Application implements CommandLineRunner {
         u1.setCreatedDate(currentTime);
         u1.setLastModifiedDate(currentTime);
         u1.setOverallPoints(100);
+        u1.resetBio();
         userRepository.save(u1);
 
         //User to show point system working in leaderboard
@@ -75,6 +76,7 @@ public class Application implements CommandLineRunner {
         u2.setCreatedDate(currentTime2);
         u2.setLastModifiedDate(currentTime2);
         u2.setOverallPoints(50);
+        u2.resetBio();
         userRepository.save(u2);
 
         User u3 = new User();
@@ -89,6 +91,7 @@ public class Application implements CommandLineRunner {
         u3.setCreatedDate(currentTime3);
         u3.setLastModifiedDate(currentTime3);
         u3.setOverallPoints(10);
+        u3.resetBio();
         userRepository.save(u3);
 
 

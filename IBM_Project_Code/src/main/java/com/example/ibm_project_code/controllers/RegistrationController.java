@@ -43,6 +43,7 @@ public class RegistrationController {
         Timestamp currentTime = Timestamp.from(Instant.now());
         user.setCreatedDate(currentTime);
         user.setLastModifiedDate(currentTime);
+        user.resetBio();
 
         userRepository.save(user);
         return "redirect:/login";

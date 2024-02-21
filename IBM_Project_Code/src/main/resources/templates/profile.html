@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>User Profile</title>
+  <style>
+    form {
+      position: absolute;
+      top: 40%;
+      left: 10%
+    }
+
+    h2 {
+      left: 10%
+    }
+
+    p{
+      left: 10%
+    }
+
+  </style>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
+  <link th:href="@{/css/sidebar.css}" rel="stylesheet" type="text/css"/>
+  <link th:href="@{/css/navbar.css}" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="skillsBuildTitle">User Profile</h2>
+      <div class="profile-info">
+        <p><strong>First Name:</strong> <span th:text="${user.firstName}"></span></p>
+        <p><strong>Last Name:</strong> <span th:text="${user.lastName}"></span></p>
+        <p><strong>Bio:</strong> <span th:text="${user.bio}"></span></p>
+      </div>
+    </div>
+  </div>
+</div>
+<form action="/profile?firstName&lastName&bio">
+  <h2 class="skillsBuildTitle">Edit Profile</h2>
+  <label for="firstName"><strong>First name:</strong></label>
+  <input type="text" id="firstName" name="firstName" th:value="${user.firstName}"><br><br>
+  <label for="lastName"><strong>Last name:</strong></label>
+  <input type="text" id="lastName" name="lastName" th:value="${user.lastName}"><br><br>
+  <label for="bio"><strong>Bio:</strong></label>
+  <br>
+  <textarea id="bio" name="bio" rows="5" cols="50">
+</textarea><br><br>
+  <input type="submit" value="Edit Profile">
+</form>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script th:src="@{/js/sidebar.js}"></script>
+</body>
+</html>
