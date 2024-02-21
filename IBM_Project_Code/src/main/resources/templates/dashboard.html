@@ -38,8 +38,7 @@
                         <td th:text="${c.language}"></td>
                         <td th:text="${c.duration}"></td>
                         <td>
-                            <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}">Start Learning</a>
-
+                            <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
                         </td>
                     </tr>
                     </tbody>
