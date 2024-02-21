@@ -20,6 +20,24 @@
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.75);
 }
 
+.menu-link {
+    background: none;
+    border: none;
+    color: #000; /* Match your link color */
+    text-decoration: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 10px; /* Adjust padding to match your links */
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+}
+
+.menu-link:hover, .menu-link:focus {
+    background-color: #f0f0f0; /* Match the hover background color of your links */
+    text-decoration: none; /* If your links get underlined on hover */
+}
 
 
 .logo img {
