@@ -29,7 +29,7 @@ git clone https://campus.cs.le.ac.uk/gitlab/co2201-2024/group-12.git
 2. **Navigate to the project directory**
 
 ```bash
- cd .\group-12\IBM_Project_Code\
+ cd ./group-12/IBM_Project_Code/
 ```
 
 3. **Set up environment variables**
