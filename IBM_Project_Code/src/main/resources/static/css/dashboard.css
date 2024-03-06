@@ -1,67 +1,85 @@
-
-html,
-body {
-    /*position: fixed;*/
-    /*overflow: hidden;*/
+/* General Body Styles */
+.dashboard-body {
     width: 100%;
     height: auto;
 }
 
-.header-image img {
+/* Header Image */
+.dashboard-header-img {
     display: block;
     margin-left: auto;
     margin-right: auto;
     width: 20%;
-    /*
-    margin-top: 15px;
-    */
 }
 
-.scrollable-table {
+/* Tables and Scrollable Areas */
+.dashboard-scrollable-table {
     max-height: 600px;
     overflow-y: auto;
-    /*
-    margin-top: 20px;
-    */
 }
 
-.scrollable-table thead th {
+.dashboard-sticky-header {
     position: sticky;
     top: 0;
 }
 
-table {
+/* Table Styling */
+.dashboard-table {
     border-collapse: collapse;
     width: 100vw;
 }
 
-th {
+.dashboard-th {
     background: #f9fafb;
 }
 
-.dropdown-menu {
+/* Dropdown Menu */
+.dashboard-dropdown-menu {
     right: 0;
     left: auto;
 }
 
-.myCourse {
+/* Links */
+.dashboard-course-link {
     display: block;
     color: #007bff;
 }
 
-.skillsBuildTitle {
-    margin-top: 10rem;
+/* Titles and Headings */
+.dashboard-main-title {
+    margin-top: 6%;
     margin-bottom: 2rem;
 }
 
-.centered-heading{
+.dashboard-centered-heading {
     color: #3f3f3f;
 }
 
-a{
+/* Navigation and Links */
+.dashboard-nav-link {
     color: #007bff;
 }
 
-.dashboard{
+.dashboard-active {
     text-decoration: underline;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .dashboard-container {
+        width: 95%;
+        margin: 20px auto;
+    }
+
+    .dashboard-title-small {
+        padding: 15px;
+    }
+
+    .dashboard-small-table-cell {
+        padding: 10px;
+    }
+
+    .dashboard-header-img-small {
+        max-width: 50%;
+    }
 }

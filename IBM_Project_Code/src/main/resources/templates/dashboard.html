@@ -1,80 +1,80 @@
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>IBM Skillsbuild Dashboard</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/css/sidebar.css}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <script th:src="@{/js/landing.js}"></script>
 </head>
-<body>
+<body class="dashboard-body">
 
-<div class="container">
+<div class="container dashboard-container">
     <div th:replace="~{fragments/header :: header}"></div>
     <div class="row">
         <div class="col-md-12">
-            <h2 class="skillsBuildTitle">IBM Skills Build Courses</h2>
-            <div class="scrollable-table">
-                <table class="table table-striped table-bordered">
+            <h2 class="dashboard-main-title">IBM Skills Build Courses</h2>
+            <div class="dashboard-scrollable-table">
+                <table class="table table-striped table-bordered dashboard-table">
                     <thead>
                     <tr>
-                        <th>Topic</th>
-                        <th>Course</th>
-                        <th>Description</th>
-                        <th>Language</th>
-                        <th>Duration</th>
-                        <th>Link</th>
+                        <th class="dashboard-th">Topic</th>
+                        <th class="dashboard-th">Course</th>
+                        <th class="dashboard-th">Description</th>
+                        <th class="dashboard-th">Language</th>
+                        <th class="dashboard-th">Duration</th>
+                        <th class="dashboard-th">Link</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="c: ${courses}" th:if="${user.getUserCourse(c) == null}">
-                        <td th:text="${c.category}"></td>
-                        <td th:text="${c.title}"></td>
-                        <td th:text="${c.description}"></td>
-                        <td th:text="${c.language}"></td>
-                        <td th:text="${c.duration}"></td>
-                        <td>
-                            <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
+                    <tr th:each="c : ${courses}" th:if="${user.getUserCourse(c) == null}">
+                        <td class="dashboard-td" th:text="${c.category}"></td>
+                        <td class="dashboard-td" th:text="${c.title}"></td>
+                        <td class="dashboard-td" th:text="${c.description}"></td>
+                        <td class="dashboard-td" th:text="${c.language}"></td>
+                        <td class="dashboard-td" th:text="${c.duration}"></td>
+                        <td class="dashboard-td">
+                            <a class="dashboard-course-link" th:href="@{/start/{courseId}(courseId=${c.id})}"
+                               target="_blank">Start Learning</a>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-            <div th:if="${user.getCourses().size() != 0}" class="scrollable-table">
-                <h3 class="centered-heading">Your Courses</h3>
-                <table class="table table-striped table-bordered">
+            <div class="dashboard-scrollable-table">
+                <h3 class="dashboard-centered-heading">Your Courses</h3>
+                <table class="table table-striped table-bordered dashboard-table">
                     <thead>
                     <tr>
-                        <th>Topic</th>
-                        <th>Course</th>
-                        <th>Start Date</th>
-                        <th>Completion Date</th>
+                        <th class="dashboard-th">Topic</th>
+                        <th class="dashboard-th">Course</th>
+                        <th class="dashboard-th">Start Date</th>
+                        <th class="dashboard-th">Completion Date</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="c: ${courses}" th:if="${user.getUserCourse(c) != null}">
-                        <td th:text="${c.category}"></td>
-                        <td th:text="${c.title}"></td>
-                        <td th:text="${user.getUserCourse(c).getStartDate()}"></td>
-                        <td th:if="${user.getUserCourse(c).getEndDate() != null}"
-                            th:text="${user.getUserCourse(c).endDate}"></td>
-                        <td th:unless="${user.getUserCourse(c).getEndDate() != null}">
-                            <a class="myCourse" th:href="@{/resume/{courseId}(courseId=${c.id})}">Resume Learning</a>
-                            <a class="myCourse" th:href="@{/finish/{courseId}(courseId=${c.id})}">Finish</a>
-
+                    <tr th:each="c : ${courses}" th:if="${user.getUserCourse(c) != null}">
+                        <td class="dashboard-td" th:text="${c.category}"></td>
+                        <td class="dashboard-td" th:text="${c.title}"></td>
+                        <td class="dashboard-td" th:text="${user.getUserCourse(c).getStartDate()}"></td>
+                        <td class="dashboard-td" th:if="${user.getUserCourse(c).getEndDate() != null}"
+                            th:text="${user.getUserCourse(c).getEndDate()}"></td>
+                        <td class="dashboard-td" th:unless="${user.getUserCourse(c).getEndDate() != null}">
+                            <a class="dashboard-course-link" th:href="@{/resume/{courseId}(courseId=${c.id})}">Resume
+                                Learning</a>
+                            <a class="dashboard-course-link"
+                               th:href="@{/finish/{courseId}(courseId=${c.id})}">Finish</a>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
 </div>
+
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script th:src="@{/js/sidebar.js}"></script>
 </body>
