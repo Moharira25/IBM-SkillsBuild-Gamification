@@ -5,7 +5,6 @@ import com.example.ibm_project_code.database.User;
 import com.example.ibm_project_code.repositories.CourseRepository;
 import com.example.ibm_project_code.repositories.UserRepository;
 import com.example.ibm_project_code.services.CustomUserDetailsService;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,10 +16,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static java.time.Instant.*;
+import static java.time.Instant.now;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -114,7 +114,7 @@ public class Application implements CommandLineRunner {
                 Element language = cE.select(".ml-1").get(0);
                 Element duration = cE.select(".ml-1").get(2);
                 Element description = cE.getElementsByClass("bx--body-long-02 max-w-9/10").select("p").first();
-                String link = cE.getElementsByClass("flex flex-col md:flex-row").select("a").last().attr("href");
+                String link = Objects.requireNonNull(cE.getElementsByClass("flex flex-col md:flex-row").select("a").last()).attr("href");
 
                 // Regular expression to find the numbers in the duration string.
                 Pattern pattern = Pattern.compile("\\d+");
@@ -132,7 +132,7 @@ public class Application implements CommandLineRunner {
                 course.setLanguage(language.text());
                 assert description != null;
                 course.setDescription(description.text());
-                if (!link.startsWith("/")){
+                if (!link.startsWith("/")) {
                     course.setLink(link);
                     courseRepository.save(course);
                 }

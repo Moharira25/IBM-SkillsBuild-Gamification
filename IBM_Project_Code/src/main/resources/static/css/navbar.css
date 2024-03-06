@@ -1,9 +1,9 @@
 .navbar-gradient {
-    background: radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);
+    background: radial-gradient(circle at 12.3% 19.3%, rgb(70, 75, 180) 0%, rgb(80, 170, 220) 100.2%); /* Softened gradient */
     display: flex;
     color: white;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between; /* Space items out */
     line-height: 2rem;
     z-index: 10;
     margin: 0;
@@ -18,9 +18,9 @@
     padding-top: .5em;
     padding-bottom: .5em;
     border: 1px solid black;
-    -webkit-box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.75);
-    box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .menu-link {
@@ -50,7 +50,10 @@
 }
 
 .main-nav {
-    margin-top: 5px;
+    display: flex; /* Allow links to spread out */
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .logo a,
@@ -71,24 +74,19 @@
     color: #00b8e8;
 }
 
+.profile-icon {
+    display: flex;
+    align-items: center; /* Centers vertically */
+    margin-left: auto;
+    cursor: pointer;
+    margin-right: 6%;
+}
 
-@media (min-width: 769px) {
-    .header,
-    .main-nav {
-        display: flex;
-    }
 
+@media (max-width: 768px) {
     .header {
-        flex-direction: column;
-        align-items: center;
-
-        .header {
-            width: 80%;
-            margin: 0 auto;
-            max-width: 1150px;
-        }
+        flex-direction: column; /* Stack items on small screens */
     }
-
 }
 
 @media (min-width: 1025px) {
@@ -99,13 +97,13 @@
 
 }
 
-.profile-icon {
-    position: relative;
-    margin-left: auto;
-    cursor: pointer;
-    margin-right: 6%;
-    margin-top: auto;
-}
+/*.profile-icon {*/
+/*    position: relative;*/
+/*    margin-left: auto;*/
+/*    cursor: pointer;*/
+/*    margin-right: 6%;*/
+/*    margin-top: auto;*/
+/*}*/
 
 .profile-icon img {
     width: 50px;

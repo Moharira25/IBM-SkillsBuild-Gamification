@@ -1,9 +1,7 @@
 package com.example.ibm_project_code.controllers;
 
 
-import com.example.ibm_project_code.database.Course;
 import com.example.ibm_project_code.database.User;
-import com.example.ibm_project_code.database.UserCourse;
 import com.example.ibm_project_code.repositories.CourseRepository;
 import com.example.ibm_project_code.repositories.UserCourseRepository;
 import com.example.ibm_project_code.repositories.UserRepository;
@@ -49,7 +47,7 @@ public class ProfileController {
 
         User user = userAuth();
         user.setFirstName(user1.getFirstName());
-        user.setFirstName(user1.getLastName());
+        user.setLastName(user1.getLastName());
         user.setBio(user1.getBio());
         model.addAttribute("user", user);
         model.addAttribute("userId", user.getId());

@@ -1,31 +1,24 @@
-<header class="header navbar-gradient" th:fragment="header">
+<nav class="header navbar-gradient" th:fragment="header">
     <div class="logo">
         <a href="/"><img th:src="@{/img/courseXP.png}" alt="Course XP logo"></a>
     </div>
     <ul class="main-nav nav-links">
-<!--        if user id is null, show home direct to /, if not, home direct to /dashboard-->
         <li class="home"><a th:if="${userId == null}" href="/">Home</a></li>
         <li class="dashboard"><a th:if="${userId != null}" href="/dashboard">Dashboard</a></li>
-
         <li>
             <a th:if="${userId == null}" href="/login">Login</a>
         </li>
         <li><a th:if="${userId == null}" href="/register">Register</a></li>
         <li class="leaderboard"><a th:if="${userId != null}" href="/leaderboard">Leaderboard</a></li>
-
-
-
     </ul>
     <div th:if="${userId != null}" class="profile-icon" onclick="toggleDropdown()">
         <img src="https://creazilla-store.fra1.digitaloceanspaces.com/icons/7912642/avatar-icon-md.png"
              alt="Profile Picture">
         <div class="dropdown-content" id="dropdownMenu">
             <a class="menu-link" href="/profile">Profile</a>
-            <!--<a class="menu-link" href="/settings">Settings</a>-->
             <form th:action="@{/logout}" method="post" style="display: inline;">
                 <input type="submit" value="Logout" class="menu-link" />
             </form>
-
         </div>
     </div>
-</header>
+</nav>
