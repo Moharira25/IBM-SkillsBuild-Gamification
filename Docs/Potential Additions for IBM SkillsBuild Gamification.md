@@ -10,11 +10,11 @@
 
 * Badge for adding something / buying something off the market.
 * Profile skins and themes.
-* Avatar customization. 
+* Avatar customisation. 
 * Badge slots to display more on your public profile.
 * Certificate templates like a glow or some such.
 * Progress bar or level bar skins viewable when clicking on a profile.
-* Dashboard customizations.
+* Dashboard customisations.
 
 * **Big list:**
     * Profile Avatars
@@ -75,7 +75,7 @@
 * **Rewards could include:**
 
     * **In-Game Currency and Consumables**
-        * Increasing Boosters: Larger XP boosts or more powerful "Streak Savers" as streaks get longer.
+        * Increasing Boosters: Larger XP boosts or more powerful streak savers as streaks get longer.
         * Bundle Packs: Reward packages containing a mix of currency, boosters, and maybe some cosmetic items.
 
     * **Special Privileges & Access**
