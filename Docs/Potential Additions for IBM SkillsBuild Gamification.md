@@ -89,9 +89,10 @@
         * Badges at each milestone
 
     * **Gamified Rewards**
-        * Discounts on Partner Products: 
-        * Exclusive Webinars: 
-        * "Certificate of Dedication":
+        * Discounts on Partner Products: Partner with companies for discounts on relevant software, books, or other professional tools.
+        * Exclusive Webinars: Webinars with industry figures, tailored towards those at higher streak levels.
+        * "Certificate of Dedication": A digital certificate that showcases those incredible long-term streaks - suitable for portfolios or resumes.
+
 
 ## Misc
 
