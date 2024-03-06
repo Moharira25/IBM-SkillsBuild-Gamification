@@ -5,11 +5,14 @@
     <ul class="main-nav nav-links">
         <li class="home"><a th:if="${userId == null}" href="/">Home</a></li>
         <li class="dashboard"><a th:if="${userId != null}" href="/dashboard">Dashboard</a></li>
+        <li class="dashboard"><a th:if="${userId != null}" href="/leaderboard">Leaderboard</a></li>
+        <li class="dashboard"><a th:if="${userId != null}" href="/time-trials">Time Trials</a></li>
+        <li class="dashboard"><a th:if="${userId != null}" href="/marketplace">Marketplace</a></li>
+        <li class="dashboard"><a th:if="${userId != null}" href="/help">Help</a></li>
         <li>
             <a th:if="${userId == null}" href="/login">Login</a>
         </li>
         <li><a th:if="${userId == null}" href="/register">Register</a></li>
-        <li class="leaderboard"><a th:if="${userId != null}" href="/leaderboard">Leaderboard</a></li>
     </ul>
     <div th:if="${userId != null}" class="profile-icon" onclick="toggleDropdown()">
         <img src="https://creazilla-store.fra1.digitaloceanspaces.com/icons/7912642/avatar-icon-md.png"
