@@ -4,7 +4,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>IBM Skillsbuild Dashboard</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/sidebar.css}" rel="stylesheet" type="text/css"/>
@@ -12,46 +11,106 @@
     <script th:src="@{/js/landing.js}"></script>
 </head>
 <body>
-
+<h2 class="skillsBuildTitle">IBM Skills Build Courses</h2>
 <div class="container">
     <div th:replace="~{fragments/header :: header}"></div>
-    <div class="row">
-        <div class="col-md-12">
-            <h2 class="skillsBuildTitle">IBM Skills Build Courses</h2>
-            <div class="scrollable-table">
-                <table class="table table-striped table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Topic</th>
-                        <th>Course</th>
-                        <th>Description</th>
-                        <th>Language</th>
-                        <th>Duration</th>
-                        <th>Link</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="c: ${courses}" th:if="${user.getUserCourse(c) == null}">
-                        <td th:text="${c.category}"></td>
-                        <td th:text="${c.title}"></td>
-                        <td th:text="${c.description}"></td>
-                        <td th:text="${c.language}"></td>
-                        <td th:text="${c.duration}"></td>
-                        <td>
-                            <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+    <h2 class="category-title">Artificial Intelligence Courses</h2>
+    <div class="cards">
+        <div class="card" th:each="c: ${courses}"
+             th:if="${user.getUserCourse(c) == null and c.category == 'Artificial intelligence'}">
+            <div class="card-content">
+                <h3 th:text="${c.title}"></h3>
+                <p th:text="${c.duration}"></p>
+                <div class="description-box">
+                    <p th:text="${c.description}"></p>
+                </div>
+                <p class="about-language" th:text="${c.language}"></p>
+                <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
             </div>
-            <div th:if="${user.getCourses().size() != 0}" class="scrollable-table">
-                <h3 class="centered-heading">Your Courses</h3>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Topic</th>
-                        <th>Course</th>
-                        <th>Start Date</th>
+        </div>
+    </div>
+    <h2 class="category-title">Cloud Courses</h2>
+    <div class="cards">
+        <div class="card" th:each="c: ${courses}"
+             th:if="${user.getUserCourse(c) == null and c.category == 'Cloud'}">
+            <div class="card-content">
+                <h3 th:text="${c.title}"></h3>
+                <p th:text="${c.duration}"></p>
+                <div class="description-box">
+                    <p th:text="${c.description}"></p>
+                </div>
+                <p class="about-language" th:text="${c.language}"></p>
+                <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
+            </div>
+        </div>
+    </div>
+    <h2 class="category-title">Data science Courses</h2>
+    <div class="cards">
+        <div class="card" th:each="c: ${courses}"
+             th:if="${user.getUserCourse(c) == null and c.category == 'Data science'}">
+            <div class="card-content">
+                <h3 th:text="${c.title}"></h3>
+                <p th:text="${c.duration}"></p>
+                <div class="description-box">
+                    <p th:text="${c.description}"></p>
+                </div>
+                <p class="about-language" th:text="${c.language}"></p>
+                <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
+            </div>
+        </div>
+    </div>
+    <h2 class="category-title">Cybersecurity Courses</h2>
+    <div class="cards">
+        <div class="card" th:each="c: ${courses}"
+             th:if="${user.getUserCourse(c) == null and c.category == 'Cybersecurity'}">
+            <div class="card-content">
+                <h3 th:text="${c.title}"></h3>
+                <p th:text="${c.duration}"></p>
+                <div class="description-box">
+                    <p th:text="${c.description}"></p>
+                </div>
+                <p class="about-language" th:text="${c.language}"></p>
+                <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
+            </div>
+        </div>
+    </div>
+    <h2 class="category-title">Sustainability Courses</h2>
+    <div class="cards">
+        <div class="card" th:each="c: ${courses}"
+             th:if="${user.getUserCourse(c) == null and c.category == 'Sustainability'}">
+            <div class="card-content">
+                <h3 th:text="${c.title}"></h3>
+                <p th:text="${c.duration}"></p>
+                <div class="description-box">
+                    <p th:text="${c.description}"></p>
+                </div>
+                <p class="about-language" th:text="${c.language}"></p>
+                <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
+            </div>
+        </div>
+    </div>
+    <h2 class="category-title">Your Courses</h2>
+    <div class="cards">
+        <div class="card" th:each="c: ${courses}" th:if="${user.getCourses().size() != 0}">
+            <div class="card-content">
+                <h3 th:text="${c.title}"></h3>
+                <p th:text="${c.duration}"></p>
+                <div class="description-box">
+                    <p th:text="${c.description}"></p>
+                </div>
+                <p class="about-language" th:text="${c.language}"></p>
+                <a class="start-learning-button" th:href="@{/start/{courseId}(courseId=${c.id})}">Start Learning</a>
+            </div>
+        </div>
+    </div>
+    <div th:if="${user.getCourses().size() != 0}" class="cards">
+        <h2 class="category-title">Your Courses</h2>
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>Topic</th>
+                <th>Course</th>
+                <th>Start Date</th>
                         <th>Completion Date</th>
                     </tr>
                     </thead>
@@ -71,11 +130,7 @@
                     </tbody>
                 </table>
             </div>
-
-        </div>
     </div>
-</div>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script th:src="@{/js/sidebar.js}"></script>
 </body>
 </html>

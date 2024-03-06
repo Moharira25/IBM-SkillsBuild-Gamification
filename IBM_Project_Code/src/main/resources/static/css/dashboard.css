@@ -1,67 +1,144 @@
 
 html,
+* {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+:root {
+    --thumb: #e9f0ff;
+    --darkblue: #208bff;
+}
 body {
-    /*position: fixed;*/
-    /*overflow: hidden;*/
     width: 100%;
     height: auto;
 }
-
-.header-image img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 20%;
-    /*
-    margin-top: 15px;
-    */
-}
-
-.scrollable-table {
-    max-height: 600px;
-    overflow-y: auto;
-    /*
-    margin-top: 20px;
-    */
-}
-
-.scrollable-table thead th {
-    position: sticky;
-    top: 0;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100vw;
-}
-
-th {
-    background: #f9fafb;
-}
-
 .dropdown-menu {
     right: 0;
     left: auto;
 }
-
 .myCourse {
     display: block;
     color: #007bff;
 }
-
-.skillsBuildTitle {
+.centered-heading{
+    color: #525252;
+}
+.card a{
+    color: #007bff;
+    padding-left: 15px;
+}
+.dashboard{
+    text-decoration: underline;
+}
+.skillsBuildTitle{
+    text-align: center;
+    color: #525252;
     margin-top: 10rem;
     margin-bottom: 2rem;
 }
-
-.centered-heading{
-    color: #3f3f3f;
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+    max-width: 90%;
+    margin: 0 auto;
+}
+.category-title{
+    text-align: left;
+    border-bottom: 2px solid #525252;
+    width: 100%;
+    padding-bottom: 5px;
+    margin-bottom: 25px;
+    color: #525252;
+}
+.cards{
+    margin-bottom: 20px;
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
 }
 
-a{
-    color: #007bff;
+.card {
+    background: #fafcff;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
 }
-
-.dashboard{
-    text-decoration: underline;
+.cards::-webkit-scrollbar {
+    height: 12px;
+}
+.cards::-webkit-scrollbar-thumb,
+.cards::-webkit-scrollbar-track {
+    border-radius: 92px;
+}
+.cards::-webkit-scrollbar-thumb {
+    background: var(--darkblue);
+}
+.cards::-webkit-scrollbar-track {
+    background: var(--thumb);
+}
+.card:hover {
+    transform: translateY(-5px);
+}
+.card h3 {
+    font-size: 22px;
+    color: #525252;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+}
+.description-box {
+    padding: 7px;
+    background: #e5f2ff;
+}
+.card p {
+    font-size: 16px;
+    color: #525252;
+    padding-left: 15px;
+}
+.about-language{
+    font-size: 16px;
+    color: #525252;
+    padding-left: 15px;
+    padding-top: 10px;
+}
+.card a {
+    display: inline-block;
+    cursor: pointer;
+    text-align: left;
+    font-weight: bold;
+    margin-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+@media (min-width: 500px) {
+    .card {
+        flex-basis: calc(50% - 10px);
+    }
+    .card:not(:last-child) {
+        margin-right: 20px;
+    }
+}
+@media (min-width: 700px) {
+    .card {
+        flex-basis: calc(calc(100% / 3) - 20px);
+    }
+    .card:not(:last-child) {
+        margin-right: 30px;
+    }
+}
+@media (min-width: 1100px) {
+    .card {
+        flex-basis: calc(33% - 30px);
+    }
+    .card:not(:last-child) {
+        margin-right: 40px;
+    }
 }
