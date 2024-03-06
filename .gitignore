@@ -14,7 +14,6 @@ build/
 .env
 test/
 IBM_Project_Code/src/main/resources/application.properties
-
 ### node modules ###
 node_modules/
 

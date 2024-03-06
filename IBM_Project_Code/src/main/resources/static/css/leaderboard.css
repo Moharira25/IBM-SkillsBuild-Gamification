@@ -1,105 +1,106 @@
-.container {
-    width: 80%; /* Adjusted width for better spacing */
-    margin: 10rem auto; /* Added more margin to the top for spacing */
+.lead-container {
+    width: 80%;
+    margin: 10rem auto;
     text-align: center;
     flex-grow: 1;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1); /* Added shadow for modern feel */
-    border-radius: 10px; /* Rounded corners for the container */
-    overflow: hidden; /* Ensures the border-radius clips the table */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-h1 {
+.lead-title {
     background: #022258;
     color: white;
     font-size: 30px;
     padding: 20px;
     margin: 0;
-    border-bottom: 1px solid #ffffff30; /* Subtle separation from table */
+    border-bottom: 1px solid #ffffff30;
 }
 
-table {
+.lead-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 0; /* Removed margin to align with modern design */
+    margin-top: 0;
     font-family: "Hiragino Sans GB", Arial, sans-serif;
-    text-align: center; /* Center align table text */
+    text-align: center;
 }
 
-thead th {
-    background-color: #3498db; /* Lighter blue for a modern look */
+.lead-thead-th {
+    background-color: #3498db;
     color: white;
-    border: none; /* Removed borders for a cleaner look */
+    border: none;
     padding: 15px;
     text-align: center;
-    font-size: 18px; /* Larger font for readability */
+    font-size: 18px;
 }
 
-tbody td {
-    border: none; /* Removed cell borders for a cleaner look */
+.lead-tbody-td {
+    border: none;
     padding: 15px;
-    font-size: 16px; /* Slightly smaller font than header */
+    font-size: 16px;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* Light color for odd rows */
 }
 
 tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #e3e3e3; /* Slightly darker color for even rows */
 }
 
-tbody tr:hover {
-    background-color: #f0f0f0;
-    cursor: pointer; /* Indicates the row is interactive */
+.lead-tbody-tr-hover:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 
-.highlighted {
+.lead-highlighted {
     background-color: #064369 !important;
-    color: white; /* Ensures text is readable on the highlight */
+    color: white;
 }
 
-.image-container {
+.lead-image-container {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.image-container img {
+.lead-image {
     max-width: 20%;
     display: block;
     margin: 500px auto 0;
 }
 
-.image-sticky-bottom {
-    position: fixed; /* Fixed position relative to the viewport */
-    bottom: 0;      /* Align to the bottom */
-    left: 0;        /* Align to the left */
-    width: 100%;    /* Full width */
-    text-align: center; /* Center the image */
+.lead-image-sticky {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
 }
 
-.image-sticky-bottom img {
-    max-width: 100px; /* Set a maximum width for the image */
-    height: auto;     /* Maintain aspect ratio */
+.lead-image-sticky img {
+    max-width: 100px;
+    height: auto;
 }
 
-.leaderboard{
-    text-decoration: underline; /*to indicate that the view is currently leaderboard*/
+.lead-leaderboard {
+    text-decoration: underline;
 }
 
-
-
-/* Added media query for responsive design */
 @media (max-width: 768px) {
-    .container {
-        width: 95%; /* Full width on smaller screens */
-        margin: 20px auto; /* Less margin on smaller screens */
+    .lead-container {
+        width: 95%;
+        margin: 20px auto;
     }
 
-    h1 {
-        padding: 15px; /* Smaller padding on smaller screens */
+    .lead-title {
+        padding: 15px;
     }
 
-    thead th, tbody td {
-        padding: 10px; /* Smaller padding in table cells on smaller screens */
+    .lead-thead-th, .lead-tbody-td {
+        padding: 10px;
     }
 
-    .image-container img {
-        max-width: 50%; /* Larger image on smaller screens */
+    .lead-image-container img {
+        max-width: 50%;
     }
 }

@@ -5,40 +5,39 @@
     <link th:href="@{/css/leaderboard.css}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/landing.css}">
-
     <script th:src="@{/js/landing.js}"></script>
     <title>Leaderboard</title>
 </head>
 <body>
-<div th:replace="~{fragments/header :: header}"></div>
-<div class="container">
-    <h1>Global leaderboard</h1>
-    <table>
+<div class="lead-container">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <h1 class="lead-title">Global leaderboard</h1>
+    <table class="lead-table">
         <thead>
         <tr>
-            <th>Rank</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Overall Points</th>
+            <th class="lead-thead-th">Rank</th>
+            <th class="lead-thead-th">First Name</th>
+            <th class="lead-thead-th">Last Name</th>
+            <th class="lead-thead-th">Overall Points</th>
         </tr>
         </thead>
-        <tbody>
-
-        <!-- Loop through the list of users and populate the table and highlight the current user -->
-        <tr th:each="user, rank : ${users}" th:class="${user.id == userId ? 'highlighted' : ''}">
-            <td th:text="${rank.index + 1}"></td>
-            <td th:text="${user.firstName}">First Name</td>
-            <td th:text="${user.lastName}">Last Name</td>
-            <td th:text="${user.overallPoints}">Overall Points</td>
+        <tbody class="leaderboard-table">
+        <tr class="lead-tbody-tr-hover" th:each="user, rank : ${users}"
+            th:class="${user.id == userId ? 'lead-highlighted' : ''}">
+            <td class="lead-tbody-td" th:text="${rank.index + 1}"></td>
+            <td class="lead-tbody-td" th:text="${user.firstName}">First Name</td>
+            <td class="lead-tbody-td" th:text="${user.lastName}">Last Name</td>
+            <td class="lead-tbody-td" th:text="${user.overallPoints}">Overall Points</td>
         </tr>
-
         </tbody>
     </table>
 </div>
 
-<div class="image-container image-sticky-bottom">
+<div class="lead-image-container lead-image-sticky">
     <img th:src="@{/img/courseXP.png}" alt="Course XP logo">
 </div>
+
+<script th:src="@{/js/leaderboard.js}"></script>
 
 </body>
 </html>
