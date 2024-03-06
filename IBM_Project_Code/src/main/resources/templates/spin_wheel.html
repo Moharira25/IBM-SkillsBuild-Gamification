@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Daily Wheel Spin</title>
     <link rel="stylesheet" type="text/css" href="../static/css/spin_design.css">
@@ -29,104 +29,110 @@
     </div>
     <div id="timer"></div>
 </div>
-    <script>
-        const SPIN_INTERVAL_MS = 10 * 1000;
-        const LAST_SPIN_KEY = 'lastSpin';
+<script>
+    const SPIN_INTERVAL_MS = 0;
+    const LAST_SPIN_KEY = 'lastSpin';
 
-        let wheel = document.querySelector('.Wheel');
-        let spinButton = document.getElementById('spinbutton');
-        let arrow = document.querySelector('.Spin_Button .arrow');
-        let overlay = document.getElementById('overlay');
-        let modal = document.getElementById('modal');
-        let modalContent = document.getElementById('modal-content');
-        let isSpinAllowed = true;
-        let isSpinning = false;
+    let wheel = document.querySelector('.Wheel');
+    let spinButton = document.getElementById('spinbutton');
+    let overlay = document.getElementById('overlay');
+    let modal = document.getElementById('modal');
+    let modalContent = document.getElementById('modal-content');
+    let isSpinning = false;
 
-        spinButton.onclick = function () {
-            if (!canSpinWheel() || isSpinning) {
-                alert('You can only spin the wheel once every 10 seconds.');
-                return;
-            }
+    function calculateSectionIndex(rotation) {
+        const degreesPerSection = 360 / 8; // Adjust if your wheel has a different number of sections
+        let adjustedRotation = (rotation % 360 + 360) % 360; // Normalize rotation
+        let rawIndex = Math.floor((360 - adjustedRotation + degreesPerSection / 2) / degreesPerSection);
+        return rawIndex % 8; // Adjust based on the number of sections
+    }
 
-            lockButton();
-            isSpinning = true;
-
-            var randomRotation = Math.floor(Math.random() * (360 - 1 + 1)) + 1;
-
-            wheel.style.transition = 'transform 5s ease-out';
-            wheel.style.transform = 'rotate(' + (1800 + randomRotation) + 'deg)';
-
-            setTimeout(function () {
-                wheel.style.transform = 'rotate(0deg)';
-                isSpinning = false;
-                wheel.style.transition = 'none';
-
-                let wheelRotation = ((1800 + randomRotation) % 360);
-                let sectionIndex = Math.floor((wheelRotation + 202.5) / 45) % 8;
-                let sectionSpan = document.querySelector('.number:nth-child(' + (sectionIndex + 1) + ') span');
-                let sectionContent = sectionSpan.textContent.trim();
-                displayModal(sectionContent);
-                localStorage.setItem(LAST_SPIN_KEY, new Date().getTime().toString());
-
-                // Start the timer
-                startTimer();
-            }, 5000);
-        };
-
-        function startTimer() {
-            var remainingTime = 10;
-            var button = document.getElementById('spinbutton');
-            button.disabled = true;
-            button.innerText = "Please wait " + remainingTime + " seconds";
-            button.style.fontSize = "7px";
-            button.style.textAlign = "center";
-
-            var intervalId = setInterval(function() {
-                remainingTime--;
-                if (remainingTime <= 0) {
-                    button.disabled = false;
-                    button.innerText = "Spin";
-                    button.style.fontSize = "";
-                    button.style.textAlign = "";
-                    clearInterval(intervalId);
-                } else {
-                    button.innerText = "Please wait " + remainingTime + " seconds";
-                }
-            }, 1000);
+    spinButton.onclick = function () {
+        if (!canSpinWheel() || isSpinning) {
+            alert('You can only spin the wheel once every 10 seconds.');
+            return;
         }
 
-        function goToHome() {
-            window.location.href ="home.html"; // Navigate to the Daily Spin page
-        }
-        function canSpinWheel() {
-            const lastSpinTime = localStorage.getItem(LAST_SPIN_KEY);
-            if (lastSpinTime) {
-                const currentTime = new Date().getTime();
-                const timeSinceLastSpin = currentTime - parseInt(lastSpinTime);
-                return timeSinceLastSpin >= SPIN_INTERVAL_MS;
-            } else {
-                return true;
-            }
-        }
+        isSpinning = true;
+        lockButton();
 
-        function lockButton() {
-            var button = document.getElementById('spinbutton');
-            button.disabled = true;
-            setTimeout(function(){
+        let randomRotation = Math.floor(Math.random() * 360);
+        let finalRotation = 1800 + randomRotation; // Ensures a minimum of 5 rotations for a spin effect
+
+        wheel.style.transition = 'transform 5s ease-out';
+        wheel.style.transform = `rotate(${finalRotation}deg)`;
+
+        setTimeout(() => {
+            let finalDegrees = finalRotation % 360;
+            let sectionIndex = calculateSectionIndex(finalDegrees);
+            let sectionSpan = document.querySelectorAll('.number span')[sectionIndex];
+            let sectionContent = sectionSpan.textContent.trim();
+
+            displayModal(sectionContent);
+            localStorage.setItem(LAST_SPIN_KEY, new Date().getTime().toString());
+            startTimer();
+            isSpinning = false;
+            wheel.style.transition = 'none'; // Reset the transition to prevent spinning effect on reset
+            wheel.style.transform = 'rotate(0deg)'; // Reset the wheel for the next spin
+        }, 5000);
+    };
+
+    function startTimer() {
+        let remainingTime = 10;
+        let button = document.getElementById('spinbutton');
+        button.disabled = true;
+        button.innerText = "Please wait " + remainingTime + " seconds";
+        button.style.fontSize = "7px";
+        button.style.textAlign = "center";
+
+        var intervalId = setInterval(function () {
+            remainingTime--;
+            if (remainingTime <= 0) {
                 button.disabled = false;
-            }, 6000);
-        }
-        function displayModal(sectionContent) {
-            modalContent.innerHTML = 'Congratulations, you have won ' + sectionContent + ' on your next course!';
-            overlay.style.display = 'block';
-            modal.style.display = 'block';
-        }
+                button.innerText = "Spin";
+                button.style.fontSize = "";
+                button.style.textAlign = "";
+                clearInterval(intervalId);
+            } else {
+                button.innerText = "Please wait " + remainingTime + " seconds";
+            }
+        }, 1000);
+    }
 
-        function closeModal() {
-            overlay.style.display = 'none';
-            modal.style.display = 'none';
-        }
+    function goToHome() {
+        window.location.href = "home.html"; // Navigate to the Daily Spin page
+    }
 
-    </script>
+    function canSpinWheel() {
+        const lastSpinTime = localStorage.getItem(LAST_SPIN_KEY);
+        if (lastSpinTime) {
+            const currentTime = new Date().getTime();
+            const timeSinceLastSpin = currentTime - parseInt(lastSpinTime);
+            return timeSinceLastSpin >= SPIN_INTERVAL_MS;
+        } else {
+            return true;
+        }
+    }
+
+    function lockButton() {
+        var button = document.getElementById('spinbutton');
+        button.disabled = true;
+        setTimeout(function () {
+            button.disabled = false;
+        }, 6000);
+    }
+
+    function displayModal(sectionContent) {
+        modalContent.innerHTML = 'Congratulations, you have won ' + sectionContent + ' on your next course!';
+        overlay.style.display = 'block';
+        modal.style.display = 'block';
+    }
+
+    function closeModal() {
+        overlay.style.display = 'none';
+        modal.style.display = 'none';
+    }
+
+</script>
 </body>
 </html>

@@ -15,8 +15,8 @@
 }
 
 .header {
-    padding-top: .5em;
-    padding-bottom: .5em;
+    padding-top: .1em;
+    padding-bottom: .1em;
     border: 1px solid black;
     -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -31,10 +31,14 @@
     cursor: pointer;
     font-family: inherit;
     font-size: inherit;
-    padding: 10px; /* Adjust padding to match your links */
+    padding: 1rem; /* Adjust padding to match your links */
     display: inline-block;
     width: 100%;
     text-align: left;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 1rem 10rem rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .menu-link:hover, .menu-link:focus {
@@ -51,9 +55,17 @@
 
 .main-nav {
     display: flex; /* Allow links to spread out */
-    margin: 0;
     padding: 0;
     list-style: none;
+    align-items: center; /* Centers vertically */
+    flex-grow: 1; /* Takes up remaining space */
+    justify-content: center;
+    text-align: center;
+    /*box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);*/
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    box-shadow: 0 1rem 10rem rgba(0, 0, 0, 0.1);
 }
 
 .logo a,
@@ -146,4 +158,6 @@ a {
     margin: 0;
     padding: 0;
     list-style: none;
+    display: flex;
+    align-items: center;
 }

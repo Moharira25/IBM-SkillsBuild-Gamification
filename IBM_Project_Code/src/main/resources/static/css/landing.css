@@ -15,7 +15,7 @@ ul {
     list-style: none;
 }
 
-.captionText {
+.landing-captionText {
     font-family: DIN Alternate, sans-serif;
     line-height: 1;
     font-size: 50px;
@@ -24,7 +24,7 @@ ul {
     margin-bottom: 9px;
 }
 
-.right-image {
+.landing-right-image {
     position: absolute;
     top: 500px;
     right: 0;
@@ -32,24 +32,21 @@ ul {
     height: auto;
 }
 
-h2 {
+.landing-title {
     font-family: "Bradley Hand", sans-serif;
-    line-height: 0;
     font-size: 47px;
     margin-left: 120px;
     color: cornflowerblue;
 }
 
-h3,
-a {
-    color: #e8e8e8;
+.landing-subtitle {
+    font-family: "Bradley Hand", sans-serif;
+    font-size: 47px;
+    margin-left: 120px;
+    color: cornflowerblue;
 }
 
-a {
-    text-decoration: none;
-}
-
-.button {
+.landing-button {
     display: inline-block;
     font-family: "Avenir Next", sans-serif;
     font-size: 17px;
@@ -65,34 +62,29 @@ a {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.button:hover {
+.landing-button:hover {
     background-color: #0056b3;
     transform: translateY(-3px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
-.button:active {
+.landing-button:active {
     transform: translateY(-1px);
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 }
 
-
-.button-container {
+.landing-button-container {
     display: flex;
     justify-content: flex-start;
 }
 
-.already-account {
+.landing-already-account {
     background-color: black;
     margin-left: 2rem;
 }
 
-.already-account:hover {
+.landing-already-account:hover {
     background-color: #3f3f3f;
     transform: translateY(-3px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
-
-
-
-
