@@ -59,7 +59,7 @@ How to run the program on your local machine.
 Point your web browser or use a tool like Postman to interact with the application at:
 
 ```
-http://localhost:8080
+http://localhost:8000
 ```
 
 ## Built With
