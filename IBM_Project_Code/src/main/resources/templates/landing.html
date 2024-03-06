@@ -6,25 +6,22 @@
     <link rel="stylesheet" th:href="@{/css/landing.css}">
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <script th:src="@{/js/landing.js}"></script>
-
-
 </head>
 <body>
 
 <div th:replace="~{fragments/header :: header}"></div>
 
-<div class="captionText">
-    <h1> Elevate Your Skills <br> Power Up Your Potential </h1>
+<div class="landing-captionText">
+    <h1 class="landing-title"> Elevate Your Skills <br> Power Up Your Potential </h1>
 </div>
 
 <img src="https://darvideo.tv/wp-content/uploads/2021/05/E-learning-animation-video.jpg" alt="Description of your image"
-     class="right-image">
-    <h2>The IBM SkillsBuild</h2>
-<div th:if="${userId == null}" class="button-container">
-    <a href="/register" class="button">Get Started</a>
-    <a href="/login" class="button already-account">I have an account</a>
+     class="landing-right-image">
+<h2 class="landing-subtitle">The IBM SkillsBuild</h2>
+<div th:if="${userId == null}" class="landing-button-container">
+    <a href="/register" class="landing-button landing-get-started">Get Started</a>
+    <a href="/login" class="landing-button landing-already-account">I have an account</a>
 </div>
 
 </body>
 </html>
-
