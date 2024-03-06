@@ -1,4 +1,3 @@
-
 # Potential Additions for IBM SkillsBuild Gamification
 
 ## More or better daily rewards
