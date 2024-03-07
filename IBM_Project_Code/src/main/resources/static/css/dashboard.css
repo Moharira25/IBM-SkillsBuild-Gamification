@@ -30,10 +30,12 @@ body {
     text-decoration: underline;
 }
 .skillsBuildTitle{
+    font-family: "Bradley Hand", cursive;
     text-align: center;
-    color: #525252;
+    color: #208bff;
     margin-top: 10rem;
     margin-bottom: 2rem;
+    font-size: 3rem;
 }
 .container {
     display: flex;
