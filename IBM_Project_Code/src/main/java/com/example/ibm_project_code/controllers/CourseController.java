@@ -51,7 +51,7 @@ public class CourseController {
         UserCourse userCourse = new UserCourse();
         userCourse.setCourse(course);
         //Formatting the date and setting the start date for the user-course.
-        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("dd/MMMM/yyyy");
         String formattedStartDate = simpleFormat.format(Timestamp.from(Instant.now()));
         userCourse.setStartDate(formattedStartDate);
         userCourse.setUser(user);
@@ -74,7 +74,7 @@ public class CourseController {
         Course course = courseRepo.findById(courseId);
 
         //getting the formatted date
-        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("dd/MMMM/yyyy");
         String formattedEndDate = simpleFormat.format(Timestamp.from(Instant.now()));
         //Recording the completion time for the course.
         user.getUserCourse(course).setEndDate(formattedEndDate);

@@ -99,7 +99,7 @@
                         <div class="card-content">
                             <h3 th:text="${c.title}"></h3>
                             <p th:text="${c.category}"></p>
-                            <p>Start Date: <span th:text="${user.getUserCourse(c).getStartDate()}"></span></p>
+                            <p>Start Date:<br/> <span th:text="${user.getUserCourse(c).getStartDate()}"></span></p>
                             <div class="card-actions">
                                 <a th:href="@{/resume/{courseId}(courseId=${c.id})}">Resume Learning</a>
                                 <a th:href="@{/finish/{courseId}(courseId=${c.id})}">Finish</a>
@@ -115,8 +115,8 @@
                         <div class="card-content">
                             <h3 th:text="${c.title}"></h3>
                             <p th:text="${c.category}"></p>
-                            <p>Start Date: <span th:text="${user.getUserCourse(c).getStartDate()}"></span></p>
-                            <p>Completion Date: <span th:text="${user.getUserCourse(c).getEndDate()}"></span></p>
+                            <p>Start Date:<br/> <span th:text="${user.getUserCourse(c).getStartDate()}"></span></p>
+                            <p>Completion Date:<br/> <span th:text="${user.getUserCourse(c).getEndDate()}"></span></p>
                         </div>
                     </div>
                 </div>
