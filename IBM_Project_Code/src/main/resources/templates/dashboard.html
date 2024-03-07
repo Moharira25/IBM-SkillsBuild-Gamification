@@ -9,14 +9,26 @@
     <link th:href="@{/css/sidebar.css}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <script th:src="@{/js/landing.js}"></script>
+    <script th:src="@{/js/dashboard-sidebar.js}"></script>
 </head>
 <body>
+<div class="sidebar" id="sidebar">
+    <ul>
+        <li class="sidebar-header">On the page</li>
+        <li><a href="#ai">Artificial Intelligence</a></li>
+        <li><a href="#cloud">Cloud</a></li>
+        <li><a href="#ds">Data Science</a></li>
+        <li><a href="#cyber">Cybersecurity</a></li>
+        <li><a href="#sustain">Sustainability</a></li>
+        <li><a href="#yc">Your Courses</a></li>
+    </ul>
+</div>
 <h2 class="skillsBuildTitle">IBM Skills Build Courses</h2>
 <div class="container">
     <div th:replace="~{fragments/header :: header}"></div>
     <h2 class="category-title">Artificial Intelligence Courses</h2>
     <div class="cards">
-        <div class="card" th:each="c: ${courses}"
+        <section id="ai" class="card" th:each="c: ${courses}"
              th:if="${user.getUserCourse(c) == null and c.category == 'Artificial intelligence'}">
             <div class="card-content">
                 <h3 th:text="${c.title}"></h3>
@@ -27,11 +39,11 @@
                 <p class="about-language" th:text="${c.language}"></p>
                 <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
             </div>
-        </div>
+        </section>
     </div>
     <h2 class="category-title">Cloud Courses</h2>
     <div class="cards">
-        <div class="card" th:each="c: ${courses}"
+        <section id="cloud" class="card" th:each="c: ${courses}"
              th:if="${user.getUserCourse(c) == null and c.category == 'Cloud'}">
             <div class="card-content">
                 <h3 th:text="${c.title}"></h3>
@@ -42,11 +54,11 @@
                 <p class="about-language" th:text="${c.language}"></p>
                 <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
             </div>
-        </div>
+        </section>
     </div>
     <h2 class="category-title">Data science Courses</h2>
     <div class="cards">
-        <div class="card" th:each="c: ${courses}"
+        <section id="ds" class="card" th:each="c: ${courses}"
              th:if="${user.getUserCourse(c) == null and c.category == 'Data science'}">
             <div class="card-content">
                 <h3 th:text="${c.title}"></h3>
@@ -57,11 +69,11 @@
                 <p class="about-language" th:text="${c.language}"></p>
                 <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
             </div>
-        </div>
+        </section>
     </div>
     <h2 class="category-title">Cybersecurity Courses</h2>
     <div class="cards">
-        <div class="card" th:each="c: ${courses}"
+        <section id="cyber" class="card" th:each="c: ${courses}"
              th:if="${user.getUserCourse(c) == null and c.category == 'Cybersecurity'}">
             <div class="card-content">
                 <h3 th:text="${c.title}"></h3>
@@ -72,11 +84,11 @@
                 <p class="about-language" th:text="${c.language}"></p>
                 <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
             </div>
-        </div>
+        </section>
     </div>
     <h2 class="category-title">Sustainability Courses</h2>
     <div class="cards">
-        <div class="card" th:each="c: ${courses}"
+        <section id="sustain" class="card" th:each="c: ${courses}"
              th:if="${user.getUserCourse(c) == null and c.category == 'Sustainability'}">
             <div class="card-content">
                 <h3 th:text="${c.title}"></h3>
@@ -87,18 +99,18 @@
                 <p class="about-language" th:text="${c.language}"></p>
                 <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
             </div>
-        </div>
+        </section>
     </div>
     <h2 class="category-title">Your Courses</h2>
-    <div th:if="${user.getCourses().size() != 0}" class="progress-cards">
+    <section id="yc" th:if="${user.getCourses().size() != 0}" class="progress-cards">
         <div class="row">
             <div class="column">
                 <h3 class="sub-header">In Progress</h3>
                 <div class="card-container-progress">
                     <div th:each="c: ${courses}" th:if="${user.getUserCourse(c) != null and user.getUserCourse(c).getEndDate() == null}" class="card">
                         <div class="card-content">
-                            <h3 th:text="${c.title}"></h3>
                             <p th:text="${c.category}"></p>
+                            <h3 th:text="${c.title}"></h3>
                             <p>Start Date:<br/> <span th:text="${user.getUserCourse(c).getStartDate()}"></span></p>
                             <div class="card-actions">
                                 <a th:href="@{/resume/{courseId}(courseId=${c.id})}">Resume Learning</a>
@@ -108,22 +120,23 @@
                     </div>
                 </div>
             </div>
+        </div>
             <div class="column">
                 <h3 class="sub-header">Finished</h3>
                 <div class="card-container-progress">
                     <div th:each="c: ${courses}" th:if="${user.getUserCourse(c) != null and user.getUserCourse(c).getEndDate() != null}" class="card">
                         <div class="card-content">
-                            <h3 th:text="${c.title}"></h3>
                             <p th:text="${c.category}"></p>
+                            <h3 th:text="${c.title}"></h3>
                             <p>Start Date:<br/> <span th:text="${user.getUserCourse(c).getStartDate()}"></span></p>
                             <p>Completion Date:<br/> <span th:text="${user.getUserCourse(c).getEndDate()}"></span></p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+    </section>
 </div>
 <script th:src="@{/js/sidebar.js}"></script>
+<script th:src="@{/js/dashboard-sidebar.js}"></script>
 </body>
 </html>
