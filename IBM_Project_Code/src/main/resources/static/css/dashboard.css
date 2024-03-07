@@ -81,6 +81,10 @@ body {
     color: #007bff;
     padding-left: 15px;
 }
+.card h4{
+    color: #464646;
+    padding-left: 15px;
+}
 .dashboard{
     text-decoration: underline;
 }

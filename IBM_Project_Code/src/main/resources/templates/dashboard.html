@@ -15,6 +15,7 @@
 <div class="sidebar" id="sidebar">
     <ul>
         <li class="sidebar-header">On the page</li>
+        <li><a href="#trending">Trending Courses</a></li>
         <li><a href="#ai">Artificial Intelligence</a></li>
         <li><a href="#cloud">Cloud</a></li>
         <li><a href="#ds">Data Science</a></li>
@@ -26,6 +27,25 @@
 <h2 class="skillsBuildTitle">IBM Skills Build Courses</h2>
 <div class="container">
     <div th:replace="~{fragments/header :: header}"></div>
+    <h2 class="category-title">Trending Courses</h2>
+    <div class="cards">
+        <div th:if="${#lists.isEmpty(topCourses)}">
+            <p>No trending courses currently available.</p>
+        </div>
+        <section id="trending" class="card" th:each="c: ${topCourses}"
+                 th:if="${user.getUserCourse(c) == null}">
+            <div class="card-content">
+                <h4 th:text="${c.category}"></h4>
+                <h3 th:text="${c.title}"></h3>
+                <p th:text="${c.duration}"></p>
+                <div class="description-box">
+                    <p th:text="${c.description}"></p>
+                </div>
+                <p class="about-language" th:text="${c.language}"></p>
+                <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
+            </div>
+        </section>
+    </div>
     <h2 class="category-title">Artificial Intelligence Courses</h2>
     <div class="cards">
         <section id="ai" class="card" th:each="c: ${courses}"

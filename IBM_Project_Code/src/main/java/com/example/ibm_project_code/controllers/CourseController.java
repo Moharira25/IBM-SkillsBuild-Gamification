@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.List;
 
 
 @Controller
@@ -37,6 +38,9 @@ public class CourseController {
         model.addAttribute("courses", courseRepo.findAll());
         model.addAttribute("user", user);
         model.addAttribute("userId", user.getId());
+
+        List<Course> topCourses = courseRepo.findTop3ByOrderByCourseUsersDesc();
+        model.addAttribute("topCourses", topCourses);
 
         return "dashboard";
     }
@@ -100,7 +104,6 @@ public class CourseController {
         Course course = courseRepo.findById(courseId);
         return "redirect:" + course.getLink();
     }
-
 
     private User userAuth() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
