@@ -61,11 +61,9 @@ body {
 .card {
     background: #fafcff;
     border-radius: 8px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px;
     transition: transform 0.3s;
-    margin-left: 10px;
-    margin-right: 10px;
     display: flex;
     flex-direction: column;
     flex: 0 0 100%;
@@ -118,12 +116,32 @@ body {
     padding-left: 15px;
     padding-right: 15px;
 }
+.progress-cards{
+    width: 100%;
+}
+.row{
+    display: flex;
+    flex-wrap: wrap;
+}
+.column {
+    flex: 50%;
+}
+.card-container-progress{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+}
+.sub-header{
+    color: #525252;
+    text-decoration: underline;
+}
+
 @media (min-width: 500px) {
     .card {
         flex-basis: calc(50% - 10px);
     }
     .card:not(:last-child) {
-        margin-right: 20px;
+        margin-right: 12px;
     }
 }
 @media (min-width: 700px) {
@@ -131,7 +149,7 @@ body {
         flex-basis: calc(calc(100% / 3) - 20px);
     }
     .card:not(:last-child) {
-        margin-right: 30px;
+        margin-right: 22px;
     }
 }
 @media (min-width: 1100px) {
@@ -139,6 +157,6 @@ body {
         flex-basis: calc(33% - 30px);
     }
     .card:not(:last-child) {
-        margin-right: 40px;
+        margin-right: 32px;
     }
 }
