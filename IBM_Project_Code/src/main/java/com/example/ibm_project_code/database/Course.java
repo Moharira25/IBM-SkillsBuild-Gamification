@@ -26,6 +26,8 @@ public class Course {
     private String category;
     @Column
     private int points;
+    @Column
+    private int courseUsers;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<UserCourse> enrollments;

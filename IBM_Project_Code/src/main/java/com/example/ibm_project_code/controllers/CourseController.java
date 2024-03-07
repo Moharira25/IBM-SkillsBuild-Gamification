@@ -56,11 +56,14 @@ public class CourseController {
         userCourse.setStartDate(formattedStartDate);
         userCourse.setUser(user);
 
+
         //saving the userCourse to the database.
         userCourseRepository.save(userCourse);
 
         user.getCourses().add(userCourse);
         course.getEnrollments().add(userCourse);
+
+        course.setCourseUsers(course.getCourseUsers() + 1);
 
         userRepo.save(user);
         courseRepo.save(course);
