@@ -17,10 +17,17 @@ body {
 }
 .myCourse {
     display: block;
-    color: #007bff;
+    color: #208bff;
+}
+.myCourse-disabled {
+    display: block;
+    color: #8a8a8a;
 }
 .centered-heading{
     color: #525252;
+}
+.card-actions a{
+    color: #208bff;
 }
 .sidebar {
     position: fixed;
@@ -78,7 +85,6 @@ body {
     opacity: 0.7;
 }
 .card a{
-    color: #007bff;
     padding-left: 15px;
 }
 .card h4{

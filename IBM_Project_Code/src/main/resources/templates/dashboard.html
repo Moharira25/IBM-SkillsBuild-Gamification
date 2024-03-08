@@ -29,8 +29,7 @@
         <div th:if="${#lists.isEmpty(topCourses)}">
             <p>No trending courses currently available.</p>
         </div>
-        <section id="trending" class="card" th:each="c: ${topCourses}"
-                 th:if="${user.getUserCourse(c) == null}">
+        <section id="trending" class="card" th:each="c: ${topCourses}">
             <div class="card-content">
                 <h4 th:text="${c.category}"></h4>
                 <h3 th:text="${c.title}"></h3>
@@ -39,7 +38,12 @@
                     <p th:text="${c.description}"></p>
                 </div>
                 <p class="about-language" th:text="${c.language}"></p>
-                <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
+                <th:block th:if="${not user.getCourses().contains(c.getId())}">
+                    <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
+                </th:block>
+                <th:block th:if="${user.getCourses().contains(c.getId())}">
+                    <a class="myCourse-disabled" >Already enrolled on course</a>
+                </th:block>
             </div>
         </section>
     </div>
