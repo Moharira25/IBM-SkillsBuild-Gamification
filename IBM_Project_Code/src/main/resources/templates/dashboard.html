@@ -38,12 +38,7 @@
                     <p th:text="${c.description}"></p>
                 </div>
                 <p class="about-language" th:text="${c.language}"></p>
-                <th:block th:if="${not user.getCourses().contains(c.getId())}">
-                    <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
-                </th:block>
-                <th:block th:if="${user.getCourses().contains(c.getId())}">
-                    <a class="myCourse-disabled" >Already enrolled on course</a>
-                </th:block>
+                <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
             </div>
         </section>
     </div>
