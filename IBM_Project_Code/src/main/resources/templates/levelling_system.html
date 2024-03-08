@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="levelling_style.css">
 </head>
 <body>
-<audio id="orbSound" src="orb.mp3"></audio>
-<audio id="levelUpSound" src="levelup.mp3"></audio>
+<!--<audio id="orbSound" src="orb.mp3"></audio>-->
+<!--<audio id="levelUpSound" src="levelup.mp3"></audio>-->
 <div class="container">
     <div id="levelBar" class="level-container">
         <div class="line-1"></div>
@@ -45,8 +45,8 @@
         clickCount++;
         const newWidth = increment * clickCount;
         levelBar.querySelector('.fill-increment').style.width = `${newWidth}%`;
-        orbSound.currentTime = 0;
-        orbSound.play();
+        // orbSound.currentTime = 0;
+        // orbSound.play();
         if (clickCount === maxClicks) {
             setTimeout(() => {
                 levelUp();
@@ -61,8 +61,8 @@
     function levelUp() {
         currentLevel++;
         showPopUp(`Level ${currentLevel}`);
-        levelSound.currentTime = 0;
-        levelSound.play();
+        // levelSound.currentTime = 0;
+        // levelSound.play();
     }
 
     function resetLevelBar() {
