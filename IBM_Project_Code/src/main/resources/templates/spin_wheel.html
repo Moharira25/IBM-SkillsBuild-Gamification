@@ -39,6 +39,7 @@
     let modal = document.getElementById('modal');
     let modalContent = document.getElementById('modal-content');
     let isSpinning = false;
+    let stoppedSegment = null; // Variable to store the segment on which the wheel stops
 
     function calculateSectionIndex(rotation) {
         const degreesPerSection = 360 / 8; // Adjust if your wheel has a different number of sections
@@ -65,6 +66,7 @@
         setTimeout(() => {
             let finalDegrees = finalRotation % 360;
             let sectionIndex = calculateSectionIndex(finalDegrees);
+            stoppedSegment = sectionIndex + 1; // Segment numbers start from 1
             let sectionSpan = document.querySelectorAll('.number span')[sectionIndex];
             let sectionContent = sectionSpan.textContent.trim();
 
@@ -78,8 +80,8 @@
     };
 
     function startTimer() {
-        let remainingTime = 10;
-        let button = document.getElementById('spinbutton');
+        var remainingTime = 10;
+        var button = document.getElementById('spinbutton');
         button.disabled = true;
         button.innerText = "Please wait " + remainingTime + " seconds";
         button.style.fontSize = "7px";
@@ -126,6 +128,7 @@
         modalContent.innerHTML = 'Congratulations, you have won ' + sectionContent + ' on your next course!';
         overlay.style.display = 'block';
         modal.style.display = 'block';
+        localStorage.setItem('segmentValue', sectionContent);
     }
 
     function closeModal() {

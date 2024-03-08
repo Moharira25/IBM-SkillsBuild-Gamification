@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leveling System</title>
-    <link rel="stylesheet" href="levelling_style.css">
+    <link rel="stylesheet" href="../static/css/levelling_style.css">
 </head>
 <body>
 <!--<audio id="orbSound" src="orb.mp3"></audio>-->
@@ -30,6 +30,8 @@
     let currentLevel = 1;
     let isAnimating = false;
     let hideTimeout;
+    const segmentValue = localStorage.getItem('segmentValue');
+    const multiplier = parseFloat(segmentValue.substring(1)); // Extract the multiplier from the segment value
     const orbSound = new Audio('orb.mp3');
     const levelSound = new Audio('levelup.mp3');
 
@@ -43,7 +45,7 @@
     function incrementLevel() {
         const increment = 100 / maxClicks;
         clickCount++;
-        const newWidth = increment * clickCount;
+        const newWidth = increment * clickCount * multiplier; // Multiply the increment by the multiplier
         levelBar.querySelector('.fill-increment').style.width = `${newWidth}%`;
         // orbSound.currentTime = 0;
         // orbSound.play();
