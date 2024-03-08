@@ -4,12 +4,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>IBM Skillsbuild Dashboard</title>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/sidebar.css}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
-    <script th:src="@{/js/landing.js}"></script>
-    <script th:src="@{/js/dashboard-sidebar.js}"></script>
 </head>
 <body>
 <div class="sidebar" id="sidebar">
@@ -49,7 +46,7 @@
     <h2 class="category-title">Artificial Intelligence Courses</h2>
     <div class="cards">
         <section id="ai" class="card" th:each="c: ${courses}"
-             th:if="${user.getUserCourse(c) == null and c.category == 'Artificial intelligence'}">
+                 th:if="${user.getUserCourse(c) == null and c.category == 'Artificial intelligence'}">
             <div class="card-content">
                 <h3 th:text="${c.title}"></h3>
                 <p th:text="${c.duration}"></p>
@@ -64,7 +61,7 @@
     <h2 class="category-title">Cloud Courses</h2>
     <div class="cards">
         <section id="cloud" class="card" th:each="c: ${courses}"
-             th:if="${user.getUserCourse(c) == null and c.category == 'Cloud'}">
+                 th:if="${user.getUserCourse(c) == null and c.category == 'Cloud'}">
             <div class="card-content">
                 <h3 th:text="${c.title}"></h3>
                 <p th:text="${c.duration}"></p>
@@ -79,7 +76,7 @@
     <h2 class="category-title">Data science Courses</h2>
     <div class="cards">
         <section id="ds" class="card" th:each="c: ${courses}"
-             th:if="${user.getUserCourse(c) == null and c.category == 'Data science'}">
+                 th:if="${user.getUserCourse(c) == null and c.category == 'Data science'}">
             <div class="card-content">
                 <h3 th:text="${c.title}"></h3>
                 <p th:text="${c.duration}"></p>
@@ -94,7 +91,7 @@
     <h2 class="category-title">Cybersecurity Courses</h2>
     <div class="cards">
         <section id="cyber" class="card" th:each="c: ${courses}"
-             th:if="${user.getUserCourse(c) == null and c.category == 'Cybersecurity'}">
+                 th:if="${user.getUserCourse(c) == null and c.category == 'Cybersecurity'}">
             <div class="card-content">
                 <h3 th:text="${c.title}"></h3>
                 <p th:text="${c.duration}"></p>
@@ -109,7 +106,7 @@
     <h2 class="category-title">Sustainability Courses</h2>
     <div class="cards">
         <section id="sustain" class="card" th:each="c: ${courses}"
-             th:if="${user.getUserCourse(c) == null and c.category == 'Sustainability'}">
+                 th:if="${user.getUserCourse(c) == null and c.category == 'Sustainability'}">
             <div class="card-content">
                 <h3 th:text="${c.title}"></h3>
                 <p th:text="${c.duration}"></p>
@@ -127,7 +124,9 @@
             <div class="column">
                 <h3 class="sub-header">In Progress</h3>
                 <div class="card-container-progress">
-                    <div th:each="c: ${courses}" th:if="${user.getUserCourse(c) != null and user.getUserCourse(c).getEndDate() == null}" class="card">
+                    <div th:each="c: ${courses}"
+                         th:if="${user.getUserCourse(c) != null and user.getUserCourse(c).getEndDate() == null}"
+                         class="card">
                         <div class="card-content">
                             <p th:text="${c.category}"></p>
                             <h3 th:text="${c.title}"></h3>
@@ -141,22 +140,28 @@
                 </div>
             </div>
         </div>
-            <div class="column">
-                <h3 class="sub-header">Finished</h3>
-                <div class="card-container-progress">
-                    <div th:each="c: ${courses}" th:if="${user.getUserCourse(c) != null and user.getUserCourse(c).getEndDate() != null}" class="card">
-                        <div class="card-content">
-                            <p th:text="${c.category}"></p>
-                            <h3 th:text="${c.title}"></h3>
-                            <p>Start Date:<br/> <span th:text="${user.getUserCourse(c).getStartDate()}"></span></p>
-                            <p>Completion Date:<br/> <span th:text="${user.getUserCourse(c).getEndDate()}"></span></p>
-                        </div>
+        <div class="column">
+            <h3 class="sub-header">Finished</h3>
+            <div class="card-container-progress">
+                <div th:each="c: ${courses}"
+                     th:if="${user.getUserCourse(c) != null and user.getUserCourse(c).getEndDate() != null}"
+                     class="card">
+                    <div class="card-content">
+                        <p th:text="${c.category}"></p>
+                        <h3 th:text="${c.title}"></h3>
+                        <p>Start Date:<br/> <span th:text="${user.getUserCourse(c).getStartDate()}"></span></p>
+                        <p>Completion Date:<br/> <span th:text="${user.getUserCourse(c).getEndDate()}"></span></p>
                     </div>
                 </div>
             </div>
+        </div>
     </section>
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 <script th:src="@{/js/sidebar.js}"></script>
 <script th:src="@{/js/dashboard-sidebar.js}"></script>
+<script th:src="@{/js/landing.js}"></script>
+
 </body>
 </html>
