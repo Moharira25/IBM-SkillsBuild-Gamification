@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leveling System</title>
+    <link rel="stylesheet" href="levelling_style.css">
+</head>
+<body>
+<audio id="orbSound" src="orb.mp3"></audio>
+<audio id="levelUpSound" src="levelup.mp3"></audio>
+<div class="container">
+    <div id="levelBar" class="level-container">
+        <div class="line-1"></div>
+        <div class="line-2"></div>
+        <div class="line-3"></div>
+        <div class="line-4"></div>
+        <div class="line-5"></div>
+        <div class="line-6"></div>
+        <div class="line-7"></div>
+        <div class="line-8"></div>
+        <div class="line-9"></div>
+        <div class="fill-increment"></div>
+    </div>
+</div>
+<script>
+    const levelBar = document.getElementById('levelBar');
+    const maxClicks = 10;
+    let clickCount = 0;
+    let currentLevel = 1;
+    let isAnimating = false;
+    let hideTimeout;
+    const orbSound = new Audio('orb.mp3');
+    const levelSound = new Audio('levelup.mp3');
+
+    document.addEventListener('keydown', (event) => {
+        if (event.code === 'Space' && clickCount < maxClicks && !isAnimating) {
+            showLevelBarSmooth();
+            setTimeout(incrementLevel, 500);
+        }
+    });
+
+    function incrementLevel() {
+        const increment = 100 / maxClicks;
+        clickCount++;
+        const newWidth = increment * clickCount;
+        levelBar.querySelector('.fill-increment').style.width = `${newWidth}%`;
+        orbSound.currentTime = 0;
+        orbSound.play();
+        if (clickCount === maxClicks) {
+            setTimeout(() => {
+                levelUp();
+                resetLevelBar();
+            }, 1000);
+        } else {
+            clearTimeout(hideTimeout);
+            hideTimeout = setTimeout(hideLevelBar, 5000);
+        }
+    }
+
+    function levelUp() {
+        currentLevel++;
+        showPopUp(`Level ${currentLevel}`);
+        levelSound.currentTime = 0;
+        levelSound.play();
+    }
+
+    function resetLevelBar() {
+        clickCount = 0;
+        levelBar.querySelector('.fill-increment').style.width = '0';
+    }
+
+    function showLevelBarSmooth() {
+        isAnimating = true;
+        levelBar.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+        levelBar.style.transform = 'translateY(0)';
+        levelBar.style.opacity = '1';
+        setTimeout(() => {
+            isAnimating = false;
+            levelBar.style.transition = '';
+        }, 500);
+    }
+
+    function hideLevelBar() {
+        levelBar.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+        levelBar.style.transform = 'translateY(-100%)';
+        levelBar.style.opacity = '0';
+        setTimeout(() => {
+            levelBar.style.transition = '';
+        }, 500);
+    }
+
+    function showPopUp(message) {
+        const popUp = document.createElement('div');
+        popUp.classList.add('pop-up');
+        popUp.textContent = message;
+        document.body.appendChild(popUp);
+        setTimeout(() => {
+            popUp.remove();
+        }, 3000);
+    }
+</script>
+</body>
+</html>
