@@ -42,6 +42,10 @@ public class CourseController {
         List<Course> topCourses = courseRepo.findTop3ByOrderByCourseUsersDesc();
         model.addAttribute("topCourses", topCourses);
 
+        // Fetch distinct categories and add to the model
+        List<String> topics = courseRepo.findDistinctCategories();
+        model.addAttribute("topics", topics);
+
         return "dashboard";
     }
 

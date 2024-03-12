@@ -56,6 +56,11 @@ public class User {
     @Column(nullable = false)
     private Timestamp lastModifiedDate;
 
+    // Marketplace-specific fields
+    @Column(nullable = false)
+    private double balance; // User's balance for transactions in the marketplace
+
+    // Associations with other entities
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
@@ -70,41 +75,42 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL)
     private List<BadgeCollection> badgeCollection = new ArrayList<>();
 
+    // This could represent items owned by the user in the marketplace
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UserItem> userItems = new ArrayList<>();
+
     @Column
     private int overallPoints = 0;
+
     @PreUpdate
     protected void onUpdate() {
         lastModifiedDate = Timestamp.from(Instant.now());
     }
 
-    // Constructors, getters and setters will be handled by Lombok
+    // Additional methods
 
-    //A method to check if a course have been started
-    public boolean courseStarted(Course course){
-        boolean started = false;
-        for (UserCourse c: courses){
-            if (Objects.equals(course, c.getCourse())){
+    // Check if a course has been started
+    public boolean courseStarted(Course course) {
+        for (UserCourse c : courses) {
+            if (Objects.equals(course, c.getCourse())) {
                 return c.getStartDate() != null;
             }
-
         }
-        return started;
+        return false;
     }
 
-    //Getting the UserCourse by the course.
-    public UserCourse getUserCourse(Course course){
-        for (UserCourse c: courses){
-            if (Objects.equals(course, c.getCourse())){
+    // Get the UserCourse by the course
+    public UserCourse getUserCourse(Course course) {
+        for (UserCourse c : courses) {
+            if (Objects.equals(course, c.getCourse())) {
                 return c;
             }
         }
-        //if the course does not exist
+        // If the course does not exist
         return null;
     }
 
-    public void resetBio(){
+    public void resetBio() {
         this.bio = "This user has not added to their own Bio.";
     }
-
-
 }

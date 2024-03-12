@@ -19,7 +19,7 @@ public class LeaderboardController {
 
     @GetMapping("/leaderboard")
     public String leaderboard(Model model) {
-        List<User> users = userRepo.findAll();
+        List<User> users = (List<User>) userRepo.findAll();
         //sorting users by overall points
         users.sort(new Comparator<User>() {
             @Override

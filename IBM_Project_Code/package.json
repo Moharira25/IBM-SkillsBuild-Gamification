@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "autoprefixer": "^10.4.13",
+    "flowbite": "^2.3.0",
+    "postcss": "^8.4.20"
+  },
+  "scripts": {
+    "build:css": "postcss src/main/resources/static/css/main.css -o src/main/resources/static/css/output.css",
+    "watch:css": "postcss src/main/resources/static/css/main.css -o src/main/resources/static/css/output.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}

@@ -1,10 +1,14 @@
 package com.example.ibm_project_code;
 
 import com.example.ibm_project_code.database.Course;
+import com.example.ibm_project_code.database.Item;
+import com.example.ibm_project_code.database.Listing;
 import com.example.ibm_project_code.database.User;
 import com.example.ibm_project_code.repositories.CourseRepository;
+import com.example.ibm_project_code.repositories.ItemRepository;
 import com.example.ibm_project_code.repositories.UserRepository;
 import com.example.ibm_project_code.services.CustomUserDetailsService;
+import com.example.ibm_project_code.repositories.ListingRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -16,9 +20,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Random; // Import the Random class
+
 
 import static java.time.Instant.now;
 
@@ -31,6 +38,10 @@ public class Application implements CommandLineRunner {
     private CourseRepository courseRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ItemRepository itemRepository;
+    @Autowired
+    private ListingRepository listingRepository;
 
     // loads .env data correctly
 /*    static {
@@ -93,6 +104,47 @@ public class Application implements CommandLineRunner {
         u3.setOverallPoints(10);
         u3.resetBio();
         userRepository.save(u3);
+
+        String[] itemTypes = {"Profile Avatars", "Avatar Frames", "Profile Backgrounds",
+                              "Customizable Titles", "Chat Bubbles", "Flair", "XP Boosters",
+                              "Second attempt for time trials", "Streak Savers",
+                              "Timed access to exclusive learning materials",
+                              "Collectibles", "Event-specific items",
+                              "Anniversary commemorative items"};
+
+        Random random = new Random();
+        Item.Rarity[] rarities = Item.Rarity.values();
+
+        for (String type : itemTypes) {
+            Item item = new Item();
+            item.setName(type);
+            item.setDescription("Description for " + type);
+            item.setCategory("Category for " + type);
+            Item.Rarity randomRarity = rarities[random.nextInt(rarities.length)];
+            item.setRarity(randomRarity);
+            itemRepository.save(item);
+        }
+        List<User> users = (List<User>) userRepository.findAll();
+        List<Item> items = itemRepository.findAll();
+        Random rand = new Random();
+
+        if (!users.isEmpty() && !items.isEmpty()) {
+            for (int i = 0; i < 100; i++) {
+                Listing listing = new Listing();
+                User seller = users.get(rand.nextInt(users.size()));
+                Item item = items.get(rand.nextInt(items.size()));
+
+                listing.setSeller(seller);
+                listing.setItem(item);
+                listing.setPrice(10.0 + (100 - 10) * rand.nextDouble()); // Random price between 10 and 100
+                listing.setStatus(Listing.ListingStatus.ACTIVE); // or randomly set status if you have different statuses
+
+                listingRepository.save(listing);
+            }
+        } else {
+            System.out.println("Users or Items not found. Please ensure your database is populated with users and items before adding listings.");
+        }
+
 
 
         //scrapping course-data (college students pathway only) from IBM skills build website.

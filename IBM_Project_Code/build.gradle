@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.2'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'com.moowork.node' version '1.3.1' // Adjust version if needed
+
 }
 
 group = 'com.example'
@@ -47,8 +49,4 @@ dependencies {
 
     implementation "org.jsoup:jsoup:1.15.3" //jsoup dependency
 
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
 }
