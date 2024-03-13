@@ -56,6 +56,12 @@ public class User {
     @Column(nullable = false)
     private Timestamp lastModifiedDate;
 
+    @OneToMany(mappedBy = "User")
+    private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "User")
+    private List<Rating> ratings = new ArrayList<>();
+
     // Marketplace-specific fields
     @Column(nullable = false)
     private double balance; // User's balance for transactions in the marketplace
