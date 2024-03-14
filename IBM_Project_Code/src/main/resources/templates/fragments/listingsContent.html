@@ -11,28 +11,17 @@
 <div th:replace="~{fragments/header :: header}"></div>
 
 <div class="relative overflow-x-auto mt-32 mr-32 ml-32">
-    <!-- Search form -->
-    <form th:action="@{/market/listings}" method="get">
-        <div class="pb-4 dark:bg-gray-900">
-            <label for="table-search" class="sr-only">Search</label>
-            <div class="relative mt-1">
-                <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center pl-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                </div>
-                <input type="text" name="search" id="table-search"
-                       class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                       placeholder="Search for items" th:value="${search}">
-                <button type="submit"
-                        class="absolute right-2.5 bottom-2.5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Search
-                </button>
+    <div class="pb-4 dark:bg-gray-900">
+        <label for="table-search" class="sr-only">Search</label>
+        <div class="relative mt-1">
+            <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
             </div>
+            <input type="text" id="table-search" class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search for items" onkeyup="filterTable()">
         </div>
-    </form>
+    </div>
 </div>
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mr-32 ml-32">
@@ -85,5 +74,7 @@
     </ul>
 </nav>
 
+<script th:src="@{/js/landing.js}"></script>
+<script th:src="@{/js/market.js}"></script>
 </body>
 </html>
