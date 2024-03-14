@@ -129,14 +129,15 @@ public class Application implements CommandLineRunner {
         Random rand = new Random();
 
         if (!users.isEmpty() && !items.isEmpty()) {
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 10000; i++) {
                 Listing listing = new Listing();
                 User seller = users.get(rand.nextInt(users.size()));
                 Item item = items.get(rand.nextInt(items.size()));
 
                 listing.setSeller(seller);
                 listing.setItem(item);
-                listing.setPrice(10.0 + (100 - 10) * rand.nextDouble()); // Random price between 10 and 100
+                // Randomly set the price between 10 and 1000, number should be to 2 decimal places
+                listing.setPrice((double) Math.round((rand.nextDouble() * 990 + 10) * 100) / 100);
                 listing.setStatus(Listing.ListingStatus.ACTIVE); // or randomly set status if you have different statuses
 
                 listingRepository.save(listing);

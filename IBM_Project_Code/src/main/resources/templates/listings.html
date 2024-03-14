@@ -5,45 +5,66 @@
     <title>Listings</title>
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/output.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 
 <div th:replace="~{fragments/header :: header}"></div>
 
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-32 mr-32 ml-32">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-        <tr>
-            <th scope="col" class="px-6 py-3">Item Name</th>
-            <th scope="col" class="px-6 py-3">Quantity</th>
-            <th scope="col" class="px-6 py-3">Starting at</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="listing : ${listingsPage.content}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <td th:text="${listing.itemName}" class="px-6 py-4 font-medium text-gray-900 dark:text-white">Item Name</td>
-            <td th:text="${listing.quantity}" class="px-6 py-4">Quantity</td>
-            <td th:text="'$' + ${listing.minPrice}" class="px-6 py-4">Starting at Price</td>
-        </tr>
+<div id="loadingIndicator">
 
-        </tbody>
-    </table>
+    <div role="status" class="max-w-md p-4 space-y-4 border border-gray-200 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700">
+        <div class="flex items-center justify-between">
+            <div>
+                <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+            </div>
+            <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+        </div>
+        <div class="flex items-center justify-between pt-4">
+            <div>
+                <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+            </div>
+            <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+        </div>
+        <div class="flex items-center justify-between pt-4">
+            <div>
+                <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+            </div>
+            <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+        </div>
+        <div class="flex items-center justify-between pt-4">
+            <div>
+                <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+            </div>
+            <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+        </div>
+        <div class="flex items-center justify-between pt-4">
+            <div>
+                <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+            </div>
+            <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+        </div>
+        <span class="sr-only">Loading...</span>
+    </div>
 </div>
 
-<nav class="flex items-center justify-between pt-4 mr-32" aria-label="Table navigation">
-    <span class="text-sm font-normal text-gray-500 dark:text-gray-400 ml-32">Showing <span class="font-semibold text-gray-900 dark:text-white" th:text="${listingsPage.number * listingsPage.size + 1}">1</span> to <span class="font-semibold text-gray-900 dark:text-white" th:text="${listingsPage.number * listingsPage.size + listingsPage.numberOfElements}">10</span> of <span class="font-semibold text-gray-900 dark:text-white" th:text="${listingsPage.totalElements}">1000</span></span>
-    <ul class="inline-flex items-center -space-x-px text-sm">
-        <li th:if="${listingsPage.hasPrevious()}">
-            <a th:href="@{/market/listings(page=${listingsPage.number - 1}, size=${listingsPage.size})}" class="px-3 py-2 bg-blue-500 text-white hover:bg-blue-600 rounded-l-lg transition-colors duration-200">Previous</a>
-        </li>
-        <li th:each="i : ${#numbers.sequence(0, listingsPage.totalPages - 1)}">
-            <a th:href="@{/market/listings(page=${i}, size=${listingsPage.size})}" th:text="${i + 1}" class="px-3 py-2 bg-gray-200 text-gray-800 hover:bg-blue-500 hover:text-white transition-colors duration-200" th:classappend="${i == listingsPage.number ? 'bg-blue-500 text-white' : ''}"></a>
-        </li>
-        <li th:if="${listingsPage.hasNext()}">
-            <a th:href="@{/market/listings(page=${listingsPage.number + 1}, size=${listingsPage.size})}" class="px-3 py-2 bg-blue-500 text-white hover:bg-blue-600 rounded-r-lg transition-colors duration-200">Next</a>
-        </li>
-    </ul>
-</nav>
+<div id="contentPlaceholder" style="display: none;"></div>
+
+<script>
+    $(document).ready(function() {
+        // Asynchronously load the listings content
+        $("#contentPlaceholder").load("/market/listings", function() {
+            // Once the content is loaded, hide the loading indicator and show the content
+            $("#loadingIndicator").hide();
+            $("#contentPlaceholder").show();
+        });
+    });
+</script>
 
 </body>
 </html>

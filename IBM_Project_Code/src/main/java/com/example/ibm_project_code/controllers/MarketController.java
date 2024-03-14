@@ -30,7 +30,7 @@ public class MarketController {
         User user = userAuth();
         Long id = user != null ? user.getId() : null;
         model.addAttribute("userId", id);
-        model.addAttribute("user", user);
+        model.addAttribute("user", user); // Add the whole User object to the model if needed
     }
 
     @GetMapping("/market")
@@ -42,17 +42,23 @@ public class MarketController {
     public String showListings(Model model,
                                @RequestParam(name = "page", defaultValue = "0") int page,
                                @RequestParam(name = "size", defaultValue = "10") int size) {
+        return showListingsContent(model, page, size); // Redirect internally to use the same method for initial load
+    }
+
+    @GetMapping("/market/listings/content")
+    public String showListingsContent(Model model,
+                                      @RequestParam(name = "page", defaultValue = "0") int page,
+                                      @RequestParam(name = "size", defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<ListingSummary> listingsPage = listingRepository.findSummaryOfActiveListings(pageable);
 
         model.addAttribute("listingsPage", listingsPage);
-        return "listings";
+        return "fragments/listingsContent"; // This should point to the Thymeleaf fragment responsible for displaying the listings
     }
 
     private User userAuth() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        return userRepo.findByUsername(username).orElse(null);
+        String username = auth.getName(); // Get the logged-in username
+        return userRepo.findByUsername(username).orElse(null); // Retrieve the user by username
     }
 }
-

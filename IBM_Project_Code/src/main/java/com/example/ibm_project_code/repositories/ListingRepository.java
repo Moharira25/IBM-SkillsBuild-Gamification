@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,5 +21,6 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
            "FROM Listing l WHERE l.status = 'ACTIVE' GROUP BY l.item.name")
     Page<ListingSummary> findSummaryOfActiveListings(Pageable pageable);
 
-
+    // add a new query method to search for listings by item name
+    Page<ListingSummary> findByItemNameContainingIgnoreCase(String search, Pageable pageable);
 }
