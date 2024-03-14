@@ -39,13 +39,6 @@ public class MarketController {
     }
 
     @GetMapping("/market/listings")
-    public String showListings(Model model,
-                               @RequestParam(name = "page", defaultValue = "0") int page,
-                               @RequestParam(name = "size", defaultValue = "10") int size) {
-        return showListingsContent(model, page, size); // Redirect internally to use the same method for initial load
-    }
-
-    @GetMapping("/market/listings/content")
     public String showListingsContent(Model model,
                                       @RequestParam(name = "page", defaultValue = "0") int page,
                                       @RequestParam(name = "size", defaultValue = "10") int size) {
@@ -53,7 +46,7 @@ public class MarketController {
         Page<ListingSummary> listingsPage = listingRepository.findSummaryOfActiveListings(pageable);
 
         model.addAttribute("listingsPage", listingsPage);
-        return "fragments/listingsContent"; // This should point to the Thymeleaf fragment responsible for displaying the listings
+        return "listings";
     }
 
     private User userAuth() {
