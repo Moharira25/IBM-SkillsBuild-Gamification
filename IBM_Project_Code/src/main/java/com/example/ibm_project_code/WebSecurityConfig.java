@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -31,7 +32,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/register", "/css/**", "/js/**", "/img/**").permitAll()
+                        .requestMatchers("/", "/register", "/css/**", "/js/**", "/img/**", "/feedback/submitFeedback").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

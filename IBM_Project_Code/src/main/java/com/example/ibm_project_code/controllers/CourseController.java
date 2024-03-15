@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -80,7 +81,7 @@ public class CourseController {
     }
 
     @RequestMapping("/finish/{courseId}")
-    public String finish(@PathVariable int courseId) {
+    public String finish(@PathVariable int courseId, RedirectAttributes redirectAttributes) {
         User user = userAuth();
         Course course = courseRepo.findById(courseId);
 
@@ -97,6 +98,10 @@ public class CourseController {
 
         userRepo.save(user);
         courseRepo.save(course);
+
+        redirectAttributes.addFlashAttribute("justFinishedCourse", true);
+        redirectAttributes.addFlashAttribute("finishedCourseId", courseId);
+
 
         return "redirect:/dashboard";
     }

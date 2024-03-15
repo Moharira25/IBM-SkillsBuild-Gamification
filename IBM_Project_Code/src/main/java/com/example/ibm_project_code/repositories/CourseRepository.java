@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface CourseRepository extends CrudRepository<Course, Integer> {
-    public Course findById(int id);
+    public Course findById(long id);
     public List<Course> findTop3ByOrderByCourseUsersDesc();
     @Query("SELECT DISTINCT c.category FROM Course c")
     List<String> findDistinctCategories();

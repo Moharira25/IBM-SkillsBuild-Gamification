@@ -22,8 +22,10 @@ public class Feedback {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    //todo add course id make it link to course
+    // canNOT be null in final version
     @ManyToOne
-    @JoinColumn(name = "course_id", nullable = false)
+    @JoinColumn(name = "course_id", nullable = true)
     private Course course;
 }
 

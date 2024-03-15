@@ -24,6 +24,22 @@
 <h2 class="skillsBuildTitle">IBM Skills Build Courses</h2>
 <div class="container">
     <div th:replace="~{fragments/header :: header}"></div>
+    <!--    -------------------------------------------------------------   -->
+    <div th:if="${justFinishedCourse}" id="feedbackModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form th:action="@{/feedback/submitFeedback}" method="post">
+                <input type="number" name="rating" min="1" max="5" required>
+                <textarea name="comment" placeholder="Enter your review here..." required></textarea>
+                <!-- Add a hidden field for the course ID -->
+                <input type="hidden" name="courseId" th:value="${courseId}">
+                <button type="submit">Submit Feedback</button>
+            </form>
+        </div>
+    </div>
+    <!--    -------------------------------------------------------------   -->
+
+
     <h2 class="category-title">Trending Courses</h2>
     <div class="cards">
         <div th:if="${#lists.isEmpty(topCourses)}">
@@ -161,6 +177,27 @@
 <script th:src="@{/js/sidebar.js}"></script>
 <script th:src="@{/js/dashboard-sidebar.js}"></script>
 <script th:src="@{/js/landing.js}"></script>
+<script th:src="@{/js/feedbackHandler.js}"></script>
+
+<script th:if="${justFinishedCourse}">
+    document.addEventListener('DOMContentLoaded', function() {
+        showModal();
+    });
+
+    function showModal() {
+        var modal = document.getElementById('feedbackModal');
+        modal.style.display = 'block';
+        var span = document.getElementsByClassName('close')[0];
+        span.onclick = function() {
+            modal.style.display = 'none';
+        };
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+    }
+</script>
 
 </body>
 </html>
