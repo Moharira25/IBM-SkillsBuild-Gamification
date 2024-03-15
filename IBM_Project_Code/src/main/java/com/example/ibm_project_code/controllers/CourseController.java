@@ -95,8 +95,12 @@ public class CourseController {
         int newPoints = user.getOverallPoints() + course.getPoints();
         user.setOverallPoints(newPoints);
 
+
+
         userRepo.save(user);
         courseRepo.save(course);
+
+        user.getUserCourse(course).setJustCompleted(true);
 
         return "redirect:/dashboard";
     }

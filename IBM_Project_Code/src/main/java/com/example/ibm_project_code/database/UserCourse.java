@@ -23,6 +23,7 @@ public class UserCourse {
     private String startDate;
     private String endDate;
     private boolean isDone = false;
+    private boolean justCompleted = false;
 
 }
 

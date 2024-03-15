@@ -56,11 +56,9 @@ public class User {
     @Column(nullable = false)
     private Timestamp lastModifiedDate;
 
-    @OneToMany(mappedBy = "User")
-    private List<Review> reviews = new ArrayList<>();
-
-    @OneToMany(mappedBy = "User")
-    private List<Rating> ratings = new ArrayList<>();
+    // map user reviews to user
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<Feedback> feedbacks = new ArrayList<>();
 
     // Marketplace-specific fields
     @Column(nullable = false)

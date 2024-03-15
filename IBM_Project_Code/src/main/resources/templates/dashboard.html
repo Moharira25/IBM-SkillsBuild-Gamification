@@ -24,6 +24,17 @@
 <h2 class="skillsBuildTitle">IBM Skills Build Courses</h2>
 <div class="container">
     <div th:replace="~{fragments/header :: header}"></div>
+    <div id="feedbackModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form action="/submitFeedback" method="post">
+                <input type="number" name="rating" min="1" max="5" required>
+                <textarea name="comment" placeholder="Enter your review here..." required></textarea>
+                <button type="submit">Submit Feedback</button>
+            </form>
+        </div>
+    </div>
+
     <h2 class="category-title">Trending Courses</h2>
     <div class="cards">
         <div th:if="${#lists.isEmpty(topCourses)}">
