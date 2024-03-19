@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>IBM Skillsbuild Dashboard</title>
     <link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/sidebar.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/feedbackHandler.css}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
 </head>
 <body>
@@ -27,11 +28,12 @@
     <!--    -------------------------------------------------------------   -->
     <div th:if="${justFinishedCourse}" id="feedbackModal" class="modal">
         <div class="modal-content">
+            <h2 th:text=rate></h2>
             <span class="close">&times;</span>
             <form th:action="@{/feedback/submitFeedback}" method="post">
                 <input type="number" name="rating" min="1" max="5" required>
                 <textarea name="comment" placeholder="Enter your review here..." required></textarea>
-                <!-- Add a hidden field for the course ID -->
+
                 <input type="hidden" name="courseId" th:value="${courseId}">
                 <button type="submit">Submit Feedback</button>
             </form>
