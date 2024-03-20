@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en">
 <head>
     <title>Daily Wheel Spin</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/spin_design.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/spin_design.css}">
 </head>
 <body>
-<button class="go-home" onclick="goToHome()">Go To Home Page</button>
 <div class="container">
     <div class="Spin_Button" id="spinbutton">
         <div class="arrow"></div>
@@ -28,6 +27,6 @@
     </div>
     <div id="timer"></div>
 </div>
-<script src="../static/js/spinwheel.js"></script>
+<script th:src="@{/js/spinwheel.js}"></script>
 </body>
 </html>

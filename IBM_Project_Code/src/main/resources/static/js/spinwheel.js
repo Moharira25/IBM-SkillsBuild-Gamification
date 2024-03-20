@@ -1,4 +1,4 @@
-const SPIN_INTERVAL_MS = 0;
+const SPIN_INTERVAL_MS = 10000;
 const LAST_SPIN_KEY = 'lastSpin';
 
 let wheel = document.querySelector('.Wheel');
@@ -18,7 +18,7 @@ function calculateSectionIndex(rotation) {
 
 spinButton.onclick = function () {
     if (!canSpinWheel() || isSpinning) {
-        alert('You can only spin the wheel once every 10 seconds.');
+        alert('You can only spin the wheel once every 24 hours!');
         return;
     }
 
@@ -92,12 +92,33 @@ function lockButton() {
     }, 6000);
 }
 
+function shouldShowModal() {
+    const lastSpinTime = localStorage.getItem(LAST_SPIN_KEY);
+    if (lastSpinTime) {
+        const currentTime = new Date().getTime();
+        const timeSinceLastSpin = currentTime - parseInt(lastSpinTime);
+        return timeSinceLastSpin >= SPIN_INTERVAL_MS;
+    } else {
+        return true; // Show modal if last spin time is not available
+    }
+}
+
+function showSpinModal() {
+    if (shouldShowModal()) {
+        displayModal();
+        localStorage.setItem(LAST_SPIN_KEY, new Date().getTime().toString());
+    }
+    showSpinModal()
+}
+
+
 function displayModal(sectionContent) {
     modalContent.innerHTML = 'Congratulations, you have won ' + sectionContent + ' on your next course!';
     overlay.style.display = 'block';
     modal.style.display = 'block';
     localStorage.setItem('segmentValue', sectionContent);
 }
+
 
 function closeModal() {
     overlay.style.display = 'none';

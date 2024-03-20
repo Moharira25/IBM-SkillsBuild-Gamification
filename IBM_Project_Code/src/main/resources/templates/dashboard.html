@@ -7,6 +7,7 @@
     <link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/sidebar.css}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/modal.css}">
 </head>
 <body>
 <div class="sidebar" id="sidebar">
@@ -156,11 +157,36 @@
         </div>
     </section>
 </div>
+
+
+<dialog id="my_modal_2" class="modal">
+    <div class="modal-box">
+        <iframe th:src="@{/spin_wheel}"></iframe>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+        <button onclick="closeModal()">X</button>
+    </form>
+</dialog>
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <script th:src="@{/js/sidebar.js}"></script>
 <script th:src="@{/js/dashboard-sidebar.js}"></script>
 <script th:src="@{/js/landing.js}"></script>
-
+<script>
+    function closeModal() {
+        var modal = document.getElementById('my_modal_2');
+        modal.close();
+    }
+    // Check if 24 hours have passed and show modal
+    $(document).ready(function() {
+        var lastShown = localStorage.getItem('lastShown');
+        if (!lastShown || (Date.now() - lastShown > 10000)) {
+            var modal = document.getElementById('my_modal_2');
+            modal.showModal();
+            localStorage.setItem('lastShown', Date.now());
+        }
+    });
+</script>
 </body>
 </html>

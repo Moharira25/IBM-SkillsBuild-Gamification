@@ -9,7 +9,8 @@ body {
     display: flex;
     justify-content: center;align-items: center;
     min-height: 100vh;
-    background: gray;
+    background: rgba(255, 255, 255, 0.3);
+    border-color: white;
 }
 
 .container {
@@ -19,20 +20,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-color: white;
 }
 
-button.go-home {
-    position: fixed;
-    bottom: 21px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
 .container .Spin_Button {
     position: absolute;
