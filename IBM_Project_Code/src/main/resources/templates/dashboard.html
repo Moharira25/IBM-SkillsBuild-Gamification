@@ -29,11 +29,11 @@
     <div th:if="${justFinishedCourse}" id="feedbackModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <form th:action="@{/feedback/submitFeedback}" method="post">
-                <input type="number" name="rating" min="1" max="5" required>
-                <textarea name="comment" placeholder="Enter your review here..." required></textarea>
+            <form th:action="@{/feedback/submitFeedback/{courseId}(courseId=${finishedCourseId})}" method="post" th:object="${feedback}">
+                <input type="number" name="rating" min="1" max="5" required th:value="${rating}">
+                <textarea name="comment" placeholder="Enter your review here..." required th:text="${comment}"></textarea>
+                <p th:text="${finishedCourseId}"></p>
 
-                <input type="hidden" name="courseId" th:value="${courseId}">
                 <button type="submit">Submit Feedback</button>
             </form>
         </div>

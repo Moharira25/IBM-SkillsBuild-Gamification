@@ -27,5 +27,10 @@ public class Feedback {
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = true)
     private Course course;
-}
+
+
+
+    }
+
+
 

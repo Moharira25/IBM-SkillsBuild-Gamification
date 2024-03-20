@@ -2,6 +2,7 @@ package com.example.ibm_project_code.controllers;
 
 
 import com.example.ibm_project_code.database.Course;
+import com.example.ibm_project_code.database.Feedback;
 import com.example.ibm_project_code.database.User;
 import com.example.ibm_project_code.database.UserCourse;
 import com.example.ibm_project_code.repositories.CourseRepository;
@@ -81,7 +82,7 @@ public class CourseController {
     }
 
     @RequestMapping("/finish/{courseId}")
-    public String finish(@PathVariable int courseId, RedirectAttributes redirectAttributes) {
+    public String finish(@PathVariable int courseId, RedirectAttributes redirectAttributes, Model model) {
         User user = userAuth();
         Course course = courseRepo.findById(courseId);
 
@@ -101,6 +102,9 @@ public class CourseController {
 
         redirectAttributes.addFlashAttribute("justFinishedCourse", true);
         redirectAttributes.addFlashAttribute("finishedCourseId", courseId);
+        model.addAttribute("course",course);
+        model.addAttribute("feedback", new Feedback());
+
 
 
         return "redirect:/dashboard";
