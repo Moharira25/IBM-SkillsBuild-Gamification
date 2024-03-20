@@ -13,6 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @Controller
 public class ProfileController {
     @Autowired
@@ -23,8 +27,33 @@ public class ProfileController {
         User user = userAuth();
         model.addAttribute("user", user);
         model.addAttribute("dto", new DataTransferObject());
+        String currentUsername = user.getUsername();
+        List<User> potentialFriends = StreamSupport.stream(userRepo.findAll().spliterator(), false)
+                .filter(u -> !u.getUsername().equals(currentUsername))
+                .collect(Collectors.toList());
+
+        model.addAttribute("potentialFriends", potentialFriends);
 
         return "profile";
+    }
+    @PostMapping("/addFriend")
+    public String addFriend(@RequestParam("friendId") Long friendId) {
+        User user = userAuth();
+        User friend = userRepo.findById(friendId).orElse(null);
+        if (friend != null) {
+            user.getFriends().add(friend);
+            userRepo.save(user);
+        }
+        return "redirect:/profile";
+    }
+    @GetMapping("/friendProfile/{id}")
+    public String viewFriendProfile(@PathVariable Long id, Model model) {
+        User friend = userRepo.findById(id).orElse(null);
+        if (friend == null) {
+            return "redirect:/profile";
+        }
+        model.addAttribute("friend", friend);
+        return "friendProfile";
     }
 
     @PostMapping("/profile")
@@ -50,4 +79,6 @@ public class ProfileController {
         // Retrieve the user by username
         return userRepo.findByUsername(username).orElse(null);
     }
+
+
 }
