@@ -30,6 +30,9 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .headers(headers -> headers
+                        .frameOptions().disable() // Disable X-Frame-Options
+                )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/register", "/css/**", "/js/**", "/img/**").permitAll()
                         .anyRequest().authenticated()
