@@ -28,7 +28,6 @@
     <!--    -------------------------------------------------------------   -->
     <div th:if="${justFinishedCourse}" id="feedbackModal" class="modal">
         <div class="modal-content">
-            <h2 th:text=rate></h2>
             <span class="close">&times;</span>
             <form th:action="@{/feedback/submitFeedback}" method="post">
                 <input type="number" name="rating" min="1" max="5" required>
