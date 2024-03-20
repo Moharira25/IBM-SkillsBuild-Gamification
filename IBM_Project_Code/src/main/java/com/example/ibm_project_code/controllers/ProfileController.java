@@ -1,10 +1,11 @@
 package com.example.ibm_project_code.controllers;
 
-
 import com.example.ibm_project_code.database.DataTransferObject;
+import com.example.ibm_project_code.database.FriendRequest;
 import com.example.ibm_project_code.database.User;
-
+import com.example.ibm_project_code.repositories.FriendRequestRepository;
 import com.example.ibm_project_code.repositories.UserRepository;
+
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -22,27 +24,67 @@ public class ProfileController {
     @Autowired
     private UserRepository userRepo;
 
+    @Autowired
+    private FriendRequestRepository friendRequestRepository;
+
     @GetMapping("/profile")
     public String viewProfile(Model model) {
         User user = userAuth();
         model.addAttribute("user", user);
         model.addAttribute("dto", new DataTransferObject());
-        String currentUsername = user.getUsername();
-        List<User> potentialFriends = StreamSupport.stream(userRepo.findAll().spliterator(), false)
-                .filter(u -> !u.getUsername().equals(currentUsername))
-                .collect(Collectors.toList());
 
+        // Update potential friends to exclude users who have sent or received a pending friend request
+        List<User> allUsers = StreamSupport.stream(userRepo.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+        List<User> potentialFriends = new ArrayList<>();
+
+        for (User u : allUsers) {
+            boolean isFriend = user.getFriends().contains(u);
+            boolean hasPendingRequest = !friendRequestRepository.findBySenderAndReceiver(user, u).isEmpty() ||
+                    !friendRequestRepository.findBySenderAndReceiver(u, user).isEmpty();
+            if (!u.equals(user) && !isFriend && !hasPendingRequest) {
+                potentialFriends.add(u);
+            }
+        }
+        // Fetch and display incoming friend requests
+        List<FriendRequest> friendRequests = friendRequestRepository.findByReceiverAndStatus(user, "PENDING");
         model.addAttribute("potentialFriends", potentialFriends);
+        model.addAttribute("friendRequests", friendRequests);
 
         return "profile";
     }
-    @PostMapping("/addFriend")
-    public String addFriend(@RequestParam("friendId") Long friendId) {
-        User user = userAuth();
-        User friend = userRepo.findById(friendId).orElse(null);
-        if (friend != null) {
-            user.getFriends().add(friend);
-            userRepo.save(user);
+
+    @PostMapping("/sendFriendRequest")
+    public String sendFriendRequest(@RequestParam("receiverId") Long receiverId) {
+        User sender = userAuth();
+        User receiver = userRepo.findById(receiverId).orElse(null);
+        if (receiver != null && !receiver.equals(sender)) {
+            // Prevent duplicate friend requests
+            boolean requestExists = friendRequestRepository.findBySenderAndReceiver(sender, receiver).stream()
+                    .anyMatch(request -> "PENDING".equals(request.getStatus()));
+            if (!requestExists) {
+                FriendRequest friendRequest = new FriendRequest();
+                friendRequest.setSender(sender);
+                friendRequest.setReceiver(receiver);
+                friendRequest.setStatus("PENDING");
+                friendRequestRepository.save(friendRequest);
+            }
+        }
+        return "redirect:/profile";
+    }
+
+    @PostMapping("/acceptFriendRequest")
+    public String acceptFriendRequest(@RequestParam("requestId") Long requestId) {
+        FriendRequest friendRequest = friendRequestRepository.findById(requestId).orElse(null);
+        if (friendRequest != null && "PENDING".equals(friendRequest.getStatus())) {
+            User sender = friendRequest.getSender();
+            User receiver = friendRequest.getReceiver();
+            sender.getFriends().add(receiver);
+            receiver.getFriends().add(sender); // Assuming mutual friendship
+            friendRequest.setStatus("ACCEPTED");
+            userRepo.save(sender);
+            userRepo.save(receiver);
+            friendRequestRepository.save(friendRequest);
         }
         return "redirect:/profile";
     }
@@ -54,6 +96,22 @@ public class ProfileController {
         }
         model.addAttribute("friend", friend);
         return "friendProfile";
+    }
+    @PostMapping("/removeFriend")
+    public String removeFriend(@RequestParam("friendId") Long friendId) {
+        User user = userAuth();
+        User friend = userRepo.findById(friendId).orElse(null);
+
+        if (friend != null && user.getFriends().contains(friend)) {
+            user.getFriends().remove(friend);
+            // Optional: Remove the user from the friend's list for bidirectional removal
+            // friend.getFriends().remove(user);
+            userRepo.save(user);
+
+            // userRepo.save(friend);
+        }
+
+        return "redirect:/profile";
     }
 
     @PostMapping("/profile")
@@ -76,7 +134,6 @@ public class ProfileController {
     private User userAuth() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName(); // Get the username
-        // Retrieve the user by username
         return userRepo.findByUsername(username).orElse(null);
     }
 

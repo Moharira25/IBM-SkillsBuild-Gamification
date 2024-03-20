@@ -47,9 +47,21 @@
             <ul class="list-unstyled">
                 <li th:each="user : ${potentialFriends}">
                     <span th:text="${user.firstName} + ' ' + ${user.lastName}"></span>
-                    <form th:action="@{/addFriend}" method="post">
-                        <input type="hidden" name="friendId" th:value="${user.id}" />
-                        <input type="submit" value="Add Friend" class="btn btn-sm btn-secondary"/>
+                    <form th:action="@{/sendFriendRequest}" method="post">
+                        <input type="hidden" name="receiverId" th:value="${user.id}" />
+                        <input type="submit" value="Send Friend Request" class="btn btn-sm btn-info"/>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-12">
+            <h2>Incoming Friend Requests</h2>
+            <ul class="list-unstyled">
+                <li th:each="request : ${friendRequests}">
+                    <span th:text="${request.sender.firstName} + ' ' + ${request.sender.lastName}"></span>
+                    <form th:action="@{/acceptFriendRequest}" method="post" style="display: inline;">
+                        <input type="hidden" name="requestId" th:value="${request.id}" />
+                        <input type="submit" value="Accept" class="btn btn-sm btn-success"/>
                     </form>
                 </li>
             </ul>
@@ -58,8 +70,12 @@
         <div class="col-md-3">
             <h2>Your Friends</h2>
             <ul class="list-unstyled">
-                <li th:each="friend : ${user.friends}">
-                    <a th:href="@{/friendProfile/{id}(id=${friend.id})}" th:text="${friend.firstName} + ' ' + ${friend.lastName}"></a>
+                <li th:each="friend : ${user.friends}" class="friend-item">
+                    <a th:href="@{/friendProfile/{id}(id=${friend.id})}" th:text="${friend.firstName} + ' ' + ${friend.lastName}" class="friend-link"></a>
+                    <form th:action="@{/removeFriend}" method="post" class="friend-action">
+                        <input type="hidden" name="friendId" th:value="${friend.id}" />
+                        <input type="submit" value="Remove Friend" class="btn btn-sm btn-danger"/>
+                    </form>
                 </li>
             </ul>
         </div>

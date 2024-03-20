@@ -47,6 +47,26 @@ input[type="text"], textarea {
     border: 1px solid #ddd; /* Subtle border */
     border-radius: 4px; /* Match rounded corners */
 }
+.friend-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /* Adjust spacing between items */
+}
+
+.friend-link {
+    color: #007bff; /* Bootstrap primary color, adjust as needed */
+    text-decoration: none;
+}
+
+.friend-link:hover {
+    color: #0056b3; /* Darker shade for hover effect, adjust as needed */
+    text-decoration: underline;
+}
+
+.friend-action {
+    white-space: nowrap; /* Prevent wrapping of buttons/text */
+}
 
 /*input[type="submit"] {*/
 /*    background-color: #007bff; !* Bootstrap primary color *!*/
