@@ -178,14 +178,11 @@
         var modal = document.getElementById('my_modal_2');
         modal.close();
     }
-    // Check if 24 hours have passed and show modal
     $(document).ready(function() {
-        var lastShown = localStorage.getItem('lastShown');
-        if (!lastShown || (Date.now() - lastShown > 10000)) {
+        setTimeout(function() {
             var modal = document.getElementById('my_modal_2');
             modal.showModal();
-            localStorage.setItem('lastShown', Date.now());
-        }
+        }, 5000); // 5 seconds delay
     });
 </script>
 </body>
