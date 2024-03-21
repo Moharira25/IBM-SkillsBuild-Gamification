@@ -1,9 +1,8 @@
 package com.example.ibm_project_code.controllers;
 
-import com.example.ibm_project_code.database.DataTransferObject;
-import com.example.ibm_project_code.database.FriendRequest;
-import com.example.ibm_project_code.database.User;
+import com.example.ibm_project_code.database.*;
 import com.example.ibm_project_code.repositories.FriendRequestRepository;
+import com.example.ibm_project_code.repositories.UserCourseRepository;
 import com.example.ibm_project_code.repositories.UserRepository;
 
 import io.micrometer.common.util.StringUtils;
@@ -26,6 +25,8 @@ public class ProfileController {
 
     @Autowired
     private FriendRequestRepository friendRequestRepository;
+    @Autowired
+    private UserCourseRepository userCourseRepository;
 
     @GetMapping("/profile")
     public String viewProfile(Model model) {
@@ -94,7 +95,12 @@ public class ProfileController {
         if (friend == null) {
             return "redirect:/profile";
         }
+        List<UserCourse> friendCourses = userCourseRepository.findByUser(friend);
+        List<Course> courses = friendCourses.stream().map(UserCourse::getCourse).collect(Collectors.toList());
+
         model.addAttribute("friend", friend);
+        model.addAttribute("courses", courses);
+
         return "friendProfile";
     }
     @PostMapping("/removeFriend")
