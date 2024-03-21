@@ -2,6 +2,7 @@ package com.example.ibm_project_code.controllers;
 
 
 import com.example.ibm_project_code.database.Course;
+import com.example.ibm_project_code.database.Feedback;
 import com.example.ibm_project_code.database.User;
 import com.example.ibm_project_code.database.UserCourse;
 import com.example.ibm_project_code.repositories.CourseRepository;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -80,7 +82,7 @@ public class CourseController {
     }
 
     @RequestMapping("/finish/{courseId}")
-    public String finish(@PathVariable int courseId) {
+    public String finish(@PathVariable int courseId, RedirectAttributes redirectAttributes, Model model) {
         User user = userAuth();
         Course course = courseRepo.findById(courseId);
 
@@ -97,6 +99,13 @@ public class CourseController {
 
         userRepo.save(user);
         courseRepo.save(course);
+
+        redirectAttributes.addFlashAttribute("justFinishedCourse", true);
+        redirectAttributes.addFlashAttribute("finishedCourseId", courseId);
+        model.addAttribute("course",course);
+        model.addAttribute("feedback", new Feedback());
+
+
 
         return "redirect:/dashboard";
     }
