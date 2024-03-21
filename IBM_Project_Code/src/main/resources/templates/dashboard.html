@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>IBM Skillsbuild Dashboard</title>
     <link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/sidebar.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/feedbackHandler.css}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/modal.css}">
 </head>
 <body>
 <div class="sidebar" id="sidebar">
@@ -25,6 +25,24 @@
 <h2 class="skillsBuildTitle">IBM Skills Build Courses</h2>
 <div class="container">
     <div th:replace="~{fragments/header :: header}"></div>
+    <!--    -------------------------------------------------------------   -->
+    <div th:if="${justFinishedCourse}" id="feedbackModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form th:action="@{/feedback/submitFeedback/{courseId}(courseId=${finishedCourseId})}" method="post" th:object="${feedback}">
+                <p>We'd love your feedback !</p>
+                <input type="number" name="rating" class="square-rating" min="1" max="5" required th:value="${rating}">
+
+                <textarea name="comment" placeholder="Enter your review here..." required th:text="${comment}"></textarea>
+
+
+                <button type="submit">Submit Feedback</button>
+            </form>
+        </div>
+    </div>
+    <!--    -------------------------------------------------------------   -->
+
+
     <h2 class="category-title">Trending Courses</h2>
     <div class="cards">
         <div th:if="${#lists.isEmpty(topCourses)}">
@@ -157,33 +175,32 @@
         </div>
     </section>
 </div>
-
-
-<dialog id="my_modal_2" class="modal">
-    <div class="modal-box">
-        <iframe th:src="@{/spin_wheel}"></iframe>
-    </div>
-    <form method="dialog" class="modal-backdrop">
-        <button onclick="closeModal()">X</button>
-    </form>
-</dialog>
-
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <script th:src="@{/js/sidebar.js}"></script>
 <script th:src="@{/js/dashboard-sidebar.js}"></script>
 <script th:src="@{/js/landing.js}"></script>
-<script>
-    function closeModal() {
-        var modal = document.getElementById('my_modal_2');
-        modal.close();
-    }
-    $(document).ready(function() {
-        setTimeout(function() {
-            var modal = document.getElementById('my_modal_2');
-            modal.showModal();
-        }, 5000); // 5 seconds delay
+<script th:src="@{/js/feedbackHandler.js}"></script>
+
+<script th:if="${justFinishedCourse}">
+    document.addEventListener('DOMContentLoaded', function() {
+        showModal();
     });
+
+    function showModal() {
+        var modal = document.getElementById('feedbackModal');
+        modal.style.display = 'block';
+        var span = document.getElementsByClassName('close')[0];
+        span.onclick = function() {
+            modal.style.display = 'none';
+        };
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+    }
 </script>
+
 </body>
 </html>
