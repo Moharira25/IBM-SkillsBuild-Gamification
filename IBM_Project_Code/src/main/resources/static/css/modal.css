@@ -1,7 +1,7 @@
 .modal {
     position: fixed;
-    top: 80%;
-    left: 35%;
+    top: 55%;
+    left: 45%;
     transform: translate(-50%, -50%);
     width: 80%;
     height: 80%;
@@ -46,4 +46,17 @@ iframe{
 
 .modal-backdrop button:hover {
     background-color: #ccc;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px; /* Adjust top distance as needed */
+    right: 10px; /* Adjust right distance as needed */
+    background-color: skyblue;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 8px 12px;
+    font-size: 16px;
 }
