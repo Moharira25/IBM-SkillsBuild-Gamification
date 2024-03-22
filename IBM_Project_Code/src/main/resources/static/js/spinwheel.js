@@ -64,7 +64,7 @@ function startTimer() {
             button.style.textAlign = "";
             clearInterval(intervalId);
         } else {
-            button.innerText = "Please wait " + remainingTime + " seconds";
+            button.innerText = "Please wait 24 hours";
         }
     }, 1000);
 }
@@ -92,23 +92,31 @@ function lockButton() {
     }, 6000);
 }
 
-function shouldShowModal() {
-    const lastSpinTime = localStorage.getItem(LAST_SPIN_KEY);
-    if (lastSpinTime) {
-        const currentTime = new Date().getTime();
-        const timeSinceLastSpin = currentTime - parseInt(lastSpinTime);
-        return timeSinceLastSpin >= SPIN_INTERVAL_MS;
-    } else {
-        return true; // Show modal if last spin time is not available
-    }
-}
-
 function showSpinModal() {
     if (shouldShowModal()) {
         displayModal();
         localStorage.setItem(LAST_SPIN_KEY, new Date().getTime().toString());
     }
     showSpinModal()
+}
+
+$(document).ready(function() {
+    if (shouldShowModal()) {
+        displayModal();
+        localStorage.setItem(LAST_SPIN_KEY, new Date().getTime().toString());
+    }
+});
+
+function shouldShowModal() {
+    const lastSpinTime = localStorage.getItem(LAST_SPIN_KEY);
+    if (lastSpinTime) {
+        const currentTime = new Date().getTime();
+        const timeSinceLastSpin = currentTime - parseInt(lastSpinTime);
+        const hoursSinceLastSpin = timeSinceLastSpin / (1000 * 60 * 60);
+        return hoursSinceLastSpin >= 24;
+    } else {
+        return true; // Show modal if last spin time is not available
+    }
 }
 
 
