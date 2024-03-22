@@ -6,6 +6,7 @@
     <title>IBM Skillsbuild Dashboard</title>
     <link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/sidebar.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/modal.css}">
     <link th:href="@{/css/feedbackHandler.css}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
 </head>
@@ -26,7 +27,7 @@
 <div class="container">
     <div th:replace="~{fragments/header :: header}"></div>
     <!--    -------------------------------------------------------------   -->
-    <div th:if="${justFinishedCourse}" id="feedbackModal" class="modal">
+    <div th:if="${justFinishedCourse}" id="feedbackModal" class="modal1">
         <div class="modal-content">
             <span class="close">&times;</span>
             <form th:action="@{/feedback/submitFeedback/{courseId}(courseId=${finishedCourseId})}" method="post" th:object="${feedback}">
@@ -175,6 +176,14 @@
         </div>
     </section>
 </div>
+
+<div id="my_modal_2" class="modal" style="display: none;">
+    <div class="modal-box">
+        <button class="close-modal" onclick="closeModal()">Close</button>
+        <iframe th:src="@{/spin_wheel}"></iframe>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <script th:src="@{/js/sidebar.js}"></script>
@@ -182,7 +191,7 @@
 <script th:src="@{/js/landing.js}"></script>
 <script th:src="@{/js/feedbackHandler.js}"></script>
 
-<script th:if="${justFinishedCourse}">
+<script  th:if="${justFinishedCourse}">
     document.addEventListener('DOMContentLoaded', function() {
         showModal();
     });
@@ -200,6 +209,30 @@
             }
         };
     }
+</script>
+<script>
+    function closeModal() {
+        $('#my_modal_2').hide();
+    }
+
+    function showDelayedModal() {
+        $('#my_modal_2').show();
+        var currentTime = new Date().getTime();
+        localStorage.setItem('lastDisplayedTime', currentTime);
+    }
+
+    $(document).ready(function() {
+        var lastDisplayedTime = localStorage.getItem('lastDisplayedTime');
+        var currentTime = new Date().getTime();
+
+        if (!lastDisplayedTime || (currentTime - lastDisplayedTime > (24 * 60 * 60 * 1000))) {
+            setTimeout(showDelayedModal, 5000);
+        } else {
+            // Schedule the modal to appear again after 30 seconds have elapsed since the last display
+            var timeDifference = (24 * 60 * 60 * 1000) - (currentTime - lastDisplayedTime);
+            setTimeout(showDelayedModal, timeDifference);
+        }
+    });
 </script>
 
 </body>
