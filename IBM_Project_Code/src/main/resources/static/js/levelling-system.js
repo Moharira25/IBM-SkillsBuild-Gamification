@@ -5,42 +5,47 @@ let currentLevel = 1;
 let isAnimating = false;
 let hideTimeout;
 const segmentValue = localStorage.getItem('segmentValue');
-const multiplier = parseFloat(segmentValue.substring(1)); // Extract the multiplier from the segment value
+let multiplier = segmentValue ? parseFloat(segmentValue.substring(1)) : 1; // Default multiplier to 1 if segmentValue is null or undefined
 const orbSound = new Audio('orb.mp3');
 const levelSound = new Audio('levelup.mp3');
 
-document.addEventListener('keydown', (event) => {
-    if (event.code === 'Space' && clickCount < maxClicks && !isAnimating) {
-        showLevelBarSmooth();
-        setTimeout(incrementLevel, 500);
-    }
-});
+// Retrieve level progress from localStorage if available
+const savedLevelProgress = localStorage.getItem('levelProgress');
+if (savedLevelProgress) {
+    const savedProgress = parseFloat(savedLevelProgress);
+    levelBar.querySelector('.fill-increment').style.width = `${savedProgress}%`;
+    clickCount = Math.floor(savedProgress / (100 / maxClicks));
+}
 
 function incrementLevel() {
-    const increment = 100 / maxClicks;
+    const baseIncrement = 100 / maxClicks; // Base increment
+    const increment = baseIncrement * multiplier; // Adjusted increment with multiplier
+    const previousWidth = parseFloat(levelBar.querySelector('.fill-increment').style.width) || 0; // Get previous width
+    const newWidth = previousWidth + increment; // Calculate new width by adding the increment
     clickCount++;
-    const newWidth = increment * clickCount * multiplier; // Multiply the increment by the multiplier
     levelBar.querySelector('.fill-increment').style.width = `${newWidth}%`;
-    // orbSound.currentTime = 0;
-    // orbSound.play();
-    if (clickCount === maxClicks) {
+    // Store progress in localStorage
+    localStorage.setItem('levelProgress', `${newWidth}%`);
+    // Check if the progress bar is full (reached 100% width)
+    if (newWidth >= 100) {
         setTimeout(() => {
             levelUp();
             resetLevelBar();
+            localStorage.removeItem('levelProgress'); // Clear progress after level up
+            clickCount = 0; // Reset click count
+            multiplier = segmentValue ? parseFloat(segmentValue.substring(1)) : 1; // Reset multiplier to default after level up
         }, 1000);
     } else {
         clearTimeout(hideTimeout);
         hideTimeout = setTimeout(hideLevelBar, 5000);
     }
 }
-
 function levelUp() {
     currentLevel++;
     showPopUp(`Level ${currentLevel}`);
     // levelSound.currentTime = 0;
     // levelSound.play();
 }
-
 function resetLevelBar() {
     clickCount = 0;
     levelBar.querySelector('.fill-increment').style.width = '0';

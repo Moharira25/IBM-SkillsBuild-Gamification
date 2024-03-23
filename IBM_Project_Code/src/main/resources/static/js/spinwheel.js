@@ -1,6 +1,5 @@
-const SPIN_INTERVAL_MS = 10000;
+const SPIN_INTERVAL_MS = 24 * 60 * 60 * 1000;
 const LAST_SPIN_KEY = 'lastSpin';
-
 let wheel = document.querySelector('.Wheel');
 let spinButton = document.getElementById('spinbutton');
 let overlay = document.getElementById('overlay');
@@ -51,7 +50,7 @@ function startTimer() {
     var remainingTime = 10;
     var button = document.getElementById('spinbutton');
     button.disabled = true;
-    button.innerText = "Please wait " + remainingTime + " seconds";
+    button.innerText = "Please wait 24 hours";
     button.style.fontSize = "7px";
     button.style.textAlign = "center";
 
