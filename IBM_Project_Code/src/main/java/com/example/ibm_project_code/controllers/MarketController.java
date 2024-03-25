@@ -14,7 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import org.springframework.http.HttpHeaders;
 
 @Controller
 public class MarketController {
@@ -38,15 +41,33 @@ public class MarketController {
         return "market";
     }
 
+
     @GetMapping("/market/listings")
     public String showListings(Model model,
                                @RequestParam(name = "page", defaultValue = "0") int page,
-                               @RequestParam(name = "size", defaultValue = "10") int size) {
+                               @RequestParam(name = "size", defaultValue = "10") int size,
+                               @RequestParam(name = "search", required = false) String search,
+                               @RequestHeader HttpHeaders headers) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<ListingSummary> listingsPage = listingRepository.findSummaryOfActiveListings(pageable);
+        Page<ListingSummary> listingsPage;
+
+        if (search != null && !search.trim().isEmpty()) {
+            listingsPage = listingRepository.findBySearchTerm("%" + search.trim() + "%", pageable);
+        } else {
+            listingsPage = listingRepository.findSummaryOfActiveListings(pageable);
+        }
 
         model.addAttribute("listingsPage", listingsPage);
-        return "listings";
+        model.addAttribute("search", search); // Keep the search term in the model
+
+        // Check if the request is an AJAX request by looking for the "X-Requested-With" header
+        if ("XMLHttpRequest".equals(headers.getFirst("X-Requested-With"))) {
+            // Return ONLY the listingsTableFragment
+            return "fragments/listingsTableFragment";
+        } else {
+            // Return the full page for non-AJAX requests
+            return "listings";
+        }
     }
 
     private User userAuth() {
