@@ -72,7 +72,10 @@
                     <p th:text="${c.description}"></p>
                 </div>
                 <p class="about-language" th:text="${c.language}"></p>
-                <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank">Start Learning</a>
+                <a class="myCourse" th:href="@{/start/{courseId}(courseId=${c.id})}" target="_blank"
+                   th:disabled="${user.getUserCourse(c) != null}"
+                   th:classappend="${user.getUserCourse(c) != null} ? 'disabled-link' : ''"
+                   th:text="${user.getUserCourse(c) != null} ? 'Already Enrolled' : 'Start Learning'">Start Learning</a>
             </div>
         </section>
     </div>

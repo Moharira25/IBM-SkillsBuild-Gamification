@@ -19,10 +19,11 @@ body {
     display: block;
     color: #208bff;
 }
-.myCourse-disabled {
-    display: block;
-    color: #8a8a8a;
+.disabled-link {
+    pointer-events: none;
+    color: #ccc;
 }
+
 .centered-heading{
     color: #525252;
 }
