@@ -1,7 +1,7 @@
 const levelBar = document.getElementById('levelBar');
 const maxClicks = 10;
 let clickCount = 0;
-let currentLevel = 1;
+let currentLevel = localStorage.getItem('currentLevel') || 1;
 let isAnimating = false;
 let hideTimeout;
 const segmentValue = localStorage.getItem('segmentValue');
@@ -40,12 +40,27 @@ function incrementLevel() {
         hideTimeout = setTimeout(hideLevelBar, 5000);
     }
 }
+document.getElementById('currentLevel').textContent = `Level ${currentLevel}`;
 function levelUp() {
     currentLevel++;
+    document.getElementById('currentLevel').textContent = `Level ${currentLevel}`;
+    localStorage.setItem('currentLevel', currentLevel);
     showPopUp(`Level ${currentLevel}`);
     // levelSound.currentTime = 0;
     // levelSound.play();
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('currentLevel').textContent = `Level ${currentLevel}`;
+});
+
+// Reset current level in localStorage when necessary
+function resetLevel() {
+    currentLevel = 1;
+    document.getElementById('currentLevel').textContent = `Level ${currentLevel}`;
+    localStorage.setItem('currentLevel', currentLevel);
+}
+
 function resetLevelBar() {
     clickCount = 0;
     levelBar.querySelector('.fill-increment').style.width = '0';

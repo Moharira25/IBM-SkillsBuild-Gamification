@@ -22,7 +22,21 @@ body, html {
     position: relative;
     overflow: hidden;
     left: 5%;
+}
 
+#currentLevel{
+    height: 25px;
+    font-size: 20px;
+    color: dimgrey;
+    background-color: deepskyblue;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+#currentLevel:hover {
+    background-color: lightskyblue;
 }
 
 .line-1, .line-2, .line-3, .line-4, .line-5, .line-6, .line-7, .line-8, .line-9 {
