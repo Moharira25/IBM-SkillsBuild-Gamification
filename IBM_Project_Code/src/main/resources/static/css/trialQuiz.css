@@ -1,0 +1,99 @@
+
+html,
+* {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+:root {
+    --thumb: #e9f0ff;
+    --darkblue: #208bff;
+}
+body {
+    width: 100%;
+    height: auto;
+}
+
+.quizContainer {
+    display: flex;
+    width: 75%;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+    border-radius: 8px; /* Rounded corners */
+    margin: 10% auto auto auto;
+}
+
+
+
+.question{
+    left: 0;
+    display: flex;
+    align-items: center;
+}
+
+.score{
+    margin-left: auto;
+    border-radius: 25px;
+    padding: 5px;
+    height: 25px;
+    width: 10%;
+    color: #FFFFFF;
+    text-align: center;
+    background-color: #208bff;
+    align-content: center;
+    align-items: center;
+}
+
+h3{
+    color: black !important;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+ .choices {
+     display: flex;
+     flex-direction: column;
+ }
+
+.radio-choice {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 5px 5px;
+    background-color: #e9f0ff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    margin: 5px auto 5px 0;  /*make it appear to far left*/
+    border-radius: 5px;  /* Rounded corners */
+}
+
+
+.review-answer {
+    margin: 0 0 0 auto; /*appear to the far right*/
+}
+
+.button-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    width: 20%;
+    background-color: #208bff; /* Button color */
+    color: white; /* Text color */
+    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #208bff; /* Button border */
+    cursor: pointer; /* Show pointer cursor on hover */
+    margin: auto;
+}
+
+.button:hover {
+    background-color: #0056b3; /* colour goes darker on hover */
+}
+
+@media (max-width: 768px) {
+
+}
+
+

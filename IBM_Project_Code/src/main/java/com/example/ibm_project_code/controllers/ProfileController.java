@@ -36,17 +36,17 @@ public class ProfileController {
 
         // Update potential friends to exclude users who have sent or received a pending friend request
         List<User> allUsers = StreamSupport.stream(userRepo.findAll().spliterator(), false)
-                .collect(Collectors.toList());
+                .toList();
         List<User> potentialFriends = new ArrayList<>();
 
         for (User u : allUsers) {
-            boolean isFriend = user.getFriends().contains(u);
+            //boolean isFriend = user.getFriends().contains(u);
             boolean hasPendingRequest = !friendRequestRepository.findBySenderAndReceiver(user, u).isEmpty() ||
                     !friendRequestRepository.findBySenderAndReceiver(u, user).isEmpty();
-            if (!u.equals(user) && !isFriend && !hasPendingRequest) {
+           // if (!u.equals(user) && !isFriend && !hasPendingRequest) {
                 potentialFriends.add(u);
             }
-        }
+        //}
         // Fetch and display incoming friend requests
         List<FriendRequest> friendRequests = friendRequestRepository.findByReceiverAndStatus(user, "PENDING");
         model.addAttribute("potentialFriends", potentialFriends);
@@ -80,8 +80,8 @@ public class ProfileController {
         if (friendRequest != null && "PENDING".equals(friendRequest.getStatus())) {
             User sender = friendRequest.getSender();
             User receiver = friendRequest.getReceiver();
-            sender.getFriends().add(receiver);
-            receiver.getFriends().add(sender); // Assuming mutual friendship
+            //sender.getFriends().add(receiver);
+            //receiver.getFriends().add(sender); // Assuming mutual friendship
             friendRequest.setStatus("ACCEPTED");
             userRepo.save(sender);
             userRepo.save(receiver);
@@ -108,14 +108,14 @@ public class ProfileController {
         User user = userAuth();
         User friend = userRepo.findById(friendId).orElse(null);
 
-        if (friend != null && user.getFriends().contains(friend)) {
-            user.getFriends().remove(friend);
+        //if (friend != null && user.getFriends().contains(friend)) {
+            //user.getFriends().remove(friend);
             // Optional: Remove the user from the friend's list for bidirectional removal
             // friend.getFriends().remove(user);
             userRepo.save(user);
 
             // userRepo.save(friend);
-        }
+        //}
 
         return "redirect:/profile";
     }

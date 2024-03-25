@@ -1,0 +1,125 @@
+
+html,
+* {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+:root {
+    --thumb: #e9f0ff;
+    --darkblue: #208bff;
+}
+body {
+    width: 100%;
+    height: auto;
+}
+
+a{
+    padding-left: 15px;
+}
+h4{
+    color: #464646;
+    padding-left: 15px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+    border-radius: 8px; /* Rounded corners */
+    margin: 10% auto auto;
+
+}
+
+
+.card{
+    border-bottom: 1px solid gray;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.card-content:hover {
+    transform: translateY(-5px);
+}
+
+h3 {
+    font-size: 22px;
+    color: #525252;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+}
+.description-box {
+    padding: 7px;
+    background: #e5f2ff;
+}
+p {
+    font-size: 16px;
+    color: #525252;
+    padding-left: 15px;
+}
+.about-language{
+    font-size: 16px;
+    color: #525252;
+    padding-left: 15px;
+    padding-top: 10px;
+}
+a {
+    display: inline-block;
+    cursor: pointer;
+    text-align: left;
+    font-weight: bold;
+    margin-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: #208bff;
+}
+
+.icons{
+    align-items: center;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.attempts{
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0); /* Soft shadow for depth */
+    border-radius: 8px; /* Rounded corners */
+    margin-top: 10px;
+
+}
+.attempt{
+    left: 0;
+    padding: 10px 0;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    display: flex;
+    align-items: center;
+}
+
+.score{
+    margin-left: auto;
+    border-radius: 8px;
+    width: 5%;
+    height: 25px;
+    background-color: #208bff;
+    padding: 5px 5px;
+    text-align: center;
+    align-content: center;
+    align-items: center;
+}
+.score-text{
+    color: #FFFFFF;
+    text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+    .container{
+        width: 100%;
+    }
+}
+
+

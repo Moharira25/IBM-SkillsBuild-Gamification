@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/trialQuiz.css}" rel="stylesheet"/>
+    <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="quizContainer">
+    <form class="trialForm" th:action="@{/submit}" method="post" th:object="${userTrial}">
+        <!-- Questions: -->
+        <div class="questions" th:each="q, n : ${questions}">
+            <!-- Question: -->
+            <div class="question-and-choices">
+
+                <div class="question">
+                    <h3 th:text=" ${n.index + 1} +'. '+ ${q.question}"></h3>
+                    <div class="score">
+                        <!-- displayed when the user is taking the quiz -->
+                        <p th:if="${review != true && n.index != 0}" class="score-text" th:text="'7 points'"></p>
+                        <p th:if="${review != true && n.index == 0}" class="score-text" th:text="'2 points'"></p>
+                        <!-- displayed when the user is reviewing the quiz -->
+                        <p th:if="${review == true && n.index == 0 && userTrial.getAnswers().get(n.index).answer == q.answer}" class="score-text" th:text="'2 points'"></p>
+                        <p th:if="${review == true && n.index != 0 && userTrial.getAnswers().get(n.index).answer == q.answer}" class="score-text" th:text="'7 points'"></p>
+                        <p th:if="${review == true && userTrial.getAnswers().get(n.index).answer != q.answer}" class="score-text" th:text="'0 points'"></p>
+
+
+
+
+
+                    </div>
+                </div>
+                <!--in this form:-->
+                <!--input tag with a name attribute that changes dynamically for each question-->
+                <!--input tag with a field set to a question in list question in the user trial-->
+                <!--input tag with a disabled tag only applied if the review flag is true-->
+                <!--label tag for each choice-->
+                <!-- hidden input for the question -->
+                <input type="hidden" th:name="'question_' + ${n.index}" th:value="${q.question}" />
+                <!--choice a-->
+                <div class="choices" th:each="choice: ${q.choices}">
+                    <div class="radio-choice">
+                        <div class="choice">
+                            <input type="radio" th:id="${#ids.seq('choice')}" th:name="'question_' + ${n.index}" th:value="${choice}" th:field="*{answers[__${n.index}__].answer}" th:disabled="${review == true}" required>
+                            <label th:for="${#ids.seq('choice')}" th:text="${choice}"></label><br>
+                        </div>
+                        <p class="review-answer" th:if="${review == true && choice == q.answer}" th:text="'Correct Answer'" style="color: darkgreen"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="button-container">
+            <input type="submit" value="submit" th:name="action" class="button" th:if="${review != true}">
+            <a th:href="@{/trials}" class="button" th:if="${review == true}" style="text-align: center">Close</a>
+        </div>
+    </form>
+</div>
+
+<script th:src="@{/js/sidebar.js}"></script>
+<script th:src="@{/js/landing.js}"></script>
+</body>
+</html>

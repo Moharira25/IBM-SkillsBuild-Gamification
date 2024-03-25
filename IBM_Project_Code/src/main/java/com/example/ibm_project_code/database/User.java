@@ -56,10 +56,10 @@ public class User {
     @Column(nullable = false)
     private Timestamp lastModifiedDate;
 
-    @OneToMany(mappedBy = "User")
+    @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "User")
+    @OneToMany(mappedBy = "user")
     private List<Rating> ratings = new ArrayList<>();
 
     // Marketplace-specific fields
@@ -93,6 +93,15 @@ public class User {
         lastModifiedDate = Timestamp.from(Instant.now());
     }
 
+    @OneToMany(mappedBy = "user")
+    private List<UserTimeTrial> trials = new ArrayList<>();
+
+    //user trial attempts
+    private int attempts = 2;
+
+    //latest trial score for the trials leaderboard
+    private int trialScore = 0;
+
     // Additional methods
 
     // Check if a course has been started
@@ -114,6 +123,30 @@ public class User {
         }
         // If the course does not exist
         return null;
+    }
+
+    // Get the UserTimeTrial by the trial
+    public UserTimeTrial getUserTimeTrial(TimeTrial timeTrial) {
+        for (UserTimeTrial ut : trials) {
+            if (Objects.equals(timeTrial, ut.getTimeTrial())) {
+                return ut;
+            }
+        }
+        // If the course does not exist
+        return null;
+    }
+
+    // Return the highest score for the given old-trial.
+    public int getOldTrialScore(TimeTrial timeTrial) {
+        int score = 0;
+        for (UserTimeTrial ut : trials) {
+            if (Objects.equals(timeTrial, ut.getTimeTrial())) {
+                if (ut.getScore() > score){
+                    score = ut.getScore();
+                }
+            }
+        }
+        return score;
     }
 
     public void resetBio() {

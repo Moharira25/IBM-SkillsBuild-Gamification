@@ -18,7 +18,8 @@
             <th class="lead-thead-th">Rank</th>
             <th class="lead-thead-th">First Name</th>
             <th class="lead-thead-th">Last Name</th>
-            <th class="lead-thead-th">Overall Points</th>
+            <th th:unless="${trialLeaderboard == true}" class="lead-thead-th">Overall Points</th>
+            <th th:if="${trialLeaderboard == true}" class="lead-thead-th">Trial Score</th>
         </tr>
         </thead>
         <tbody class="leaderboard-table">
@@ -27,7 +28,8 @@
             <td class="lead-tbody-td" th:text="${rank.index + 1}"></td>
             <td class="lead-tbody-td" th:text="${user.firstName}">First Name</td>
             <td class="lead-tbody-td" th:text="${user.lastName}">Last Name</td>
-            <td class="lead-tbody-td" th:text="${user.overallPoints}">Overall Points</td>
+            <td th:unless="${trialLeaderboard == true}" class="lead-tbody-td" th:text="${user.overallPoints}">Overall Points</td>
+            <td th:if="${trialLeaderboard == true}" class="lead-tbody-td" th:text="${user.trialScore}">Trial Score</td>
         </tr>
         </tbody>
     </table>
