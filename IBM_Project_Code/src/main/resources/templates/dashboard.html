@@ -46,8 +46,14 @@
             <span class="close">&times;</span>
             <form th:action="@{/feedback/submitFeedback/{courseId}(courseId=${finishedCourseId})}" method="post" th:object="${feedback}">
                 <p>We'd love your feedback !</p>
-                <input type="number" name="rating" class="square-rating" min="1" max="5" required th:value="${rating}">
-
+                <input type="range" name="rating" class="slider-rating" min="1" max="5" required th:value="${rating}">
+                <div class="slider-numbers">
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                </div>
                 <textarea name="comment" placeholder="Enter your review here..." required th:text="${comment}"></textarea>
 
 
