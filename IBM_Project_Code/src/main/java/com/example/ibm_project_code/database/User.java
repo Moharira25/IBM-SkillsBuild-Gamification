@@ -19,10 +19,14 @@ import java.util.Objects;
 @NoArgsConstructor
 public class User {
 
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Setter for username, if not already present
+    @Setter
+    @Getter
     @Column(nullable = false, unique = true)
     private String username;
 
@@ -96,6 +100,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserTimeTrial> trials = new ArrayList<>();
 
+
+
     //user trial attempts
     private int attempts = 2;
 
@@ -148,6 +154,24 @@ public class User {
         }
         return score;
     }
+    // In User.java
+    @ManyToMany
+    @JoinTable(
+            name = "user_friends",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private Collection<User> friends = new ArrayList<>();
+    public void addFriend(User user) {
+        this.friends.add(user);
+        user.friends.add(this);
+    }
+
+    public void removeFriend(User user) {
+        this.friends.remove(user);
+        user.friends.remove(this);
+    }
+
 
     public void resetBio() {
         this.bio = "This user has not added to their own Bio.";
