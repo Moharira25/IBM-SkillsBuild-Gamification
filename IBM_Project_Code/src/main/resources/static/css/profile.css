@@ -8,12 +8,12 @@
 
 /* Styling for the main container */
 .container {
-    max-width: 800px; /* Constrain the width for better readability */
-    background-color: #fff; /* White background for the content area */
+    max-width: 1200px; /* Increased width for better layout */
+    background-color: #fff;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-    border-radius: 8px; /* Rounded corners */
-    margin-top: 6%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin: 2% auto;
 }
 
 /* Titles styling */
@@ -29,7 +29,38 @@ h2.skillsBuildTitle {
     margin-bottom: 20px; /* Space between sections */
     border-radius: 8px; /* Rounded corners */
 }
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+}
 
+h2, h3 {
+    color: #333;
+}
+
+/* Profile Section Styling */
+.profile-info, .edit-profile, .potential-friends, .friend-requests {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.friend-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.friend-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.friend-action .btn {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+}
     /*p {*/
     /*    line-height: 1.6; !* Improve line spacing for readability *!*/
     /*    color: #666; !* Lighter text color for a modern look *!*/

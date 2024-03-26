@@ -14,7 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -33,8 +35,17 @@ public class ProfileController {
         User user = userAuth();
         model.addAttribute("user", user);
         model.addAttribute("dto", new DataTransferObject());
+        Set<User> friends = new HashSet<>(user.getFriends());
+        friends.add(user);
+        List<User> sortedFriends = friends.stream()
+                .sorted((friend1, friend2) -> Integer.compare(friend2.getOverallPoints(), friend1.getOverallPoints()))
+                .collect(Collectors.toList());
 
-        // Update potential friends to exclude users who have sent or received a pending friend request
+        model.addAttribute("sortedFriends", sortedFriends);
+
+
+
+
         List<User> allUsers = StreamSupport.stream(userRepo.findAll().spliterator(), false)
                 .toList();
         List<User> potentialFriends = new ArrayList<>();
@@ -43,16 +54,13 @@ public class ProfileController {
             boolean isFriend = user.getFriends().contains(u);
             boolean hasPendingRequest = !friendRequestRepository.findBySenderAndReceiver(user, u).isEmpty() ||
                     !friendRequestRepository.findBySenderAndReceiver(u, user).isEmpty();
-           if (!u.equals(user) && !isFriend && !hasPendingRequest) {
+            if (!u.equals(user) && !isFriend && !hasPendingRequest) {
                 potentialFriends.add(u);
             }
         }
-        // Fetch and display incoming friend requests
         List<FriendRequest> friendRequests = friendRequestRepository.findByReceiverAndStatus(user, "PENDING");
         model.addAttribute("potentialFriends", potentialFriends);
         model.addAttribute("friendRequests", friendRequests);
-        model.addAttribute("user", user);
-        model.addAttribute("userId", user.getId());
 
         return "profile";
     }
@@ -62,7 +70,6 @@ public class ProfileController {
         User sender = userAuth();
         User receiver = userRepo.findById(receiverId).orElse(null);
         if (receiver != null && !receiver.equals(sender)) {
-            // Prevent duplicate friend requests
             boolean requestExists = friendRequestRepository.findBySenderAndReceiver(sender, receiver).stream()
                     .anyMatch(request -> "PENDING".equals(request.getStatus()));
             if (!requestExists) {
@@ -83,7 +90,7 @@ public class ProfileController {
             User sender = friendRequest.getSender();
             User receiver = friendRequest.getReceiver();
             sender.getFriends().add(receiver);
-            receiver.getFriends().add(sender); // Assuming mutual friendship
+            receiver.getFriends().add(sender);
             friendRequest.setStatus("ACCEPTED");
             userRepo.save(sender);
             userRepo.save(receiver);
@@ -113,25 +120,25 @@ public class ProfileController {
         if (friend != null && user.getFriends().contains(friend)) {
             user.getFriends().remove(friend);
             // Optional: Remove the user from the friend's list for bidirectional removal
-            friend.getFriends().remove(user);
+
             userRepo.save(user);
 
-            userRepo.save(friend);
+             userRepo.save(friend);
         }
 
         return "redirect:/profile";
     }
 
     @PostMapping("/profile")
-    public String editingProfile(@ModelAttribute DataTransferObject dto){
+    public String editingProfile(Model model, @ModelAttribute DataTransferObject dto){
         User user = userAuth();
-        //making sure the values are not null or empty spaces
         String bio = dto.getBio() != null && !StringUtils.isBlank(dto.getBio()) ? dto.getBio(): user.getBio();
         String firstName = dto.getFirstName() != null && !StringUtils.isBlank(dto.getFirstName()) ? dto.getFirstName(): user.getFirstName();
         String lastName = dto.getLastName() != null && !StringUtils.isBlank(dto.getLastName()) ? dto.getLastName(): user.getLastName();
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setBio(bio);
+        model.addAttribute("user", user);
         userRepo.save(user);
 
         return "redirect:/profile";

@@ -6,15 +6,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
-    <link th:href="@{/css/profile.css}" rel="stylesheet"/>
+    <link th:href="@{/css/profile.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
 <div th:replace="fragments/header :: header"></div>
 
-<div class="container">
-    <h2>Friend's Profile</h2>
-    <div>
+<div class="container mt-5">
+
+
+    <div class="profile-info">
+        <h2>Friend's Profile</h2>
         <p><strong>First Name:</strong> <span th:text="${friend.firstName}">Friend's First Name</span></p>
         <p><strong>Last Name:</strong> <span th:text="${friend.lastName}">Friend's Last Name</span></p>
         <p><strong>Bio:</strong> <span th:text="${friend.bio}">Friend's Bio Here</span></p>

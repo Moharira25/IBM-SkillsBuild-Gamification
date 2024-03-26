@@ -7,6 +7,7 @@
     <link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
     <link th:href="@{/css/profile.css}" rel="stylesheet"/>
+    <link th:href="@{/css/leaderboard.css}" rel="stylesheet" type="text/css"/>
     <script th:src="@{/js/landing.js}"></script>
 </head>
 <body>
@@ -24,7 +25,9 @@
         </div>
 
         <div class="col-md-3">
+            <div class="profile-info">
             <h2>Edit Profile</h2>
+            </div>
             <form th:action="@{/profile}" method="post" th:object="${dto}">
                 <div class="form-group">
                     <label for="firstName">First name:</label>
@@ -43,7 +46,9 @@
         </div>
 
         <div class="col-md-3">
+            <div class="profile-info">
             <h2>Potential Friends</h2>
+            </div>
             <ul class="list-unstyled">
                 <li th:each="user : ${potentialFriends}">
                     <span th:text="${user.firstName} + ' ' + ${user.lastName}"></span>
@@ -54,8 +59,9 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-12">
-            <h2>Incoming Friend Requests</h2>
+        <div class="col-md-3">
+            <div class="profile-info">
+                <h2>Incoming Friend Requests</h2></div>
             <ul class="list-unstyled">
                 <li th:each="request : ${friendRequests}">
                     <span th:text="${request.sender.firstName} + ' ' + ${request.sender.lastName}"></span>
@@ -66,7 +72,6 @@
                 </li>
             </ul>
         </div>
-
         <div class="col-md-3">
             <h2>Your Friends</h2>
             <ul class="list-unstyled">
@@ -79,6 +84,27 @@
                 </li>
             </ul>
         </div>
+        <div class="friends-leaderboard">
+            <h2>Friends Leaderboard</h2>
+            <table class="lead-table">
+                <thead>
+                <tr>
+                    <th class="lead-thead-th">Rank</th>
+                    <th class="lead-thead-th">Name</th>
+                    <th class="lead-thead-th">Points</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="friend, iterStat : ${sortedFriends}" th:class="${friend.username == user.username} ? 'lead-highlighted' : null">
+                    <td class="lead-tbody-td" th:text="${iterStat.count}"></td>
+                    <td class="lead-tbody-td" th:text="${friend.firstName} + ' ' + ${friend.lastName}"></td>
+                    <td class="lead-tbody-td" th:text="${friend.overallPoints}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
     </div>
 </div>
 
