@@ -93,8 +93,9 @@ body {
     padding-left: 15px;
 }
 .dashboard{
-    text-decoration: underline;
+    color: #2980b9;
 }
+
 .skillsBuildTitle{
     font-family: "Bradley Hand", cursive;
     text-align: center;

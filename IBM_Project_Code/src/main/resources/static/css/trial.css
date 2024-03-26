@@ -23,20 +23,27 @@ h4{
 .container {
     display: flex;
     flex-direction: column;
-    width: 75%;
+    width: 100%;
     align-items: center;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
     border-radius: 8px; /* Rounded corners */
-    margin: 10% auto auto;
+    margin: 8% auto auto;
 
 }
 
 
 .card{
-    border-bottom: 1px solid gray;
     padding-bottom: 20px;
     padding-top: 20px;
+    width: 75%;
+}
+
+.card-content{
+    margin-bottom: 0.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+    border-radius: 8px; /* Rounded corners */
+    padding: 1.5rem;
 }
 
 .card-content:hover {
@@ -103,23 +110,20 @@ a {
 .score{
     margin-left: auto;
     border-radius: 8px;
-    width: 5%;
+    /**width: 5%;**/
     height: 25px;
     background-color: #208bff;
     padding: 5px 5px;
-    text-align: center;
     align-content: center;
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 .score-text{
     color: #FFFFFF;
-    text-align: center;
+
 }
 
-@media only screen and (max-width: 768px) {
-    .container{
-        width: 100%;
-    }
-}
+
 
 
