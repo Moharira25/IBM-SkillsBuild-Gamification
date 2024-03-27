@@ -1,9 +1,11 @@
 package com.example.ibm_project_code.controllers;
 
 import com.example.ibm_project_code.database.*;
+import com.example.ibm_project_code.repositories.BadgeRepository;
 import com.example.ibm_project_code.repositories.FriendRequestRepository;
 import com.example.ibm_project_code.repositories.UserCourseRepository;
 import com.example.ibm_project_code.repositories.UserRepository;
+import com.example.ibm_project_code.repositories.BadgeCollectionRepository;
 
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +26,14 @@ import java.util.stream.StreamSupport;
 public class ProfileController {
     @Autowired
     private UserRepository userRepo;
-
     @Autowired
     private FriendRequestRepository friendRequestRepository;
     @Autowired
     private UserCourseRepository userCourseRepository;
+    @Autowired
+    private BadgeRepository badgeRepository;
+    @Autowired
+    private BadgeCollectionRepository badgeCollectionRepository;
 
     @GetMapping("/profile")
     public String viewProfile(Model model) {
@@ -58,9 +63,13 @@ public class ProfileController {
                 }
             }
             List<FriendRequest> friendRequests = friendRequestRepository.findByReceiverAndStatus(user, "PENDING");
+            List<Badge> badges = (List<Badge>) badgeRepository.findAll();
+            List<BadgeCollection> badgeCollections = user.getBadgeCollection();
             model.addAttribute("potentialFriends", potentialFriends);
             model.addAttribute("friendRequests", friendRequests);
             model.addAttribute("userId", user.getId());
+            model.addAttribute("badges", badges);
+            model.addAttribute("badgeCollections", badgeCollections);
             return "profile";
         }
         catch (Exception e){
@@ -170,12 +179,17 @@ public class ProfileController {
             user.setBio(bio);
             model.addAttribute("user", user);
             userRepo.save(user);
+            // updates the "stylish" badge, showing the user has updated the profile
+            BadgeCollection badgeCollection = badgeCollectionRepository.findByUserAndBadge(user, badgeRepository.findById(10));
+            badgeCollection.updateCounter();
+            badgeCollectionRepository.save(badgeCollection);
             return "redirect:/profile";
         }
         catch (Exception e){
             model.addAttribute("error", e.getMessage());
             return "errors";
         }
+
 
     }
 

@@ -43,6 +43,10 @@ public class Application implements CommandLineRunner {
     @Autowired
     private UserTrialRepository userTrialRepository;
     @Autowired
+    private BadgeRepository badgeRepository;
+    @Autowired
+    private BadgeCollectionRepository badgeCollectionRepository;
+    @Autowired
     private TransactionRepository transactionRepository;
     @Autowired
     private UserItemRepository userItemRepository;
@@ -605,6 +609,119 @@ public class Application implements CommandLineRunner {
 
             }
         }
+        //Badge Images
+        String smiley = "https://creazilla-store.fra1.digitaloceanspaces.com/icons/3272111/smiley-icon-size_128.png";
+        String timer = "https://creazilla-store.fra1.digitaloceanspaces.com/icons/3251164/timer-icon-size_128.png";
+        String book = "https://creazilla-store.fra1.digitaloceanspaces.com/icons/3254971/book-icon-size_128.png";
+        String brush = "https://creazilla-store.fra1.digitaloceanspaces.com/icons/3504349/paint-brush-the-noun-project-icon-size_128.png";
+
+        //Creating the badges
+        Badge b1 = new Badge();
+        b1.setId(1);
+        b1.setName("First Friend");
+        b1.setDescription("Make your first friend");
+        b1.setRequirement(1);
+        b1.setImage(smiley);
+        b1.setType(0);
+        badgeRepository.save(b1);
+
+        Badge b2 = new Badge();
+        b2.setId(2);
+        b2.setName("Social");
+        b2.setDescription("Make 5 friends");
+        b2.setRequirement(5);
+        b2.setImage(smiley);
+        b2.setType(1);
+        badgeRepository.save(b2);
+
+        Badge b3 = new Badge();
+        b3.setId(3);
+        b3.setName("Socialite");
+        b3.setDescription("Make 10 friends");
+        b3.setRequirement(10);
+        b3.setImage(smiley);
+        b3.setType(2);
+        badgeRepository.save(b3);
+
+        Badge b4 = new Badge();
+        b4.setId(4);
+        b4.setName("Speedster");
+        b4.setDescription("Win a time trial");
+        b4.setRequirement(100);
+        b4.setImage(timer);
+        b4.setType(2);
+        badgeRepository.save(b4);
+
+        Badge b5 = new Badge();
+        b5.setId(5);
+        b5.setName("Newcomer");
+        b5.setDescription("Complete a time trial");
+        b5.setRequirement(1);
+        b5.setImage(timer);
+        b5.setType(0);
+        badgeRepository.save(b5);
+
+        Badge b6 = new Badge();
+        b6.setId(6);
+        b6.setName("Competitive");
+        b6.setDescription("Complete 5 time trials");
+        b6.setRequirement(5);
+        b6.setImage(timer);
+        b6.setType(2);
+        badgeRepository.save(b6);
+
+        Badge b7 = new Badge();
+        b7.setId(7);
+        b7.setName("First Course");
+        b7.setDescription("Complete your first course");
+        b7.setRequirement(1);
+        b7.setImage(book);
+        b7.setType(0);
+        badgeRepository.save(b7);
+
+        Badge b8 = new Badge();
+        b8.setId(8);
+        b8.setName("Brainy");
+        b8.setDescription("Complete 5 courses");
+        b8.setRequirement(5);
+        b8.setImage(book);
+        b8.setType(1);
+        badgeRepository.save(b8);
+
+        Badge b9 = new Badge();
+        b9.setId(9);
+        b9.setName("Encyclopedia");
+        b9.setDescription("Complete 10 courses");
+        b9.setRequirement(10);
+        b9.setImage(book);
+        b9.setType(2);
+        badgeRepository.save(b9);
+
+        Badge b10 = new Badge();
+        b10.setId(10);
+        b10.setName("Expressive");
+        b10.setDescription("Change your profile");
+        b10.setRequirement(1);
+        b10.setImage(brush);
+        b10.setType(0);
+        badgeRepository.save(b10);
+
+
+        List<Badge> badges = (List<Badge>) badgeRepository.findAll();
+        List<User> users2 = (List<User>) userRepository.findAll();
+        for (User user: users2) {
+            for (Badge badge: badges){
+                BadgeCollection bc = new BadgeCollection();
+                bc.setUser(user);
+                bc.setBadge(badge);
+                bc.setCounter(0);
+                bc.setComplete(false);
+                badgeCollectionRepository.save(bc);
+            }
+
+        }
+
+
 
     }
 }
