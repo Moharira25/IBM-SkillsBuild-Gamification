@@ -429,44 +429,137 @@ public class Application implements CommandLineRunner {
         timeTrialRepository.save(timeTrial);
 
 
-        String[] itemTypes = {"Profile Avatars", "Avatar Frames", "Profile Backgrounds",
-                              "Customizable Titles", "Chat Bubbles", "Flair", "XP Boosters",
-                              "Second attempt for time trials", "Streak Savers",
-                              "Timed access to exclusive learning materials",
-                              "Collectibles", "Event-specific items",
-                              "Anniversary commemorative items"};
+        String[] itemTypes = {"Profile Avatars", "Avatar Frames", "Profile Backgrounds", "Customizable Titles", "Chat Bubbles", "Flair", "XP Boosters", "Second attempt for time trials", "Streak Savers", "Timed access to exclusive learning materials", "Collectibles", "Event-specific items", "Anniversary commemorative items"};
 
         Random random = new Random();
         Item.Rarity[] rarities = Item.Rarity.values();
 
+        // New collections for generating unique names
+        String[] adjectives = {"Shimmering", "Pixelated", "Paradoxical", "Whispering", "Neon-Soaked", "Crystalline", "Ephemeral", "Glitch"};
+        String[] nouns = {"Echo", "Circuit", "Glitch", "Rune", "Mirage", "Byte", "Paradox", "Whisper"};
+        String[] verbs = {"Shifts", "Pulses", "Evolves", "Whispers", "Shatters"};
+        String[] frameThemes = {"Fire", "Water", "Celestial", "Floral", "Tech", "Abstract"};
+        String[] backgroundThemes = {"Landscape", "Space", "Neon City", "Retro", "Underwater"};
+        // multipliers for xp boosters
+        String[] xpBoosters = {"1.5x", "2x", "2.5x", "3x", "4x", "5x"};
+        // timed access length
+        String[] accessLengths = {"1 day", "1 week", "1 month", "3 months", "6 months"};
+
+        int numItemsPerCategory = 5; // Adjust as needed
+        Set<String> usedNames = new HashSet<>(); // To track used names
+
         for (String type : itemTypes) {
-            Item item = new Item();
-            item.setName(type);
-            item.setDescription("Description for " + type);
-            item.setCategory("Category for " + type);
-            Item.Rarity randomRarity = rarities[random.nextInt(rarities.length)];
-            item.setRarity(randomRarity);
-            itemRepository.save(item);
+            for (int i = 0; i < numItemsPerCategory; ) {
+                Item item = new Item();
+                String generatedName;
+
+                // Initially assume it's not a default type
+                boolean isDefaultType = false;
+
+                do {
+                    generatedName = switch (type) {
+                        case "Profile Avatars" ->
+                                adjectives[random.nextInt(adjectives.length)] + " " + nouns[random.nextInt(nouns.length)];
+                        case "Avatar Frames" -> backgroundThemes[random.nextInt(backgroundThemes.length)] + " Frame";
+                        case "Profile Backgrounds" -> frameThemes[random.nextInt(frameThemes.length)] + " Background";
+                        case "Customizable Titles" ->
+                                "The " + adjectives[random.nextInt(adjectives.length)] + " " + nouns[random.nextInt(nouns.length)];
+                        case "Chat Bubbles", "Flair" -> type + " of " + adjectives[random.nextInt(adjectives.length)];
+                        case "XP Boosters" -> xpBoosters[random.nextInt(xpBoosters.length)] + " XP Booster";
+                        case "Timed access to exclusive learning materials" ->
+                                accessLengths[random.nextInt(accessLengths.length)] + " Access Pass";
+                        case "Collectibles" -> "Collectible " + nouns[random.nextInt(nouns.length)];
+                        case "Event-specific items" -> "Event " + verbs[random.nextInt(verbs.length)];
+                        case "Anniversary commemorative items" -> "Anniversary " + nouns[random.nextInt(nouns.length)];
+                        default -> {
+                            isDefaultType = true;
+                            yield type; // Use the type directly for the default case
+                        }
+                    };
+                } while (!isDefaultType && !usedNames.add(generatedName)); // Ensure unique names, but skip for default type
+
+                // Populate item details
+                item.setName(generatedName);
+                item.setDescription("A " + type.toLowerCase() + " to enhance your profile.");
+                item.setCategory(type);
+                item.setRarity(rarities[random.nextInt(rarities.length)]);
+                item.setImageUrl("https://i.pravatar.cc/100"); // Placeholder image URL
+
+                // Save the item
+                itemRepository.save(item);
+
+                if (isDefaultType) {
+                    break; // Exit the loop after adding one item for default type
+                }
+
+                i++; // Increment only if not default type or to proceed to next item
+            }
         }
+
         List<User> users = (List<User>) userRepository.findAll();
         List<Item> items = itemRepository.findAll();
         Random rand = new Random();
 
         if (!users.isEmpty() && !items.isEmpty()) {
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 1000; i++) {
                 Listing listing = new Listing();
                 User seller = users.get(rand.nextInt(users.size()));
                 Item item = items.get(rand.nextInt(items.size()));
 
                 listing.setSeller(seller);
                 listing.setItem(item);
-                listing.setPrice(10.0 + (100 - 10) * rand.nextDouble()); // Random price between 10 and 100
+                // Random price between 0.1 and 20 pounds
+                // number should be rounded eg 10.50 not 10.501
+                listing.setPrice(BigDecimal.valueOf(rand.nextDouble() * (20 - 0.1) + 0.1).setScale(2, RoundingMode.HALF_UP));
                 listing.setStatus(Listing.ListingStatus.ACTIVE); // or randomly set status if you have different statuses
 
                 listingRepository.save(listing);
             }
         } else {
             System.out.println("Users or Items not found. Please ensure your database is populated with users and items before adding listings.");
+        }
+
+        List<Listing> listings = listingRepository.findAll(); // Get existing listings
+
+        if (!users.isEmpty() && !items.isEmpty() && !listings.isEmpty()) {
+            for (int i = 0; i < 500; i++) { // Adjust number of transactions as needed
+                Transaction transaction = new Transaction();
+
+                // Logic to determine buyer and seller (we'll refine this later)
+                User buyer = users.get(rand.nextInt(users.size()));
+                Listing listing = listings.get(rand.nextInt(listings.size()));
+                User seller = listing.getSeller();
+                Item item = listing.getItem();
+                int saleQuantity = rand.nextInt(3) + 1; // Random quantity between 1 and 3
+
+                // Ensure the seller has the item in user_items with sufficient quantity
+                UserItem userItem = userItemRepository.findByUserIdAndItemId(seller.getId(), item.getId());
+                if (userItem == null) {
+                    userItem = new UserItem();
+                    userItem.setUser(seller);
+                    userItem.setItem(item);
+                    userItem.setQuantity(saleQuantity);
+                    userItemRepository.save(userItem);
+                } else if (userItem.getQuantity() < saleQuantity) {
+                    userItem.setQuantity(userItem.getQuantity() + saleQuantity);
+                    userItemRepository.save(userItem);
+                }
+
+                // Now the seller is guaranteed to have the item, proceed to create the transaction
+                transaction.setBuyer(buyer);
+                transaction.setSeller(seller);
+                transaction.setItem(item);
+                transaction.setPrice(listing.getPrice());
+                transaction.setQuantity(saleQuantity);
+
+                // Assuming all transactions result in a sale for simplicity
+                transaction.setOrderType(Transaction.OrderType.SELL);
+                transaction.setStatus(Transaction.TransactionStatus.PENDING);
+
+                transactionRepository.save(transaction);
+            }
+        } else {
+            System.out.println("Users, Items, or Listings not found. Please ensure your database is populated with users, items, and listings before adding transactions.");
         }
 
 
