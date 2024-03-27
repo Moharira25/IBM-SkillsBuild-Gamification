@@ -29,15 +29,19 @@ public class Badge {
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
-    private int expWorth;
+    @Column
+    private int requirement;
 
-    // Not sure if this attribute should be an image itself or a string
-    // telling the program what kind of badge it is, relating it to a badge
-    // image
+    // figured I should keep the image and type separate, since badges
+    // can share the same image but not the same type (colour)
     @Column(nullable = false)
-    private String type;
+    private String image;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<BadgeCollection> instances;
+    @Column
+    private int type;
+
+    @OneToMany(mappedBy = "badge", cascade = CascadeType.ALL)
+    private List<BadgeCollection> badgeCollections = new ArrayList<>();
+
+
 }

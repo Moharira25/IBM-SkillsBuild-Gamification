@@ -1,13 +1,8 @@
 package com.example.ibm_project_code.controllers;
 
 
-import com.example.ibm_project_code.database.Course;
-import com.example.ibm_project_code.database.Feedback;
-import com.example.ibm_project_code.database.User;
-import com.example.ibm_project_code.database.UserCourse;
-import com.example.ibm_project_code.repositories.CourseRepository;
-import com.example.ibm_project_code.repositories.UserCourseRepository;
-import com.example.ibm_project_code.repositories.UserRepository;
+import com.example.ibm_project_code.database.*;
+import com.example.ibm_project_code.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +27,10 @@ public class CourseController {
     private UserRepository userRepo;
     @Autowired
     private UserCourseRepository userCourseRepository;
+    @Autowired
+    BadgeCollectionRepository badgeCollectionRepository;
+    @Autowired
+    BadgeRepository badgeRepository;
 
 
     @GetMapping("/dashboard")
@@ -111,6 +110,15 @@ public class CourseController {
             user.getUserCourse(course).setDone(true);
             int newPoints = user.getOverallPoints() + course.getPoints();
             user.setOverallPoints(newPoints);
+            
+            //updating the badges that reference the courses
+            BadgeCollection badgeCollection1 = badgeCollectionRepository.findByUserAndBadge(user, badgeRepository.findById(5));
+            badgeCollection1.updateCounter();
+            badgeCollectionRepository.save(badgeCollection1);
+
+            BadgeCollection badgeCollection2 = badgeCollectionRepository.findByUserAndBadge(user, badgeRepository.findById(6));
+            badgeCollection2.updateCounter();
+            badgeCollectionRepository.save(badgeCollection2);
 
             userRepo.save(user);
             courseRepo.save(course);

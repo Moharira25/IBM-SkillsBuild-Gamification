@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Collection;
 
@@ -24,7 +25,16 @@ public class BadgeCollection {
     @ManyToOne
     private Badge badge;
 
-    // bool value, so we know if the user has claimed the badge
-    private Boolean claimed;
+    @Column
+    private boolean complete;
 
+    @Column
+    private int counter;
+
+    public void updateCounter(){
+        this.counter+=1;
+        if (this.counter >= this.badge.getRequirement()){
+            this.complete = true;
+        }
+    }
 }
