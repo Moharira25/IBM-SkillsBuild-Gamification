@@ -1,0 +1,71 @@
+.badges {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 20px;
+}
+
+.badge-obj {
+    color: darkred;
+    display: flex;
+    justify-content: center;
+    background-color: goldenrod;
+    align-items: center;
+    flex-direction: column;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+}
+
+.badge-obj span {
+    margin-top: 10px;
+    opacity: 0; /* Initially hide the text */
+    position: absolute; /* Position the text */
+    top: 50%; /* Position the text vertically centered */
+    left: 50%; /* Position the text horizontally centered */
+    transform: translate(-50%, -50%); /* Center the text */
+    transition: opacity 0.3s ease; /* Add transition effect */
+}
+
+.badge-obj:hover span {
+    opacity: 1;
+}
+
+.badge-obj:hover img{
+    opacity: 0
+}
+
+.badge {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+
+}
+
+.badge img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.badge p {
+    margin: 0;
+}
+
+.unlocked {
+    background-color: #f0f0f0;
+    filter: grayscale(0%);
+}
+
+.locked {
+    background-color: #e0e0e0;
+    opacity: 0.5;
+}
+
+.badge-obj img {
+    width: 100%;
+    height: auto;
+    transition: opacity 0.3s ease;
+}
