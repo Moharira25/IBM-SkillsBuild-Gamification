@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Collections;
@@ -67,6 +68,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         testUser.setEmailVerified(false);
         testUser.setEnabled(true);
         testUser.setLastModifiedDate(Timestamp.valueOf(java.time.LocalDateTime.now()));
+        // balance of 100
+        testUser.setBalance(BigDecimal.valueOf(100));
 
         testUser.setRoles(Collections.singletonList(role1));
 

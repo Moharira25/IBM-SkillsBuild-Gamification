@@ -12,15 +12,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Random; // Import the Random class
-
 
 import static java.time.Instant.now;
 
@@ -47,6 +46,10 @@ public class Application implements CommandLineRunner {
     private BadgeRepository badgeRepository;
     @Autowired
     private BadgeCollectionRepository badgeCollectionRepository;
+    @Autowired
+    private TransactionRepository transactionRepository;
+    @Autowired
+    private UserItemRepository userItemRepository;
 
     // loads .env data correctly
 /*    static {
@@ -158,11 +161,7 @@ public class Application implements CommandLineRunner {
         //creating a time trial for testing
         TimeTrial timeTrial = new TimeTrial();
         timeTrial.setTitle("AI Agents Time Trial Challenge");
-        timeTrial.setDescription("Join the AI Agents Time Trial Challenge and put your knowledge of artificial intelligence to the test! " +
-                "Compete weekly against others on a leaderboard for exciting rewards. " +
-                "This week's challenge focuses on AI agents, starting with easy questions and progressively getting harder and harder!. " +
-                "Win coveted prizes such as exclusive avatars, digital badges, profile highlights, and more for top placements. " +
-                "Don't miss out on the chance to showcase your AI expertise and claim your well-deserved rewards!");
+        timeTrial.setDescription("Join the AI Agents Time Trial Challenge and put your knowledge of artificial intelligence to the test! " + "Compete weekly against others on a leaderboard for exciting rewards. " + "This week's challenge focuses on AI agents, starting with easy questions and progressively getting harder and harder!. " + "Win coveted prizes such as exclusive avatars, digital badges, profile highlights, and more for top placements. " + "Don't miss out on the chance to showcase your AI expertise and claim your well-deserved rewards!");
 
 
         //setting the questions for the time trial.
@@ -234,181 +233,181 @@ public class Application implements CommandLineRunner {
         };
 
         String[][] choices = {
-                {       "a) A person who works with artificial intelligence",
+                {"a) A person who works with artificial intelligence",
                         "b) A software program that acts on behalf of a user or another program",
                         "c) An organization specializing in AI research",
                         "d) A hardware component used in AI systems"
 
                 },
-                {       "a) Autonomy",
+                {"a) Autonomy",
                         "b) Reactivity",
                         "c) Sensory perception",
                         "d) Fixed behavior"
 
                 },
-                {       "a) Utility-based agent",
+                {"a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
 
                 },
-                {   "a) To react to stimuli from its environment",
+                {"a) To react to stimuli from its environment",
                         "b) To learn from past experiences and improve its performance",
                         "c) To maximize a performance measure based on utility function",
                         "d) To follow a predefined set of rules and actions"
 
                 },
-                {       "a) Utility-based agent",
+                {"a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
 
                 },
-                {       "a) The ability to understand emotions",
+                {"a) The ability to understand emotions",
                         "b) The ability to perceive and interpret information from the environment",
                         "c) The ability to communicate with other agents",
                         "d) The ability to learn from past experiences"
 
                 },
-                {       "a) Utility-based agent",
+                {"a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
 
                 },
-                {       "a) The ability to function without human intervention",
+                {"a) The ability to function without human intervention",
                         "b) The ability to collaborate with other agents",
                         "c) The ability to adapt to changing environments",
                         "d) The ability to perceive and interpret sensory information"
 
                 },
-                {       "a) Utility-based agent",
+                {"a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
 
                 },
-                {       "a) Its ability to react to stimuli from the environment",
+                {"a) Its ability to react to stimuli from the environment",
                         "b) Its ability to use utility functions to make decisions",
                         "c) Its ability to improve its performance over time through experience",
                         "d) Its ability to simulate potential actions before executing them"
 
                 },
-                {       "a) Utility-based agent",
+                {"a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
 
                 },
-                {       "a) To evaluate the performance of the agent",
+                {"a) To evaluate the performance of the agent",
                         "b) To determine the utility function",
                         "c) To provide sensory input to the agent",
                         "d) To define the environment in which the agent operates"
 
                 },
-                {       "a) Utility-based agent",
+                {"a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
 
                 },
-                {       "a) Its ability to plan and reason about future actions",
+                {"a) Its ability to plan and reason about future actions",
                         "b) Its ability to adapt to changing environments",
                         "c) Its simplicity and efficiency",
                         "d) Its capability to learn from past experiences"
 
                 },
-                {       "a) Utility-based agent",
+                {"a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
                 },
                 {
-                    "a) The ability to plan and reason about future actions",
+                        "a) The ability to plan and reason about future actions",
                         "b) The ability to adapt to changing environments",
                         "c) The ability to take immediate actions based on current stimuli",
                         "d) The ability to learn from past experiences"
                 },
                 {
-                    "a) Utility-based agent",
+                        "a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
                 },
                 {
-                    "a) Handling complex environments with uncertain outcomes",
+                        "a) Handling complex environments with uncertain outcomes",
                         "b) Adapting to changing circumstances over time",
                         "c) Dealing with sensory input and reacting appropriately in real-time",
                         "d) Learning from past experiences to improve performance"
                 },
                 {
-                    "a) Utility-based agent",
+                        "a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
                 },
                 {
-                    "a) Its ability to react quickly to stimuli from the environment",
+                        "a) Its ability to react quickly to stimuli from the environment",
                         "b) Its ability to learn from past experiences and adjust its behavior",
                         "c) Its ability to simulate potential actions before making decisions",
                         "d) Its ability to maximize a performance measure based on utility function"
                 },
                 {
-                    "a) Utility-based agent",
+                        "a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
                 },
                 {
-                    "a) It provides sensory input to the agent",
+                        "a) It provides sensory input to the agent",
                         "b) It determines the agent''s utility function",
                         "c) It evaluates the performance of the agent",
                         "d) It simulates potential actions for the agent to consider"
                 },
                 {
-                    "a) Utility-based agent",
+                        "a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
                 },
                 {
-                    "a) Its ability to learn from past experiences",
+                        "a) Its ability to learn from past experiences",
                         "b) Its focus on maximizing a performance measure based on utility function",
                         "c) Its reliance on immediate sensory input to make decisions",
                         "d) Its simplicity and efficiency in decision-making"
                 },
                 {
-                    "a) Utility-based agent",
+                        "a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
                 },
                 {
-                    "a) Its ability to simulate potential actions before making decisions",
+                        "a) Its ability to simulate potential actions before making decisions",
                         "b) Its ability to adapt to changing environments over time",
                         "c) Its simplicity and efficiency in decision-making",
                         "d) Its capability to learn from past experiences and improve performance"
                 },
                 {
-                    "a) Utility-based agent",
+                        "a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
                 },
                 {
-                    "a) Its ability to react to stimuli from the environment",
+                        "a) Its ability to react to stimuli from the environment",
                         "b) Its focus on maximizing a performance measure based on utility function",
                         "c) Its capability to improve its performance over time through experience",
                         "d) Its reliance on immediate sensory input to make decisions"
                 },
                 {
-                    "a) The ability to function without human intervention",
+                        "a) The ability to function without human intervention",
                         "b) The ability to collaborate with other agents",
                         "c) The ability to adapt to changing environments",
                         "d) The ability to perceive and interpret sensory information"
                 },
                 {
-                    "a) Utility-based agent",
+                        "a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
@@ -432,39 +431,87 @@ public class Application implements CommandLineRunner {
         //Saving the time trial to the database
         timeTrialRepository.save(timeTrial);
 
-
-        String[] itemTypes = {"Profile Avatars", "Avatar Frames", "Profile Backgrounds",
-                              "Customizable Titles", "Chat Bubbles", "Flair", "XP Boosters",
-                              "Second attempt for time trials", "Streak Savers",
-                              "Timed access to exclusive learning materials",
-                              "Collectibles", "Event-specific items",
-                              "Anniversary commemorative items"};
+        String[] itemTypes = {"Profile Avatars", "Avatar Frames", "Profile Backgrounds", "Customizable Titles", "Chat Bubbles", "Flair", "XP Boosters", "Second attempt for time trials", "Streak Savers", "Timed access to exclusive learning materials", "Collectibles", "Event-specific items", "Anniversary commemorative items"};
 
         Random random = new Random();
         Item.Rarity[] rarities = Item.Rarity.values();
 
+        String[] adjectives = {"Shimmering", "Pixelated", "Paradoxical", "Whispering", "Neon-Soaked", "Crystalline", "Ephemeral", "Glitch"};
+        String[] nouns = {"Echo", "Circuit", "Glitch", "Rune", "Mirage", "Byte", "Paradox", "Whisper"};
+        String[] verbs = {"Shifts", "Pulses", "Evolves", "Whispers", "Shatters"};
+        String[] frameThemes = {"Fire", "Water", "Celestial", "Floral", "Tech", "Abstract"};
+        String[] backgroundThemes = {"Landscape", "Space", "Neon City", "Retro", "Underwater"};
+        // multipliers for xp boosters
+        String[] xpBoosters = {"1.5x", "2x", "2.5x", "3x", "4x", "5x"};
+        // timed access length
+        String[] accessLengths = {"1 day", "1 week", "1 month", "3 months", "6 months"};
+
+        int numItemsPerCategory = 5; // Adjust as needed
+        Set<String> usedNames = new HashSet<>(); // To track used names
+
         for (String type : itemTypes) {
-            Item item = new Item();
-            item.setName(type);
-            item.setDescription("Description for " + type);
-            item.setCategory("Category for " + type);
-            Item.Rarity randomRarity = rarities[random.nextInt(rarities.length)];
-            item.setRarity(randomRarity);
-            itemRepository.save(item);
+            for (int i = 0; i < numItemsPerCategory; ) {
+                Item item = new Item();
+                String generatedName;
+
+                // Initially assume it's not a default type
+                boolean isDefaultType = false;
+
+                do {
+                    generatedName = switch (type) {
+                        case "Profile Avatars" ->
+                                adjectives[random.nextInt(adjectives.length)] + " " + nouns[random.nextInt(nouns.length)];
+                        case "Avatar Frames" -> backgroundThemes[random.nextInt(backgroundThemes.length)] + " Frame";
+                        case "Profile Backgrounds" -> frameThemes[random.nextInt(frameThemes.length)] + " Background";
+                        case "Customizable Titles" ->
+                                "The " + adjectives[random.nextInt(adjectives.length)] + " " + nouns[random.nextInt(nouns.length)];
+                        case "Chat Bubbles", "Flair" -> type + " of " + adjectives[random.nextInt(adjectives.length)];
+                        case "XP Boosters" -> xpBoosters[random.nextInt(xpBoosters.length)] + " XP Booster";
+                        case "Timed access to exclusive learning materials" ->
+                                accessLengths[random.nextInt(accessLengths.length)] + " Access Pass";
+                        case "Collectibles" -> "Collectible " + nouns[random.nextInt(nouns.length)];
+                        case "Event-specific items" -> "Event " + verbs[random.nextInt(verbs.length)];
+                        case "Anniversary commemorative items" -> "Anniversary " + nouns[random.nextInt(nouns.length)];
+                        default -> {
+                            isDefaultType = true;
+                            yield type; // Use the type directly for the default case
+                        }
+                    };
+                } while (!isDefaultType && !usedNames.add(generatedName)); // Ensure unique names, but skip for default type
+
+                // Populate item details
+                item.setName(generatedName);
+                item.setDescription("A " + type.toLowerCase() + " to enhance your profile.");
+                item.setCategory(type);
+                item.setRarity(rarities[random.nextInt(rarities.length)]);
+                item.setImageUrl("https://i.pravatar.cc/100"); // Placeholder image URL
+
+                // Save the item
+                itemRepository.save(item);
+
+                if (isDefaultType) {
+                    break; // Exit the loop after adding one item for default type
+                }
+
+                i++; // Increment only if not default type or to proceed to next item
+            }
         }
+
         List<User> users = (List<User>) userRepository.findAll();
         List<Item> items = itemRepository.findAll();
         Random rand = new Random();
 
         if (!users.isEmpty() && !items.isEmpty()) {
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 1000; i++) {
                 Listing listing = new Listing();
                 User seller = users.get(rand.nextInt(users.size()));
                 Item item = items.get(rand.nextInt(items.size()));
 
                 listing.setSeller(seller);
                 listing.setItem(item);
-                listing.setPrice(10.0 + (100 - 10) * rand.nextDouble()); // Random price between 10 and 100
+                // Random price between 0.1 and 20 pounds
+                // number should be rounded eg 10.50 not 10.501
+                listing.setPrice(BigDecimal.valueOf(rand.nextDouble() * (20 - 0.1) + 0.1).setScale(2, RoundingMode.HALF_UP));
                 listing.setStatus(Listing.ListingStatus.ACTIVE); // or randomly set status if you have different statuses
 
                 listingRepository.save(listing);
@@ -473,13 +520,52 @@ public class Application implements CommandLineRunner {
             System.out.println("Users or Items not found. Please ensure your database is populated with users and items before adding listings.");
         }
 
+        List<Listing> listings = listingRepository.findAll(); // Get existing listings
+
+        if (!users.isEmpty() && !items.isEmpty() && !listings.isEmpty()) {
+            for (int i = 0; i < 500; i++) { // Adjust number of transactions as needed
+                Transaction transaction = new Transaction();
+
+                // Logic to determine buyer and seller (we'll refine this later)
+                User buyer = users.get(rand.nextInt(users.size()));
+                Listing listing = listings.get(rand.nextInt(listings.size()));
+                User seller = listing.getSeller();
+                Item item = listing.getItem();
+                int saleQuantity = rand.nextInt(3) + 1; // Random quantity between 1 and 3
+
+                // Ensure the seller has the item in user_items with sufficient quantity
+                UserItem userItem = userItemRepository.findByUserIdAndItemId(seller.getId(), item.getId());
+                if (userItem == null) {
+                    userItem = new UserItem();
+                    userItem.setUser(seller);
+                    userItem.setItem(item);
+                    userItem.setQuantity(saleQuantity);
+                    userItemRepository.save(userItem);
+                } else if (userItem.getQuantity() < saleQuantity) {
+                    userItem.setQuantity(userItem.getQuantity() + saleQuantity);
+                    userItemRepository.save(userItem);
+                }
+
+                // Now the seller is guaranteed to have the item, proceed to create the transaction
+                transaction.setBuyer(buyer);
+                transaction.setSeller(seller);
+                transaction.setItem(item);
+                transaction.setPrice(listing.getPrice());
+                transaction.setQuantity(saleQuantity);
+
+                // Assuming all transactions result in a sale for simplicity
+                transaction.setOrderType(Transaction.OrderType.SELL);
+                transaction.setStatus(Transaction.TransactionStatus.PENDING);
+
+                transactionRepository.save(transaction);
+            }
+        } else {
+            System.out.println("Users, Items, or Listings not found. Please ensure your database is populated with users, items, and listings before adding transactions.");
+        }
 
 
         //scrapping course-data (college students pathway only) from IBM skills build website.
-        Document doc = Jsoup
-                .connect("https://skillsbuild.org/college-students/digital-credentials")
-                .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36")
-                .get();
+        Document doc = Jsoup.connect("https://skillsbuild.org/college-students/digital-credentials").userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36").get();
         Elements categories = doc.getElementsByClass("pb-12");
 
         for (Element c : categories) {
@@ -631,7 +717,7 @@ public class Application implements CommandLineRunner {
             }
 
         }
-            
+
 
 
     }

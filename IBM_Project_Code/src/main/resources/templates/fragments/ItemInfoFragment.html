@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!--<div th:if="${itemDetails != null}" th:fragment="item-info" class="container mx-auto mt-10">-->
+<div th:fragment="item-info" class="container mx-auto mt-10">
+    <div th:object="${itemDetails}" class="mx-auto p-6 bg-white rounded-lg shadow-md">
+        <div class="flex flex-col lg:flex-row items-center lg:justify-between mb-4">
+            <div class="item-image mb-4 lg:mb-0">
+                <img th:src="${itemDetails.imageUrl}" alt="Item Name" class="w-32 h-32 object-cover rounded-md">
+            </div>
+            <div class="item-details flex-1 lg:ml-6">
+                <h1 class="text-2xl font-semibold" th:text="${itemDetails.itemName}"></h1>
+                <p class="text-gray-500 mt-2" th:text="${itemDetails.description}"></p>
+                <p class="text-gray-500 mt-2" th:text="${itemDetails.rarity}"></p>
+
+                <div class="flex flex-col lg:flex-row items-center lg:justify-between mb-4">
+                    <div class="flex flex-col md:flex-row items-center justify-between mt-4">
+                        <div class="bg-blue-100 p-6 rounded-lg shadow-md mr-4 mb-4 md:mb-0">
+                            <div class="flex flex-col items-baseline m-2">
+                                <span class="text-gray-600" th:if="${itemDetails.sellOrderCount != null}">
+                                    <span th:text="${itemDetails.sellOrderCount}"></span> orders starting from:
+                                </span>
+                                <span class="text-2xl font-bold" th:if="${itemDetails.sellOrderCount != null}"
+                                      th:text="${'£' + itemDetails.lowestSellOrder}"></span>
+                                <div class="mt-4">
+                                    <div class="mt-4">
+                                        <button class="bg-blue-400 hover:bg-blue-500 text-gray-800 font-bold py-3 px-6 rounded-lg text-lg"
+                                                id="buyButton"
+                                                th:attr="data-item-id=${itemDetails.id},
+                                                     data-item-name=${itemDetails.itemName},
+                                                     data-item-price=${itemDetails.lowestSellOrder}">
+                                            Buy
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-100 p-6 rounded-lg shadow-md mt-4 md:mt-0 md:ml-4">
+                            <div class="flex flex-col items-baseline m-2">
+                                <span class="text-gray-600" th:if="${itemDetails.buyRequestCount != null}">
+                                    <span th:text="${itemDetails.buyRequestCount}"></span> requests to buy at:
+                                </span>
+                                <span class="text-2xl font-bold text-gray-600"
+                                      th:if="${itemDetails.buyRequestCount != null}"
+                                      th:text="${'£' + itemDetails.highestBuyRequest}"></span>
+                            </div>
+                            <div class="mt-4">
+                                <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-6 rounded-lg text-lg"
+                                        id="sellButton">
+                                    Sell
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div id="buyModal" tabindex="-1" aria-hidden="true"
+         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+        <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                        Buy Item - <span th:text="${itemDetails.itemName}"></span>
+                    </h3>
+                    <button type="button"
+                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            data-modal-toggle="buyModal">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+                <form th:action="@{/market/buy}" method="post" id="buyForm">
+                    <div class="p-6 space-y-6">
+
+                        <input type="hidden" name="itemId" id="itemId" th:value="${itemDetails.id}">
+
+                        <div class="grid grid-cols-1 gap-6">
+                            <label class="block">
+                                <span class="text-gray-700">Price per item:</span>
+                                <!-- type of input is BigDecimal -->
+                                <input type="text" name="price" id="price" th:value="${itemDetails.lowestSellOrder}"
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                       placeholder="Enter price per item">
+                            </label>
+                            <label class="block">
+                                <span class="text-gray-700">Quantity:</span>
+                                <input type="number" name="quantity" id="quantity"
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                       placeholder="Enter quantity">
+                            </label>
+                            <p>Total Cost: £<span id="totalCost">0</span></p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                        <button type="submit"
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                id="placeOrderButton">Place Order
+                        </button>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- Sell Item Modal -->
+    <div id="sellModal" tabindex="-1" aria-hidden="true"
+         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+        <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                        Sell Your Item
+                    </h3>
+                    <button type="button"
+                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            data-modal-toggle="sellModal">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+                <form th:action="@{/market/sell}" method="post" id="sellForm">
+                    <div class="p-6 space-y-6">
+                        <div class="grid grid-cols-1 gap-6">
+                            <label class="block">
+                                <span class="text-gray-700">Select Item:</span>
+                                <select name="itemId" id="itemId1"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    <!-- Dynamically populate this list with the user's items -->
+                                    <option value="">Select an item</option>
+                                    <option th:each="item : ${userItems}"
+                                            th:value="${item.getItem().id}"
+                                            th:text="${item.getItem().name} + ' (' + ${item.quantity} + ')'"
+                                    ></option>
+                                </select>
+                            </label>
+                            <label class="block">
+                                <span class="text-gray-700">Selling Price:</span>
+                                <input type="text" name="price" id="price1"
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                       placeholder="Enter selling price per item">
+                            </label>
+                            <label class="block">
+                                <span class="text-gray-700">Quantity:</span>
+                                <input type="number" name="quantity" id="quantity1"
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                       placeholder="Enter quantity to sell">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                        <button type="submit"
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                id="listForSaleButton">List for Sale
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/market.js}"></script>
+
+</body>

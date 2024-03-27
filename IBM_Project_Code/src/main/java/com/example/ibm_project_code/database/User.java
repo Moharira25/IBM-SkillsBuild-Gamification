@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -67,8 +68,9 @@ public class User {
     private List<Rating> ratings = new ArrayList<>();
 
     // Marketplace-specific fields
+    // default value of 0
     @Column(nullable = false)
-    private double balance; // User's balance for transactions in the marketplace
+    private BigDecimal balance = BigDecimal.ZERO;
 
     // Associations with other entities
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

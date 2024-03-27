@@ -28,7 +28,7 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = false)
     private String name;
 
     @Column(length = 1024)
@@ -40,6 +40,9 @@ public class Item {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Rarity rarity;
+
+    @Column(name="image_url")
+    private String imageUrl;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UserItem> userItems = new ArrayList<>();

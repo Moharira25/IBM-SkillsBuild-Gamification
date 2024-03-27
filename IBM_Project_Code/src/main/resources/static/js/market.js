@@ -56,14 +56,118 @@ function filterTable() {
     }
 }
 
+const urlParams = new URLSearchParams(window.location.search);
+const itemName = urlParams.get('itemName');
+
+document.addEventListener('DOMContentLoaded', function () {
+    const modalBuyToggle = document.querySelector('[data-modal-toggle="buyModal"]');
+    const modalSellToggle = document.querySelector('[data-modal-toggle="sellModal"]');
+    const buyModal = document.getElementById('buyModal');
+    const sellModal = document.getElementById('sellModal');
+    const priceInput = document.getElementById('price');
+    const quantityInput = document.getElementById('quantity');
+    const totalCostSpan = document.getElementById('totalCost');
+    const placeOrderButton = document.getElementById('placeOrderButton');
+    const itemNameSpan = document.getElementById('itemName');
+    const itemIdInput = document.getElementById('itemId');
 
 
-function updateUrlAndReload(key, value) {
-    if ('URLSearchParams' in window) {
-        let searchParams = new URLSearchParams(window.location.search);
-        searchParams.set(key, value);
-        searchParams.set('page', 0); // Reset page to 0 when searching
-        window.location.href = window.location.pathname + '?' + searchParams.toString(); // Trigger a page reload with the new URL
+    // Function to open the modal and set item details
+    function openBuyModal() {
+        buyModal.classList.remove('hidden');
+        buyModal.setAttribute('aria-hidden', 'false');
     }
-}
+
+    // Function to close the modal
+    function closeBuyModal() {
+        buyModal.classList.add('hidden');
+        buyModal.setAttribute('aria-hidden', 'true');
+    }
+
+    function openSellModal() {
+        sellModal.classList.remove('hidden');
+        sellModal.setAttribute('aria-hidden', 'false');
+    }
+
+    // Function to close the modal
+    function closeSellModal() {
+        sellModal.classList.add('hidden');
+        sellModal.setAttribute('aria-hidden', 'true');
+    }
+
+    // Event listeners
+    modalBuyToggle.addEventListener('click', closeBuyModal);
+    modalSellToggle.addEventListener('click', closeSellModal);
+    priceInput.addEventListener('input', updateTotalCost);
+    quantityInput.addEventListener('input', updateTotalCost);
+
+    // Update total cost
+    function updateTotalCost() {
+        const price = parseFloat(priceInput.value) || 0;
+        const quantity = parseInt(quantityInput.value, 10) || 0;
+        const totalCost = price * quantity;
+        totalCostSpan.textContent = totalCost.toFixed(2);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Open modal buttons
+    const buyButton = document.querySelector('#buyButton');
+    const sellButton = document.querySelector('#sellButton');
+
+    // Close modal buttons
+    const modalBuyClose = document.querySelector('[data-modal-toggle="buyModal"]');
+    const modalSellClose = document.querySelector('[data-modal-toggle="sellModal"]');
+
+    const buyModal = document.getElementById('buyModal');
+    const sellModal = document.getElementById('sellModal');
+
+    // Function to toggle the modal's visibility
+    function toggleModal(modal) {
+        if (modal.classList.contains('hidden')) {
+            modal.classList.remove('hidden');
+            modal.setAttribute('aria-hidden', 'false');
+        } else {
+            modal.classList.add('hidden');
+            modal.setAttribute('aria-hidden', 'true');
+        }
+    }
+
+    // Open the Buy Modal
+    if (buyButton) {
+        buyButton.addEventListener('click', function () {
+            toggleModal(buyModal);
+        });
+    }
+
+    // Open the Sell Modal
+    if (sellButton) {
+        sellButton.addEventListener('click', function () {
+            toggleModal(sellModal);
+        });
+    }
+
+    // Close the Buy Modal
+    if (modalBuyClose) {
+        modalBuyClose.addEventListener('click', function () {
+            toggleModal(buyModal);
+        });
+    }
+
+    // Close the Sell Modal
+    if (modalSellClose) {
+        modalSellClose.addEventListener('click', function () {
+            toggleModal(sellModal);
+        });
+    }
+
+    // Optional: Listen for clicks outside of modals to close them
+    window.addEventListener('click', function (event) {
+        if (event.target === buyModal) {
+            toggleModal(buyModal);
+        } else if (event.target === sellModal) {
+            toggleModal(sellModal);
+        }
+    });
+});
 
