@@ -11,7 +11,7 @@
         <li class="dashboard"><a th:if="${userId != null}" href="/dashboard">Dashboard</a></li>
         <li class="dashboard"><a th:if="${userId != null}" href="/leaderboard">Leaderboard</a></li>
         <li class="dashboard"><a th:if="${userId != null}" href="/trials">Time Trials</a></li>
-        <li class="dashboard"><a th:if="${userId != null}" href="/market">Market</a></li>
+        <li class="dashboard"><a th:if="${userId != null}" href="/market/listings">Market</a></li>
         <li class="dashboard"><a th:if="${userId != null}" href="/help">Help</a></li>
         <li>
             <a th:if="${userId == null}" href="/login">Login</a>
@@ -19,7 +19,7 @@
         <li><a th:if="${userId == null}" href="/register">Register</a></li>
     </ul>
     <div th:if="${userId != null}" class="profile-icon" onclick="toggleDropdown()">
-        <p th:text="'£' + ${#numbers.formatDecimal(user.balance, 1, 'COMMA', 2, 'POINT')}" class="text-balance text-green-300 mr-2"></p>
+<!--        <p th:text="'£' + ${#numbers.formatDecimal(user.balance, 1, 'COMMA', 2, 'POINT')}" class="text-balance text-green-300 mr-2"></p>-->
         <img src="https://creazilla-store.fra1.digitaloceanspaces.com/icons/7912642/avatar-icon-md.png"
              alt="Profile Picture">
         <div class="dropdown-content" id="dropdownMenu">

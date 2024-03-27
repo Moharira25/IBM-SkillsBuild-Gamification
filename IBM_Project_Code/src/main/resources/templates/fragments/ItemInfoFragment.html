@@ -15,7 +15,7 @@
 
                 <div class="flex flex-col lg:flex-row items-center lg:justify-between mb-4">
                     <div class="flex flex-col md:flex-row items-center justify-between mt-4">
-                        <div class="bg-blue-100 p-6 rounded-lg shadow-md mr-4 mb-4 md:mb-0">
+                        <div class="bg-green-100 p-6 rounded-lg shadow-md mr-4 mb-4 md:mb-0">
                             <div class="flex flex-col items-baseline m-2">
                                 <span class="text-gray-600" th:if="${itemDetails.sellOrderCount != null}">
                                     <span th:text="${itemDetails.sellOrderCount}"></span> orders starting from:
@@ -23,35 +23,33 @@
                                 <span class="text-2xl font-bold" th:if="${itemDetails.sellOrderCount != null}"
                                       th:text="${'£' + itemDetails.lowestSellOrder}"></span>
                                 <div class="mt-4">
-                                    <div class="mt-4">
-                                        <button class="bg-blue-400 hover:bg-blue-500 text-gray-800 font-bold py-3 px-6 rounded-lg text-lg"
-                                                id="buyButton"
-                                                th:attr="data-item-id=${itemDetails.id},
-                                                     data-item-name=${itemDetails.itemName},
-                                                     data-item-price=${itemDetails.lowestSellOrder}">
-                                            Buy
-                                        </button>
-                                    </div>
-
+                                    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg text-lg"
+                                            id="buyButton"
+                                            th:attr="data-item-id=${itemDetails.id},
+                                     data-item-name=${itemDetails.itemName},
+                                     data-item-price=${itemDetails.lowestSellOrder}">
+                                        Buy
+                                    </button>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="bg-gray-100 p-6 rounded-lg shadow-md mt-4 md:mt-0 md:ml-4">
+                        <div class="bg-gray-200 p-6 rounded-lg shadow-md mr-4 mb-4 md:mb-0 w-full md:w-auto">
                             <div class="flex flex-col items-baseline m-2">
                                 <span class="text-gray-600" th:if="${itemDetails.buyRequestCount != null}">
                                     <span th:text="${itemDetails.buyRequestCount}"></span> requests to buy at:
                                 </span>
-                                <span class="text-2xl font-bold text-gray-600"
+                                <span class="text-2xl font-bold text-gray-800"
                                       th:if="${itemDetails.buyRequestCount != null}"
                                       th:text="${'£' + itemDetails.highestBuyRequest}"></span>
+                                <div class="mt-4">
+                                    <button class="bg-slate-700 hover:bg-slate-900 text-white font-bold py-3 px-8 rounded-lg text-lg"
+                                            id="sellButton">
+                                        Sell
+                                    </button>
+                                </div>
                             </div>
-                            <div class="mt-4">
-                                <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-6 rounded-lg text-lg"
-                                        id="sellButton">
-                                    Sell
-                                </button>
-                            </div>
+
                         </div>
                     </div>
                 </div>

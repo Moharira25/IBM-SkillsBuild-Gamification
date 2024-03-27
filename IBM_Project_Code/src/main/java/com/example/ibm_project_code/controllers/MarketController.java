@@ -127,7 +127,7 @@ public class MarketController {
             model.addAttribute("errorMessage", "Insufficient funds to complete the transaction.");
         }
 
-        return "redirect:/market";
+        return "redirect:/market/listings";
     }
 
     @PostMapping("/market/sell")
@@ -149,7 +149,7 @@ public class MarketController {
         transactionRepository.save(sellOrder);
 
         model.addAttribute("sellOrder", sellOrder);
-        return "redirect:/market";
+        return "redirect:/market/listings";
     }
 
     public Transaction placeBuyOrder(User buyer, Item item, BigDecimal price, int quantity) throws InsufficientFundsException {

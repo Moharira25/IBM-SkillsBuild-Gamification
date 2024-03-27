@@ -25,11 +25,11 @@ public class LeaderboardController {
 
     @GetMapping("/leaderboard")
     public String leaderboard(Model model) {
+        User user = userAuth();
         try {
             List<User> users = (List<User>) userRepo.findAll();
             //sorting users by overall points
             users.sort((o1, o2) -> o2.getOverallPoints() - o1.getOverallPoints());
-            User user = userAuth();
             Long id = user != null ? user.getId() : 1;
             model.addAttribute("userId", id);
             model.addAttribute("users", users);
@@ -45,7 +45,7 @@ public class LeaderboardController {
     public String leaderboardTimeTrial(Model model, @PathVariable long trialId) {
         try{
             List<User> users = (List<User>) userRepo.findAll();
-            TimeTrial timeTrial = timeTrialRepository.findById(trialId).get();
+            TimeTrial timeTrial = timeTrialRepository.findById(trialId).orElseThrow(() -> new Exception("Time trial not found"));
 
             //Removing users that have not stared the trial
             users.removeIf(user -> user.getUserTimeTrial(timeTrial) == null);

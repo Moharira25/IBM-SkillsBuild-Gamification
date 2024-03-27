@@ -75,6 +75,7 @@ public class Application implements CommandLineRunner {
         u1.setCreatedDate(currentTime);
         u1.setLastModifiedDate(currentTime);
         u1.setOverallPoints(100);
+        u1.setBalance(BigDecimal.valueOf(1000));
         u1.resetBio();
         userRepository.save(u1);
 
@@ -91,6 +92,7 @@ public class Application implements CommandLineRunner {
         u2.setCreatedDate(currentTime2);
         u2.setLastModifiedDate(currentTime2);
         u2.setOverallPoints(50);
+        u2.setBalance(BigDecimal.valueOf(1000));
         u2.resetBio();
         userRepository.save(u2);
 
@@ -106,6 +108,7 @@ public class Application implements CommandLineRunner {
         u3.setCreatedDate(currentTime3);
         u3.setLastModifiedDate(currentTime3);
         u3.setOverallPoints(10);
+        u3.setBalance(BigDecimal.valueOf(1000));
         u3.resetBio();
         userRepository.save(u3);
 

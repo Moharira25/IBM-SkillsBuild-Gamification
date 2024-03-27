@@ -20,14 +20,10 @@ import java.util.Objects;
 @NoArgsConstructor
 public class User {
 
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Setter for username, if not already present
-    @Setter
-    @Getter
     @Column(nullable = false, unique = true)
     private String username;
 

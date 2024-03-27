@@ -50,7 +50,7 @@ public class TimeTrialsController {
         model.addAttribute("userTrial", ut);
         model.addAttribute("oldTrials", user.getTrials());
         //adding all trials to model
-        model.addAttribute("trials", trials.reversed());
+        model.addAttribute("trials", trials);
         return "timeTrials";
     }
 
