@@ -16,12 +16,17 @@ public class LandingPageController {
     private UserRepository userRepo;
 
     @GetMapping("/")
-    public String leaderboard(Model model) {
-
-        User user = userAuth();
-        Long id = user != null ? user.getId(): null;
-        model.addAttribute("userId", id);
-        return "landing";
+    public String landing(Model model) {
+        try{
+            User user = userAuth();
+            Long id = user != null ? user.getId() : null;
+            model.addAttribute("userId", id);
+            return "landing";
+        }
+        catch (Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "errors";
+        }
     }
 
     private User userAuth() {

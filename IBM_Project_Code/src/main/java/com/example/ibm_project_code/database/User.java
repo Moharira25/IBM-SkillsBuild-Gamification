@@ -68,9 +68,8 @@ public class User {
     private List<Rating> ratings = new ArrayList<>();
 
     // Marketplace-specific fields
-    // default balance is 0
-    @Column(nullable = false, precision = 19, scale = 2)
-    private BigDecimal balance = BigDecimal.ZERO;
+    @Column(nullable = false)
+    private BigDecimal balance; // User's balance for transactions in the marketplace
 
     // Associations with other entities
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -102,11 +101,16 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserTimeTrial> trials = new ArrayList<>();
 
+
+
     //user trial attempts
+    //this will be reset back to 2 every week, (when a new trial is up).
     private int attempts = 2;
 
     //latest trial score for the trials leaderboard
     private int trialScore = 0;
+
+    // Additional methods
 
     // Check if a course has been started
     public boolean courseStarted(Course course) {

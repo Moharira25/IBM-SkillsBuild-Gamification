@@ -17,21 +17,28 @@ public class WelcomeController {
 
     @GetMapping("/hello")
     public String hello(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName(); // Get the username
 
-        // Retrieve the user by username
-        User user = userRepository.findByUsername(username).orElse(null);
+        try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String username = auth.getName(); // Get the username
 
-        // Add the first name to the model, or default to "User" if not found
-        String firstName = user != null ? user.getFirstName() : "User";
-        model.addAttribute("firstName", firstName);
-        //adding userId to use it when displaying the dashboard
-        Long userId = user != null ? user.getId() : 1; //default is id=1 for test user.
-        model.addAttribute("userId", userId);
+            // Retrieve the user by username
+            User user = userRepository.findByUsername(username).orElse(null);
 
-        // redirect to /dashboard
-        return "redirect:/dashboard";
+            // Add the first name to the model, or default to "User" if not found
+            String firstName = user != null ? user.getFirstName() : "User";
+            model.addAttribute("firstName", firstName);
+            //adding userId to use it when displaying the dashboard
+            Long userId = user != null ? user.getId() : 1; //default is id=1 for test user.
+            model.addAttribute("userId", userId);
+
+            // redirect to /dashboard
+            return "redirect:/dashboard";
+        }
+        catch (Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "errors";
+        }
     }
 }
 
