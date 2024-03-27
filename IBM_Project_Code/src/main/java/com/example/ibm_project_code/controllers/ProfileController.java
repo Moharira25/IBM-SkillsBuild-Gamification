@@ -32,116 +32,150 @@ public class ProfileController {
 
     @GetMapping("/profile")
     public String viewProfile(Model model) {
-        User user = userAuth();
-        model.addAttribute("user", user);
-        model.addAttribute("dto", new DataTransferObject());
-        Set<User> friends = new HashSet<>(user.getFriends());
-        friends.add(user);
-        List<User> sortedFriends = friends.stream()
-                .sorted((friend1, friend2) -> Integer.compare(friend2.getOverallPoints(), friend1.getOverallPoints()))
-                .collect(Collectors.toList());
+        try {
+            User user = userAuth();
+            model.addAttribute("user", user);
+            model.addAttribute("dto", new DataTransferObject());
+            Set<User> friends = new HashSet<>(user.getFriends());
+            friends.add(user);
+            List<User> sortedFriends = friends.stream()
+                    .sorted((friend1, friend2) -> Integer.compare(friend2.getOverallPoints(), friend1.getOverallPoints()))
+                    .collect(Collectors.toList());
 
-        model.addAttribute("sortedFriends", sortedFriends);
+            model.addAttribute("sortedFriends", sortedFriends);
 
 
+            List<User> allUsers = StreamSupport.stream(userRepo.findAll().spliterator(), false)
+                    .toList();
+            List<User> potentialFriends = new ArrayList<>();
 
-
-        List<User> allUsers = StreamSupport.stream(userRepo.findAll().spliterator(), false)
-                .toList();
-        List<User> potentialFriends = new ArrayList<>();
-
-        for (User u : allUsers) {
-            boolean isFriend = user.getFriends().contains(u);
-            boolean hasPendingRequest = !friendRequestRepository.findBySenderAndReceiver(user, u).isEmpty() ||
-                    !friendRequestRepository.findBySenderAndReceiver(u, user).isEmpty();
-            if (!u.equals(user) && !isFriend && !hasPendingRequest) {
-                potentialFriends.add(u);
+            for (User u : allUsers) {
+                boolean isFriend = user.getFriends().contains(u);
+                boolean hasPendingRequest = !friendRequestRepository.findBySenderAndReceiver(user, u).isEmpty() ||
+                        !friendRequestRepository.findBySenderAndReceiver(u, user).isEmpty();
+                if (!u.equals(user) && !isFriend && !hasPendingRequest) {
+                    potentialFriends.add(u);
+                }
             }
+            List<FriendRequest> friendRequests = friendRequestRepository.findByReceiverAndStatus(user, "PENDING");
+            model.addAttribute("potentialFriends", potentialFriends);
+            model.addAttribute("friendRequests", friendRequests);
+            model.addAttribute("userId", user.getId());
+            return "profile";
         }
-        List<FriendRequest> friendRequests = friendRequestRepository.findByReceiverAndStatus(user, "PENDING");
-        model.addAttribute("potentialFriends", potentialFriends);
-        model.addAttribute("friendRequests", friendRequests);
-
-        return "profile";
+        catch (Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "errors";
+        }
     }
 
     @PostMapping("/sendFriendRequest")
-    public String sendFriendRequest(@RequestParam("receiverId") Long receiverId) {
-        User sender = userAuth();
-        User receiver = userRepo.findById(receiverId).orElse(null);
-        if (receiver != null && !receiver.equals(sender)) {
-            boolean requestExists = friendRequestRepository.findBySenderAndReceiver(sender, receiver).stream()
-                    .anyMatch(request -> "PENDING".equals(request.getStatus()));
-            if (!requestExists) {
-                FriendRequest friendRequest = new FriendRequest();
-                friendRequest.setSender(sender);
-                friendRequest.setReceiver(receiver);
-                friendRequest.setStatus("PENDING");
-                friendRequestRepository.save(friendRequest);
+    public String sendFriendRequest(@RequestParam("receiverId") Long receiverId, Model model) {
+        try {
+            User sender = userAuth();
+            User receiver = userRepo.findById(receiverId).orElse(null);
+            if (receiver != null && !receiver.equals(sender)) {
+                boolean requestExists = friendRequestRepository.findBySenderAndReceiver(sender, receiver).stream()
+                        .anyMatch(request -> "PENDING".equals(request.getStatus()));
+                if (!requestExists) {
+                    FriendRequest friendRequest = new FriendRequest();
+                    friendRequest.setSender(sender);
+                    friendRequest.setReceiver(receiver);
+                    friendRequest.setStatus("PENDING");
+                    friendRequestRepository.save(friendRequest);
+                }
             }
+            return "redirect:/profile";
         }
-        return "redirect:/profile";
+        catch (Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "errors";
+        }
     }
 
     @PostMapping("/acceptFriendRequest")
-    public String acceptFriendRequest(@RequestParam("requestId") Long requestId) {
-        FriendRequest friendRequest = friendRequestRepository.findById(requestId).orElse(null);
-        if (friendRequest != null && "PENDING".equals(friendRequest.getStatus())) {
-            User sender = friendRequest.getSender();
-            User receiver = friendRequest.getReceiver();
-            sender.getFriends().add(receiver);
-            receiver.getFriends().add(sender);
-            friendRequest.setStatus("ACCEPTED");
-            userRepo.save(sender);
-            userRepo.save(receiver);
-            friendRequestRepository.save(friendRequest);
+    public String acceptFriendRequest(@RequestParam("requestId") Long requestId, Model model) {
+        try {
+            FriendRequest friendRequest = friendRequestRepository.findById(requestId).orElse(null);
+            if (friendRequest != null && "PENDING".equals(friendRequest.getStatus())) {
+                User sender = friendRequest.getSender();
+                User receiver = friendRequest.getReceiver();
+                sender.getFriends().add(receiver);
+                receiver.getFriends().add(sender);
+                friendRequest.setStatus("ACCEPTED");
+                userRepo.save(sender);
+                userRepo.save(receiver);
+                friendRequestRepository.save(friendRequest);
+            }
+            return "redirect:/profile";
         }
-        return "redirect:/profile";
+        catch (Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "errors";
+        }
     }
     @GetMapping("/friendProfile/{id}")
     public String viewFriendProfile(@PathVariable Long id, Model model) {
-        User friend = userRepo.findById(id).orElse(null);
-        if (friend == null) {
-            return "redirect:/profile";
+        try {
+            User friend = userRepo.findById(id).orElse(null);
+            if (friend == null) {
+                return "redirect:/profile";
+            }
+            List<UserCourse> friendCourses = userCourseRepository.findByUser(friend);
+            List<Course> courses = friendCourses.stream().map(UserCourse::getCourse).collect(Collectors.toList());
+
+            model.addAttribute("friend", friend);
+            model.addAttribute("courses", courses);
+
+            return "friendProfile";
         }
-        List<UserCourse> friendCourses = userCourseRepository.findByUser(friend);
-        List<Course> courses = friendCourses.stream().map(UserCourse::getCourse).collect(Collectors.toList());
-
-        model.addAttribute("friend", friend);
-        model.addAttribute("courses", courses);
-
-        return "friendProfile";
+        catch (Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "errors";
+        }
     }
     @PostMapping("/removeFriend")
-    public String removeFriend(@RequestParam("friendId") Long friendId) {
-        User user = userAuth();
-        User friend = userRepo.findById(friendId).orElse(null);
+    public String removeFriend(@RequestParam("friendId") Long friendId, Model model) {
+        try {
+            User user = userAuth();
+            User friend = userRepo.findById(friendId).orElse(null);
 
-        if (friend != null && user.getFriends().contains(friend)) {
-            user.getFriends().remove(friend);
-            // Optional: Remove the user from the friend's list for bidirectional removal
+            if (friend != null && user.getFriends().contains(friend)) {
+                user.getFriends().remove(friend);
+                // Optional: Remove the user from the friend's list for bidirectional removal
 
-            userRepo.save(user);
+                userRepo.save(user);
 
-             userRepo.save(friend);
+                userRepo.save(friend);
+            }
+
+            return "redirect:/profile";
         }
-
-        return "redirect:/profile";
+        catch (Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "errors";
+        }
     }
 
     @PostMapping("/profile")
     public String editingProfile(Model model, @ModelAttribute DataTransferObject dto){
-        User user = userAuth();
-        String bio = dto.getBio() != null && !StringUtils.isBlank(dto.getBio()) ? dto.getBio(): user.getBio();
-        String firstName = dto.getFirstName() != null && !StringUtils.isBlank(dto.getFirstName()) ? dto.getFirstName(): user.getFirstName();
-        String lastName = dto.getLastName() != null && !StringUtils.isBlank(dto.getLastName()) ? dto.getLastName(): user.getLastName();
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setBio(bio);
-        model.addAttribute("user", user);
-        userRepo.save(user);
 
-        return "redirect:/profile";
+        try{
+            User user = userAuth();
+            String bio = dto.getBio() != null && !StringUtils.isBlank(dto.getBio()) ? dto.getBio() : user.getBio();
+            String firstName = dto.getFirstName() != null && !StringUtils.isBlank(dto.getFirstName()) ? dto.getFirstName() : user.getFirstName();
+            String lastName = dto.getLastName() != null && !StringUtils.isBlank(dto.getLastName()) ? dto.getLastName() : user.getLastName();
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setBio(bio);
+            model.addAttribute("user", user);
+            userRepo.save(user);
+            return "redirect:/profile";
+        }
+        catch (Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "errors";
+        }
 
     }
 

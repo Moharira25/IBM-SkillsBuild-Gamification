@@ -48,25 +48,31 @@ public class MarketController {
                                @RequestParam(name = "size", defaultValue = "10") int size,
                                @RequestParam(name = "search", required = false) String search,
                                @RequestHeader HttpHeaders headers) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<ListingSummary> listingsPage;
+        try{
+            Pageable pageable = PageRequest.of(page, size);
+            Page<ListingSummary> listingsPage;
 
-        if (search != null && !search.trim().isEmpty()) {
-            listingsPage = listingRepository.findBySearchTerm("%" + search.trim() + "%", pageable);
-        } else {
-            listingsPage = listingRepository.findSummaryOfActiveListings(pageable);
+            if (search != null && !search.trim().isEmpty()) {
+                listingsPage = listingRepository.findBySearchTerm("%" + search.trim() + "%", pageable);
+            } else {
+                listingsPage = listingRepository.findSummaryOfActiveListings(pageable);
+            }
+
+            model.addAttribute("listingsPage", listingsPage);
+            model.addAttribute("search", search); // Keep the search term in the model
+
+            // Check if the request is an AJAX request by looking for the "X-Requested-With" header
+            if ("XMLHttpRequest".equals(headers.getFirst("X-Requested-With"))) {
+                // Return ONLY the listingsTableFragment
+                return "fragments/listingsTableFragment";
+            } else {
+                // Return the full page for non-AJAX requests
+                return "listings";
+            }
         }
-
-        model.addAttribute("listingsPage", listingsPage);
-        model.addAttribute("search", search); // Keep the search term in the model
-
-        // Check if the request is an AJAX request by looking for the "X-Requested-With" header
-        if ("XMLHttpRequest".equals(headers.getFirst("X-Requested-With"))) {
-            // Return ONLY the listingsTableFragment
-            return "fragments/listingsTableFragment";
-        } else {
-            // Return the full page for non-AJAX requests
-            return "listings";
+        catch (Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "errors";
         }
     }
 

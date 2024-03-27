@@ -24,8 +24,8 @@ public class UserTimeTrial {
 
     private int score = 0;
 
-    @OneToMany
-    List<Question> questions;
+    @OneToMany(cascade = CascadeType.ALL)
+    List<Question> questions = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     List<Answer> answers = new ArrayList<>();
@@ -35,13 +35,13 @@ public class UserTimeTrial {
 
     public void finalScore(){
         int i = 0;
-        List<Question> trialQuestions = timeTrial.getQuestionList();
+        //List<Question> trialQuestions = timeTrial.getQuestionList();
         for (Answer answer: answers){
             // if the question is null then the user did not answer the question,
             // and it is automatically 0. in this case we skip the iteration.
             if (!Objects.equals(answer, null)){
                 //checking if the users answer is correct
-                if (Objects.equals(answer.getAnswer(), trialQuestions.get(i).getAnswer())){
+                if (Objects.equals(answer.getAnswer(), questions.get(i).getAnswer())){
                     if (i == 0){
                         //the first question has a score of 2 to keep all scores integers
                         score += 2;

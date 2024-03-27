@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Time Trial</title>
     <link th:href="@{/css/trialQuiz.css}" rel="stylesheet"/>
     <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
 
@@ -10,7 +10,7 @@
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
 <div class="quizContainer">
-    <form class="trialForm" th:action="@{/submit}" method="post" th:object="${userTrial}">
+    <form class="trialForm" th:action="@{/trials}" method="post" th:object="${userTrial}">
         <!-- Questions: -->
         <div class="questions" th:each="q, n : ${questions}">
             <!-- Question: -->
@@ -40,6 +40,7 @@
                 <!--label tag for each choice-->
                 <!-- hidden input for the question -->
                 <input type="hidden" th:name="'question_' + ${n.index}" th:value="${q.question}" />
+                <input type="hidden" th:name="'trial_question_' + ${n.index}" th:value="${q}" th:field="*{questions[__${n.index}__]}" />
                 <!--choice a-->
                 <div class="choices" th:each="choice: ${q.choices}">
                     <div class="radio-choice">

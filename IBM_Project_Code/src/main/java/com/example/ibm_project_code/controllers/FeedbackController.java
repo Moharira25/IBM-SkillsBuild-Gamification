@@ -29,19 +29,24 @@ public class FeedbackController {
 
     @PostMapping("/submitFeedback/{courseId}")
     public String submitFeedback(@ModelAttribute Feedback feedback, @PathVariable int courseId, // Receive courseId as parameter
-                                 RedirectAttributes redirectAttributes) {
-
-        User user = userAuth();
-        Course course = courseRepository.findById(courseId);
-        if (user != null && course != null) { // Make sure both user and course are found
-            feedback.setCourse(course);
-            feedback.setUser(user);
-            feedbackRepository.save(feedback);
-            redirectAttributes.addFlashAttribute("successMessage", "Feedback submitted successfully");
-        } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "Feedback submission failed. User must be logged in and course must exist.");
+                                 RedirectAttributes redirectAttributes, Model model) {
+        try {
+            User user = userAuth();
+            Course course = courseRepository.findById(courseId);
+            if (user != null && course != null) { // Make sure both user and course are found
+                feedback.setCourse(course);
+                feedback.setUser(user);
+                feedbackRepository.save(feedback);
+                redirectAttributes.addFlashAttribute("successMessage", "Feedback submitted successfully");
+            } else {
+                redirectAttributes.addFlashAttribute("errorMessage", "Feedback submission failed. User must be logged in and course must exist.");
+            }
+            return "redirect:/dashboard";
         }
-        return "redirect:/dashboard";
+        catch (Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "errors";
+        }
     }
 
     @ModelAttribute

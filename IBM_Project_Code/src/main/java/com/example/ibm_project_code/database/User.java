@@ -103,6 +103,7 @@ public class User {
 
 
     //user trial attempts
+    //this will be reset back to 2 every week, (when a new trial is up).
     private int attempts = 2;
 
     //latest trial score for the trials leaderboard

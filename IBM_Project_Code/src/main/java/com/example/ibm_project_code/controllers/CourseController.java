@@ -36,6 +36,9 @@ public class CourseController {
 
     @GetMapping("/dashboard")
     public String viewDashboard(Model model) {
+        try {
+
+
         User user = userAuth();
         model.addAttribute("courses", courseRepo.findAll());
         model.addAttribute("user", user);
@@ -49,73 +52,93 @@ public class CourseController {
         model.addAttribute("topics", topics);
 
         return "dashboard";
+        }
+        catch (Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "errors";
+        }
     }
 
     @RequestMapping("/start/{courseId}")
-    public String startLearning(@PathVariable int courseId) {
-        User user = userAuth();
+    public String startLearning(@PathVariable int courseId, Model model) {
+        try {
+            User user = userAuth();
+            Course course = courseRepo.findById(courseId);
+            //Creating a course enrollment for the started course and recording the start date.
+            UserCourse userCourse = new UserCourse();
+            userCourse.setCourse(course);
+            //Formatting the date and setting the start date for the user-course.
+            SimpleDateFormat simpleFormat = new SimpleDateFormat("dd/MMMM/yyyy");
+            String formattedStartDate = simpleFormat.format(Timestamp.from(Instant.now()));
+            userCourse.setStartDate(formattedStartDate);
+            userCourse.setUser(user);
 
-        Course course = courseRepo.findById(courseId);
 
-        //Creating a course enrollment for the started course and recording the start date.
-        UserCourse userCourse = new UserCourse();
-        userCourse.setCourse(course);
-        //Formatting the date and setting the start date for the user-course.
-        SimpleDateFormat simpleFormat = new SimpleDateFormat("dd/MMMM/yyyy");
-        String formattedStartDate = simpleFormat.format(Timestamp.from(Instant.now()));
-        userCourse.setStartDate(formattedStartDate);
-        userCourse.setUser(user);
+            //saving the userCourse to the database.
+            userCourseRepository.save(userCourse);
 
+            user.getCourses().add(userCourse);
+            course.getEnrollments().add(userCourse);
 
-        //saving the userCourse to the database.
-        userCourseRepository.save(userCourse);
+            course.setCourseUsers(course.getCourseUsers() + 1);
 
-        user.getCourses().add(userCourse);
-        course.getEnrollments().add(userCourse);
+            userRepo.save(user);
+            courseRepo.save(course);
 
-        course.setCourseUsers(course.getCourseUsers() + 1);
+            return "redirect:" + course.getLink();
 
-        userRepo.save(user);
-        courseRepo.save(course);
-
-        return "redirect:" + course.getLink();
+        }
+        catch (Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "errors";
+        }
     }
 
     @RequestMapping("/finish/{courseId}")
     public String finish(@PathVariable int courseId, RedirectAttributes redirectAttributes, Model model) {
-        User user = userAuth();
-        Course course = courseRepo.findById(courseId);
 
-        //getting the formatted date
-        SimpleDateFormat simpleFormat = new SimpleDateFormat("dd/MMMM/yyyy");
-        String formattedEndDate = simpleFormat.format(Timestamp.from(Instant.now()));
-        //Recording the completion time for the course.
-        user.getUserCourse(course).setEndDate(formattedEndDate);
+        try {
+            User user = userAuth();
+            Course course = courseRepo.findById(courseId);
 
-        //Setting the done attribute to true in the UserCourse class
-        user.getUserCourse(course).setDone(true);
-        int newPoints = user.getOverallPoints() + course.getPoints();
-        user.setOverallPoints(newPoints);
+            //getting the formatted date
+            SimpleDateFormat simpleFormat = new SimpleDateFormat("dd/MMMM/yyyy");
+            String formattedEndDate = simpleFormat.format(Timestamp.from(Instant.now()));
+            //Recording the completion time for the course.
+            user.getUserCourse(course).setEndDate(formattedEndDate);
 
-        userRepo.save(user);
-        courseRepo.save(course);
+            //Setting the done attribute to true in the UserCourse class
+            user.getUserCourse(course).setDone(true);
+            int newPoints = user.getOverallPoints() + course.getPoints();
+            user.setOverallPoints(newPoints);
 
-        redirectAttributes.addFlashAttribute("justFinishedCourse", true);
-        redirectAttributes.addFlashAttribute("finishedCourseId", courseId);
-        model.addAttribute("course",course);
-        model.addAttribute("feedback", new Feedback());
+            userRepo.save(user);
+            courseRepo.save(course);
 
-
-
-        return "redirect:/dashboard";
+            redirectAttributes.addFlashAttribute("justFinishedCourse", true);
+            redirectAttributes.addFlashAttribute("finishedCourseId", courseId);
+            model.addAttribute("course", course);
+            model.addAttribute("feedback", new Feedback());
+            return "redirect:/dashboard";
+        }
+        catch (Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "errors";
+        }
     }
 
 
     //A controller for when a user resume a course.
     @RequestMapping("/resume/{courseId}")
-    public String resume(@PathVariable int courseId) {
-        Course course = courseRepo.findById(courseId);
-        return "redirect:" + course.getLink();
+    public String resume(@PathVariable int courseId, Model model) {
+        try{
+            Course course = courseRepo.findById(courseId);
+            return "redirect:" + course.getLink();
+        }
+        catch (Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "errors";
+        }
     }
 
     private User userAuth() {

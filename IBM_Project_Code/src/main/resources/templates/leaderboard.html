@@ -11,7 +11,8 @@
 <body>
 <div class="lead-container">
     <div th:replace="~{fragments/header :: header}"></div>
-    <h1 class="lead-title">Global leaderboard</h1>
+    <h1 th:unless="${trial.id != null}" class="lead-title">Global leaderboard</h1>
+    <h1 th:if="${trial.id != null}" class="lead-title" th:text="${trial.title} + ' Leaderboard'"></h1>
     <table class="lead-table">
         <thead>
         <tr>
