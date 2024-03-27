@@ -108,14 +108,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const totalCost = price * quantity;
         totalCostSpan.textContent = totalCost.toFixed(2);
     }
-
-    openBuyModal()
 });
 
 document.addEventListener('DOMContentLoaded', function () {
     // Open modal buttons
     const buyButton = document.querySelector('#buyButton');
-    const sellButton = document.querySelector('#sellButton'); // Adjust if you have a specific ID or class for the sell button
+    const sellButton = document.querySelector('#sellButton');
 
     // Close modal buttons
     const modalBuyClose = document.querySelector('[data-modal-toggle="buyModal"]');
@@ -171,7 +169,5 @@ document.addEventListener('DOMContentLoaded', function () {
             toggleModal(sellModal);
         }
     });
-
-    // Assuming updateTotalCost() is defined elsewhere in your script
 });
 

@@ -23,14 +23,15 @@
                                 <span class="text-2xl font-bold" th:if="${itemDetails.sellOrderCount != null}"
                                       th:text="${'£' + itemDetails.lowestSellOrder}"></span>
                                 <div class="mt-4">
-                                    <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-6 rounded-lg text-lg"
-                                            data-modal-toggle="buyModal" id="buyButton"
-                                            th:attr="data-item-id=${itemDetails.id},
+                                    <div class="mt-4">
+                                        <button class="bg-blue-400 hover:bg-blue-500 text-gray-800 font-bold py-3 px-6 rounded-lg text-lg"
+                                                id="buyButton"
+                                                th:attr="data-item-id=${itemDetails.id},
                                                      data-item-name=${itemDetails.itemName},
-                                                     data-item-price=${itemDetails.lowestSellOrder}"
-                                    >
-                                        Buy
-                                    </button>
+                                                     data-item-price=${itemDetails.lowestSellOrder}">
+                                            Buy
+                                        </button>
+                                    </div>
 
                                 </div>
                             </div>
@@ -161,7 +162,7 @@
                     <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
                         <button type="submit"
                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                                id="sellButton">List for Sale
+                                id="listForSaleButton">List for Sale
                         </button>
                     </div>
                 </form>

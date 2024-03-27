@@ -173,7 +173,8 @@ public class MarketController {
         buyOrder.setStatus(Transaction.TransactionStatus.PENDING);
         transactionRepository.save(buyOrder);
 
-        // Attempt to match with existing sell orders
+        // Match the buy order with existing sell orders
+        // if not matched, the buy order will be pending
         matchWithSellOrders(buyOrder);
 
         return buyOrder;
@@ -214,8 +215,11 @@ public class MarketController {
         userItemRepository.save(buyerItem);
 
         // Get or decrease the UserItem record for the seller
+        // include a check for if the order should just be partially fulfilled
+        // also check if the buyer simply want to put a request out for a lower price, it doesnt have to be bought immediately
         UserItem sellerItem = userItemRepository.findByUserAndItem(sellOrder.getSeller(), sellOrder.getItem())
-                .orElseThrow(() -> new IllegalStateException("Seller does not have the item they are trying to sell."));
+                .orElseThrow(() -> new IllegalStateException("Seller does not have the item to sell."));
+
         // Check if the seller has enough quantity to sell
         if (sellerItem.getQuantity() < sellOrder.getQuantity()) {
             throw new IllegalStateException("Seller does not have enough quantity to sell.");
