@@ -1,3 +1,7 @@
+<head>
+    <link rel="stylesheet" th:href="@{/css/output.css}">
+</head>
+
 <nav class="header navbar-gradient" th:fragment="header">
     <div class="logo">
         <a href="/"><img th:src="@{/img/courseXP.png}" alt="Course XP logo"></a>
@@ -15,6 +19,7 @@
         <li><a th:if="${userId == null}" href="/register">Register</a></li>
     </ul>
     <div th:if="${userId != null}" class="profile-icon" onclick="toggleDropdown()">
+        <p th:text="'£' + ${#numbers.formatDecimal(user.balance, 1, 'COMMA', 2, 'POINT')}" class="text-balance text-green-300 mr-2"></p>
         <img src="https://creazilla-store.fra1.digitaloceanspaces.com/icons/7912642/avatar-icon-md.png"
              alt="Profile Picture">
         <div class="dropdown-content" id="dropdownMenu">

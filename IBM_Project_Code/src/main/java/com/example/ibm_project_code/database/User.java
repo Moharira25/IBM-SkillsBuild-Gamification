@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -67,8 +68,9 @@ public class User {
     private List<Rating> ratings = new ArrayList<>();
 
     // Marketplace-specific fields
-    @Column(nullable = false)
-    private double balance; // User's balance for transactions in the marketplace
+    // default balance is 0
+    @Column(nullable = false, precision = 19, scale = 2)
+    private BigDecimal balance = BigDecimal.ZERO;
 
     // Associations with other entities
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -100,15 +102,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserTimeTrial> trials = new ArrayList<>();
 
-
-
     //user trial attempts
     private int attempts = 2;
 
     //latest trial score for the trials leaderboard
     private int trialScore = 0;
-
-    // Additional methods
 
     // Check if a course has been started
     public boolean courseStarted(Course course) {

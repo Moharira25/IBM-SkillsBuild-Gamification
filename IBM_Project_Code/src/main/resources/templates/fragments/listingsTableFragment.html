@@ -7,22 +7,27 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">Item Name</th>
+                <th scope="col" class="px-6 py-3">Category</th>
                 <th scope="col" class="px-6 py-3">Quantity</th>
                 <th scope="col" class="px-6 py-3">Starting at</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="listing : ${listingsPage.content}"
-                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td th:text="${listing.itemName}" class="px-6 py-4 font-medium text-gray-900 dark:text-white">Item Name</td>
+            <tr th:each="listing : ${listingsPage.content}" class="listing-row">
+                <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                    <!-- Update the href to include the itemName as a query parameter -->
+                    <a th:href="@{/market/item-listings(itemName=${listing.itemName})}" th:text="${listing.itemName}"></a>
+                </td>
+                <td th:text="${listing.category}" class="px-6 py-4">Category</td>
                 <td th:text="${listing.quantity}" class="px-6 py-4">Quantity</td>
                 <td th:text="${'&pound;' + #numbers.formatDecimal(listing.minPrice, 1, 'COMMA', 2, 'POINT')}"
-                    class="px-6 py-4">Starting at
-                </td>
+                    class="px-6 py-4">Starting at</td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
+
+<script th:src="@{/js/market.js}"></script>
 </body>
 </html>

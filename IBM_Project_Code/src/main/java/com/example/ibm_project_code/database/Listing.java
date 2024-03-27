@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 
@@ -34,12 +35,12 @@ public class Listing {
     private User seller;
 
     @Column(nullable = false)
-    private double price;
+    private BigDecimal price;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ListingStatus status;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Timestamp createDate = Timestamp.from(Instant.now());
 }
