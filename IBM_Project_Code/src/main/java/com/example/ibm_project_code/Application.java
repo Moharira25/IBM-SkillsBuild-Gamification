@@ -12,15 +12,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Random; // Import the Random class
-
 
 import static java.time.Instant.now;
 
@@ -43,6 +42,10 @@ public class Application implements CommandLineRunner {
     private QuestionsRepository questionsRepository;
     @Autowired
     private UserTrialRepository userTrialRepository;
+    @Autowired
+    private UserItemRepository userItemRepository;
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     // loads .env data correctly
 /*    static {
@@ -230,181 +233,181 @@ public class Application implements CommandLineRunner {
         };
 
         String[][] choices = {
-                {       "a) A person who works with artificial intelligence",
+                {"a) A person who works with artificial intelligence",
                         "b) A software program that acts on behalf of a user or another program",
                         "c) An organization specializing in AI research",
                         "d) A hardware component used in AI systems"
 
                 },
-                {       "a) Autonomy",
+                {"a) Autonomy",
                         "b) Reactivity",
                         "c) Sensory perception",
                         "d) Fixed behavior"
 
                 },
-                {       "a) Utility-based agent",
+                {"a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
 
                 },
-                {   "a) To react to stimuli from its environment",
+                {"a) To react to stimuli from its environment",
                         "b) To learn from past experiences and improve its performance",
                         "c) To maximize a performance measure based on utility function",
                         "d) To follow a predefined set of rules and actions"
 
                 },
-                {       "a) Utility-based agent",
+                {"a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
 
                 },
-                {       "a) The ability to understand emotions",
+                {"a) The ability to understand emotions",
                         "b) The ability to perceive and interpret information from the environment",
                         "c) The ability to communicate with other agents",
                         "d) The ability to learn from past experiences"
 
                 },
-                {       "a) Utility-based agent",
+                {"a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
 
                 },
-                {       "a) The ability to function without human intervention",
+                {"a) The ability to function without human intervention",
                         "b) The ability to collaborate with other agents",
                         "c) The ability to adapt to changing environments",
                         "d) The ability to perceive and interpret sensory information"
 
                 },
-                {       "a) Utility-based agent",
+                {"a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
 
                 },
-                {       "a) Its ability to react to stimuli from the environment",
+                {"a) Its ability to react to stimuli from the environment",
                         "b) Its ability to use utility functions to make decisions",
                         "c) Its ability to improve its performance over time through experience",
                         "d) Its ability to simulate potential actions before executing them"
 
                 },
-                {       "a) Utility-based agent",
+                {"a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
 
                 },
-                {       "a) To evaluate the performance of the agent",
+                {"a) To evaluate the performance of the agent",
                         "b) To determine the utility function",
                         "c) To provide sensory input to the agent",
                         "d) To define the environment in which the agent operates"
 
                 },
-                {       "a) Utility-based agent",
+                {"a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
 
                 },
-                {       "a) Its ability to plan and reason about future actions",
+                {"a) Its ability to plan and reason about future actions",
                         "b) Its ability to adapt to changing environments",
                         "c) Its simplicity and efficiency",
                         "d) Its capability to learn from past experiences"
 
                 },
-                {       "a) Utility-based agent",
+                {"a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
                 },
                 {
-                    "a) The ability to plan and reason about future actions",
+                        "a) The ability to plan and reason about future actions",
                         "b) The ability to adapt to changing environments",
                         "c) The ability to take immediate actions based on current stimuli",
                         "d) The ability to learn from past experiences"
                 },
                 {
-                    "a) Utility-based agent",
+                        "a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
                 },
                 {
-                    "a) Handling complex environments with uncertain outcomes",
+                        "a) Handling complex environments with uncertain outcomes",
                         "b) Adapting to changing circumstances over time",
                         "c) Dealing with sensory input and reacting appropriately in real-time",
                         "d) Learning from past experiences to improve performance"
                 },
                 {
-                    "a) Utility-based agent",
+                        "a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
                 },
                 {
-                    "a) Its ability to react quickly to stimuli from the environment",
+                        "a) Its ability to react quickly to stimuli from the environment",
                         "b) Its ability to learn from past experiences and adjust its behavior",
                         "c) Its ability to simulate potential actions before making decisions",
                         "d) Its ability to maximize a performance measure based on utility function"
                 },
                 {
-                    "a) Utility-based agent",
+                        "a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
                 },
                 {
-                    "a) It provides sensory input to the agent",
+                        "a) It provides sensory input to the agent",
                         "b) It determines the agent''s utility function",
                         "c) It evaluates the performance of the agent",
                         "d) It simulates potential actions for the agent to consider"
                 },
                 {
-                    "a) Utility-based agent",
+                        "a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
                 },
                 {
-                    "a) Its ability to learn from past experiences",
+                        "a) Its ability to learn from past experiences",
                         "b) Its focus on maximizing a performance measure based on utility function",
                         "c) Its reliance on immediate sensory input to make decisions",
                         "d) Its simplicity and efficiency in decision-making"
                 },
                 {
-                    "a) Utility-based agent",
+                        "a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
                 },
                 {
-                    "a) Its ability to simulate potential actions before making decisions",
+                        "a) Its ability to simulate potential actions before making decisions",
                         "b) Its ability to adapt to changing environments over time",
                         "c) Its simplicity and efficiency in decision-making",
                         "d) Its capability to learn from past experiences and improve performance"
                 },
                 {
-                    "a) Utility-based agent",
+                        "a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
                 },
                 {
-                    "a) Its ability to react to stimuli from the environment",
+                        "a) Its ability to react to stimuli from the environment",
                         "b) Its focus on maximizing a performance measure based on utility function",
                         "c) Its capability to improve its performance over time through experience",
                         "d) Its reliance on immediate sensory input to make decisions"
                 },
                 {
-                    "a) The ability to function without human intervention",
+                        "a) The ability to function without human intervention",
                         "b) The ability to collaborate with other agents",
                         "c) The ability to adapt to changing environments",
                         "d) The ability to perceive and interpret sensory information"
                 },
                 {
-                    "a) Utility-based agent",
+                        "a) Utility-based agent",
                         "b) Reactive agent",
                         "c) Deliberative agent",
                         "d) Learning agent"
@@ -561,7 +564,6 @@ public class Application implements CommandLineRunner {
         } else {
             System.out.println("Users, Items, or Listings not found. Please ensure your database is populated with users, items, and listings before adding transactions.");
         }
-
 
 
         //scrapping course-data (college students pathway only) from IBM skills build website.
