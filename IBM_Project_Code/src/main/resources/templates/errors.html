@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Something Went Wrong!</title>
+    <link rel="stylesheet" th:href="@{/css/errors.css}">
+
+</head>
+<body>
+<div class="message-container">
+    <p class="message">Something Went Wrong!
+        <a class="homepage-link" th:href="@{/}">Go Back To Homepage</a>
+    </p>
+    <!-- uncomment to see the error message
+    <p th:text="${error}"></p>
+    -->
+</div>
+
+</body>
+</html>
