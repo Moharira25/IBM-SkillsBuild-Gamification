@@ -5,13 +5,14 @@
     <link th:href="@{/css/leaderboard.css}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/landing.css}">
+    <script th:src="@{/js/landing.js}"></script>
     <title>Leaderboard</title>
 </head>
 <body>
 <div class="lead-container">
     <div th:replace="~{fragments/header :: header}"></div>
-    <h1 th:unless="${trial.id != null}" class="lead-title">Global leaderboard</h1>
-    <h1 th:if="${trial.id != null}" class="lead-title" th:text="${trial.title} + ' Leaderboard'"></h1>
+    <h1 th:unless="${trial != null}" class="lead-title">Global leaderboard</h1>
+    <h1 th:if="${trial != null}" class="lead-title" th:text="${trial.title} + ' Leaderboard'"></h1>
     <table class="lead-table">
         <thead>
         <tr>
@@ -40,7 +41,6 @@
 </div>
 
 <script th:src="@{/js/leaderboard.js}"></script>
-<script th:src="@{/js/landing.js}"></script>
 
 </body>
 </html>
